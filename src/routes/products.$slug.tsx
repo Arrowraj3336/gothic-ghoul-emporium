@@ -114,7 +114,7 @@ function ProductPage() {
           <div className="mt-10">
             <h3 className="font-display text-xs uppercase tracking-[0.3em] text-signal">Specifications</h3>
             <ul className="mt-4 divide-y divide-border border-y border-border">
-              {product.details.map((d) => (
+              {product.details.map((d: string) => (
                 <li key={d} className="flex items-center gap-3 py-3 text-sm">
                   <span className="h-1 w-1 rounded-full bg-signal" />
                   {d}
