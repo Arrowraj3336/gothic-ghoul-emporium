@@ -4,18 +4,20 @@ import { Instagram, Twitter, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="relative mt-32 border-t border-border bg-background overflow-hidden">
+    <footer className="relative mt-24 sm:mt-32 border-t border-border bg-background overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-30" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5">
               <BatLogo className="h-7 w-14 text-signal" />
-              <span className="font-display text-xl tracking-[0.25em] uppercase">Gotham<span className="text-signal">.</span>Haus</span>
+              <span className="font-display text-xl tracking-[0.3em] uppercase">
+                Dark<span className="text-signal">·</span>Decor
+              </span>
             </div>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground leading-relaxed">
-              Aesthetic home decor for the ones who prefer the night.
-              Hand-finished pieces, small batches, shipped in matte black.
+              Aesthetic home decor for those who prefer the night. Hand-finished
+              pieces, small batches, shipped in matte black.
             </p>
             <div className="mt-6 flex gap-2">
               {[Instagram, Twitter, Youtube].map((Icon, i) => (
@@ -44,7 +46,7 @@ export function Footer() {
             <h4 className="font-display text-xs tracking-[0.3em] uppercase text-signal">House</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li><Link to="/about" className="hover:text-foreground">Our Origin</Link></li>
-              <li><Link to="/contact" className="hover:text-foreground">Signal Us</Link></li>
+              <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
               <li><a href="#" className="hover:text-foreground">Shipping</a></li>
               <li><a href="#" className="hover:text-foreground">Returns</a></li>
             </ul>
@@ -52,8 +54,8 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} Gotham.Haus. All shadows reserved.</span>
-          <span className="font-mono tracking-widest">/ /  WAYNE ENTERPRISES SUBSIDIARY  / /</span>
+          <span>© {new Date().getFullYear()} Dark Decor. All shadows reserved.</span>
+          <span className="font-mono tracking-widest">/ /  CRAFTED IN THE DARK  / /</span>
         </div>
       </div>
     </footer>

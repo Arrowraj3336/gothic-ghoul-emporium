@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Cinzel", "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Orbitron", "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -37,43 +37,44 @@
   --color-signal-glow: var(--signal-glow);
 
   --shadow-signal: 0 0 40px var(--signal-glow), 0 0 80px color-mix(in oklab, var(--signal) 30%, transparent);
-  --shadow-elevated: 0 30px 60px -20px oklch(0 0 0 / 0.8), 0 0 0 1px var(--border);
+  --shadow-elevated: 0 30px 60px -20px oklch(0 0 0 / 0.9), 0 0 0 1px var(--border);
+  --shadow-frame: 0 0 0 1px var(--border), 0 30px 80px -20px oklch(0 0 0 / 0.9), inset 0 0 60px oklch(0 0 0 / 0.5);
 
-  --gradient-night: linear-gradient(180deg, oklch(0.08 0.01 260) 0%, oklch(0.04 0.005 260) 100%);
+  --gradient-night: linear-gradient(180deg, oklch(0.05 0.008 260) 0%, oklch(0.03 0.005 260) 100%);
   --gradient-signal: radial-gradient(circle at center, var(--signal) 0%, color-mix(in oklab, var(--signal) 60%, transparent) 40%, transparent 70%);
+  --gradient-ray: radial-gradient(ellipse at center bottom, color-mix(in oklab, var(--signal) 70%, transparent) 0%, color-mix(in oklab, var(--signal) 25%, transparent) 25%, transparent 60%);
 }
 
 :root {
-  --radius: 0.25rem;
+  --radius: 0.125rem;
 
-  /* Gotham noir palette */
-  --background: oklch(0.08 0.01 260);
-  --foreground: oklch(0.95 0.01 90);
+  /* Dark Decor noir palette — deeper, more futuristic */
+  --background: oklch(0.05 0.008 260);
+  --foreground: oklch(0.96 0.008 90);
 
-  --card: oklch(0.11 0.012 260);
-  --card-foreground: oklch(0.95 0.01 90);
+  --card: oklch(0.085 0.01 260);
+  --card-foreground: oklch(0.96 0.008 90);
 
-  --popover: oklch(0.09 0.012 260);
-  --popover-foreground: oklch(0.95 0.01 90);
+  --popover: oklch(0.07 0.01 260);
+  --popover-foreground: oklch(0.96 0.008 90);
 
-  /* Bat-signal yellow */
   --primary: oklch(0.86 0.18 90);
-  --primary-foreground: oklch(0.1 0.01 260);
+  --primary-foreground: oklch(0.08 0.01 260);
 
-  --secondary: oklch(0.16 0.012 260);
-  --secondary-foreground: oklch(0.95 0.01 90);
+  --secondary: oklch(0.13 0.01 260);
+  --secondary-foreground: oklch(0.96 0.008 90);
 
-  --muted: oklch(0.14 0.01 260);
-  --muted-foreground: oklch(0.6 0.015 90);
+  --muted: oklch(0.11 0.008 260);
+  --muted-foreground: oklch(0.58 0.012 90);
 
   --accent: oklch(0.86 0.18 90);
-  --accent-foreground: oklch(0.1 0.01 260);
+  --accent-foreground: oklch(0.08 0.01 260);
 
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
 
-  --border: oklch(0.2 0.012 260);
-  --input: oklch(0.16 0.012 260);
+  --border: oklch(0.17 0.012 260);
+  --input: oklch(0.13 0.01 260);
   --ring: oklch(0.86 0.18 90);
 
   --signal: oklch(0.86 0.18 90);
@@ -91,13 +92,14 @@
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0.02em; }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0.04em; font-weight: 600; }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--background); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--signal); }
 
   ::selection { background: var(--signal); color: var(--primary-foreground); }
@@ -107,54 +109,48 @@
   .text-signal { color: var(--signal); }
   .bg-signal { background: var(--signal); }
   .shadow-signal { box-shadow: var(--shadow-signal); }
+  .shadow-frame { box-shadow: var(--shadow-frame); }
   .text-glow { text-shadow: 0 0 20px var(--signal-glow), 0 0 40px color-mix(in oklab, var(--signal) 40%, transparent); }
   .gradient-night { background: var(--gradient-night); }
+  .gradient-ray { background: var(--gradient-ray); }
   .bg-grid {
     background-image:
       linear-gradient(var(--border) 1px, transparent 1px),
       linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-size: 56px 56px;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
   }
-  .noise {
-    position: relative;
+  .bg-grid-fine {
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--border) 50%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--border) 50%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
+  .noise { position: relative; }
   .noise::after {
     content: "";
     position: absolute; inset: 0;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
-    opacity: 0.06; pointer-events: none; mix-blend-mode: overlay;
+    opacity: 0.05; pointer-events: none; mix-blend-mode: overlay;
+  }
+  .clip-frame {
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
   }
 }
 
-/* Bat signal sweep animation */
+/* Existing decorative anims */
 @keyframes signal-pulse {
   0%, 100% { opacity: 0.4; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.06); }
 }
 @keyframes signal-flicker {
   0%, 100% { opacity: 1; }
-  41% { opacity: 1; }
-  42% { opacity: 0.3; }
-  43% { opacity: 1; }
-  45% { opacity: 0.5; }
-  46% { opacity: 1; }
+  42% { opacity: 0.3; } 43% { opacity: 1; } 45% { opacity: 0.5; } 46% { opacity: 1; }
 }
 @keyframes bat-fly {
   0% { transform: translateX(-120vw) translateY(20vh) scale(0.4) rotate(-8deg); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
+  20% { opacity: 1; } 80% { opacity: 1; }
   100% { transform: translateX(120vw) translateY(-20vh) scale(1.6) rotate(8deg); opacity: 0; }
-}
-@keyframes signal-burst {
-  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-  40% { transform: scale(1.3) rotate(0deg); opacity: 1; }
-  70% { transform: scale(1) rotate(0deg); opacity: 1; }
-  100% { transform: scale(8) rotate(0deg); opacity: 0; }
-}
-@keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
 }
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px); }
@@ -165,15 +161,41 @@
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/* === Product page transition: black → ray → bat reveal → fog dissolve === */
+@keyframes pt-ray-rise {
+  0% { opacity: 0; transform: translateY(40%) scaleY(0.4); }
+  40% { opacity: 1; transform: translateY(0) scaleY(1); }
+  85% { opacity: 1; }
+  100% { opacity: 0.4; transform: translateY(-10%) scaleY(1); }
+}
+@keyframes pt-bat-reveal {
+  0%, 25% { opacity: 0; transform: scale(0.4); filter: blur(20px); }
+  45% { opacity: 1; transform: scale(1.05); filter: blur(0); }
+  70% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.4); filter: blur(8px); }
+}
+@keyframes pt-fog {
+  0% { opacity: 0; }
+  35% { opacity: 0; }
+  55% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes pt-curtain {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .animate-signal-pulse { animation: signal-pulse 4s ease-in-out infinite; }
 .animate-signal-flicker { animation: signal-flicker 6s linear infinite; }
 .animate-bat-fly { animation: bat-fly 2.5s ease-in-out forwards; }
-.animate-signal-burst { animation: signal-burst 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.animate-scan-line { animation: scan-line 4s linear infinite; }
 .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
 .animate-rise-in { animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .animate-fade-in { animation: fade-in 0.5s ease-out both; }
+
+.pt-curtain { animation: pt-curtain 2.2s ease-out forwards; }
+.pt-ray { animation: pt-ray-rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.pt-bat { animation: pt-bat-reveal 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.pt-fog { animation: pt-fog 2.2s ease-in-out forwards; }

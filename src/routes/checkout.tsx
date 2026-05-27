@@ -6,7 +6,7 @@ import { BatLogo } from "@/components/BatLogo";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "Checkout — Gotham.Haus" }] }),
+  head: () => ({ meta: [{ title: "Checkout — Dark Decor" }] }),
   component: Checkout,
 });
 

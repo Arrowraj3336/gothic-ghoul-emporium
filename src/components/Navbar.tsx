@@ -6,10 +6,10 @@ import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { to: "/", label: "Manor" },
-  { to: "/shop", label: "Armory" },
+  { to: "/", label: "Home" },
+  { to: "/shop", label: "Shop" },
   { to: "/about", label: "Origin" },
-  { to: "/contact", label: "Signal" },
+  { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Navbar() {
@@ -22,7 +22,9 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="group flex items-center gap-2.5">
           <BatLogo className="h-6 w-12 text-foreground transition-all group-hover:text-signal group-hover:drop-shadow-[0_0_12px_var(--signal-glow)]" />
-          <span className="font-display text-lg tracking-[0.25em] uppercase">Gotham<span className="text-signal">.</span>Haus</span>
+          <span className="font-display text-base sm:text-lg tracking-[0.3em] uppercase">
+            Dark<span className="text-signal">·</span>Decor
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -31,7 +33,7 @@ export function Navbar() {
               key={l.to}
               to={l.to}
               className={cn(
-                "relative font-display text-xs uppercase tracking-[0.3em] transition-colors",
+                "relative font-display text-[11px] uppercase tracking-[0.35em] transition-colors",
                 path === l.to ? "text-signal" : "text-muted-foreground hover:text-foreground",
               )}
             >
@@ -43,7 +45,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <button
             aria-label="Search"
             className="hidden sm:grid h-9 w-9 place-items-center rounded-sm text-muted-foreground transition hover:text-signal hover:bg-secondary"
@@ -81,7 +83,7 @@ export function Navbar() {
                 to={l.to}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "py-3 font-display text-sm uppercase tracking-[0.25em] border-b border-border/40 last:border-0",
+                  "py-3 font-display text-sm uppercase tracking-[0.3em] border-b border-border/40 last:border-0",
                   path === l.to ? "text-signal" : "text-foreground/80",
                 )}
               >
