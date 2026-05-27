@@ -6,7 +6,7 @@ import { BatLogo } from "@/components/BatLogo";
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
-      { title: "Cart — Gotham.Haus" },
+      { title: "Cart — Dark Decor" },
       { name: "description", content: "Review the pieces you've gathered from the shadows." },
     ],
   }),

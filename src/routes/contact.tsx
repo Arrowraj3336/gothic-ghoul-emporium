@@ -7,9 +7,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Signal Us — Contact Gotham.Haus" },
-      { name: "description", content: "Get in touch with the Gotham.Haus team. Light the bat-signal and we'll answer." },
-      { property: "og:title", content: "Contact — Gotham.Haus" },
+      { title: "Signal Us — Contact Dark Decor" },
+      { name: "description", content: "Get in touch with the Dark Decor team. Light the bat-signal and we'll answer." },
+      { property: "og:title", content: "Contact — Dark Decor" },
       { property: "og:description", content: "Light the signal. We answer after dusk." },
     ],
   }),

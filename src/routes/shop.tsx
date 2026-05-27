@@ -7,9 +7,9 @@ import { BatLogo } from "@/components/BatLogo";
 export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
-      { title: "Armory — Shop All | Gotham.Haus" },
-      { name: "description", content: "Browse every piece in the Gotham.Haus catalog. Lighting, decor, accents and furnishings, all hand-finished in matte black." },
-      { property: "og:title", content: "Shop — Gotham.Haus" },
+      { title: "Armory — Shop All | Dark Decor" },
+      { name: "description", content: "Browse every piece in the Dark Decor catalog. Lighting, decor, accents and furnishings, all hand-finished in matte black." },
+      { property: "og:title", content: "Shop — Dark Decor" },
       { property: "og:description", content: "Hand-finished gothic-luxe home decor." },
     ],
   }),
@@ -36,7 +36,7 @@ function Shop() {
           <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// THE ARMORY</div>
           <h1 className="mt-3 font-display text-4xl sm:text-6xl">Every Piece. One Code.</h1>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
-            Browse the full Gotham.Haus catalog. Filter by category, sort by price, summon by night.
+            Browse the full Dark Decor catalog. Filter by category, sort by price, summon by night.
           </p>
         </div>
       </header>

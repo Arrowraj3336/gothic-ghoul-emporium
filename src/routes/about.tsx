@@ -5,10 +5,10 @@ import hero from "@/assets/hero-gotham.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Origin — About Gotham.Haus" },
-      { name: "description", content: "The origin story of Gotham.Haus: hand-finished dark home decor for those who prefer the night." },
-      { property: "og:title", content: "Our Origin — Gotham.Haus" },
-      { property: "og:description", content: "Where Gotham.Haus came from, and why we work only after dusk." },
+      { title: "Origin — About Dark Decor" },
+      { name: "description", content: "The origin story of Dark Decor: hand-finished dark home decor for those who prefer the night." },
+      { property: "og:title", content: "Our Origin — Dark Decor" },
+      { property: "og:description", content: "Where Dark Decor came from, and why we work only after dusk." },
     ],
   }),
   component: About,
@@ -25,7 +25,7 @@ function About() {
           <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// CHAPTER ZERO</div>
           <h1 className="mt-3 font-display text-5xl sm:text-7xl">An Origin in the Dark.</h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            Gotham.Haus was founded in a converted warehouse in Lower Gotham, by three designers who
+            Dark Decor was founded in a converted warehouse in Lower Gotham, by three designers who
             were tired of beige. We make pieces for the rooms the sun forgets.
           </p>
         </div>
@@ -78,7 +78,7 @@ function About() {
           “We don't sell home decor.<br /> We sell the room you become at night.”
         </p>
         <div className="mt-6 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          — The Founders, Gotham.Haus
+          — The Founders, Dark Decor
         </div>
       </section>
     </div>
