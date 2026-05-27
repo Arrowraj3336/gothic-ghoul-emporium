@@ -12,7 +12,6 @@ import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/lib/cart";
-import { RouteTransition } from "@/components/RouteTransition";
 import { KonamiBat } from "@/components/KonamiBat";
 import { Toaster } from "@/components/ui/sonner";
 
