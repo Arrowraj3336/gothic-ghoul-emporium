@@ -120,7 +120,6 @@ function RootComponent() {
           </main>
           <Footer />
         </div>
-        <RouteTransition />
         <KonamiBat />
         <Toaster />
       </CartProvider>
