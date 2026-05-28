@@ -4,6 +4,7 @@ import { products, collections } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
 import { ArrowRight, Shield, Truck, Sparkles, Moon } from "lucide-react";
 import { BatLogo } from "@/components/BatLogo";
+import { HeroVideo } from "@/components/HeroVideo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
