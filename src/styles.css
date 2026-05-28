@@ -200,3 +200,14 @@
 .pt-ray { animation: pt-ray-rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 .pt-bat { animation: pt-bat-reveal 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 .pt-fog { animation: pt-fog 2.2s ease-in-out forwards; }
+
+/* Accessibility: respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pt-curtain, .pt-ray, .pt-bat, .pt-fog { animation: none !important; opacity: 0 !important; }
+}
