@@ -13,6 +13,11 @@ export function ProductTransition() {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
+    if (typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setActive(false);
+      return;
+    }
     const t = setTimeout(() => setActive(false), 2300);
     return () => clearTimeout(t);
   }, []);
