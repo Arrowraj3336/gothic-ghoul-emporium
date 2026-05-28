@@ -4,6 +4,7 @@ import { products, collections } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
 import { ArrowRight, Shield, Truck, Sparkles, Moon } from "lucide-react";
 import { BatLogo } from "@/components/BatLogo";
+import { HeroVideo } from "@/components/HeroVideo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,16 +27,8 @@ function Index() {
       {/* HERO VIDEO BOX */}
       <section className="mx-auto max-w-7xl px-3 pt-6 sm:px-6 sm:pt-10 lg:px-8 lg:pt-14">
         <div className="relative isolate overflow-hidden border border-border bg-black clip-frame shadow-frame">
-          {/* Background video at 30% visibility */}
-          <video
-            src={heroVideo.url}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
-          />
+          {/* Background video — lazy, reduced-motion / saveData aware */}
+          <HeroVideo src={heroVideo.url} className="absolute inset-0" />
           {/* dark vignette + gradient overlay for legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/30" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0.02_0_0/0.7)_100%)]" />

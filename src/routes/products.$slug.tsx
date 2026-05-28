@@ -18,23 +18,73 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductTransition } from "@/components/ProductTransition";
 import { toast } from "sonner";
 
+const SITE_URL = "https://gothic-ghoul-emporium.lovable.app";
+
 export const Route = createFileRoute("/products/$slug")({
   loader: ({ params }) => {
     const product = getProduct(params.slug);
     if (!product) throw notFound();
     return { product };
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.product.name} — Dark Decor` },
-          { name: "description", content: loaderData.product.tagline },
-          { property: "og:title", content: `${loaderData.product.name} — Dark Decor` },
-          { property: "og:description", content: loaderData.product.tagline },
-          { property: "og:image", content: loaderData.product.image },
-        ]
-      : [],
-  }),
+  head: ({ loaderData, params }) => {
+    if (!loaderData) return { meta: [] };
+    const { product } = loaderData;
+    const url = `${SITE_URL}/products/${params.slug}`;
+    const image = `${SITE_URL}${product.image}`;
+    const title = `${product.name} — Dark Decor`;
+    const description = product.tagline;
+    const ld = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      name: product.name,
+      image: [image],
+      description: product.description,
+      sku: product.slug,
+      brand: { "@type": "Brand", name: "Dark Decor" },
+      category: product.category,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: product.rating,
+        reviewCount: product.reviews,
+      },
+      offers: {
+        "@type": "Offer",
+        url,
+        priceCurrency: "USD",
+        price: product.price.toFixed(2),
+        availability:
+          product.stock > 0
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        itemCondition: "https://schema.org/NewCondition",
+      },
+    };
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:type", content: "product" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:image", content: image },
+        { property: "og:image:alt", content: product.name },
+        { property: "product:price:amount", content: product.price.toFixed(2) },
+        { property: "product:price:currency", content: "USD" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: image },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(ld),
+        },
+      ],
+    };
+  },
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-4 py-32 text-center">
       <h1 className="font-display text-2xl sm:text-3xl">Piece not found in the catalog.</h1>
