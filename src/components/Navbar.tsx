@@ -10,6 +10,7 @@ const navLinks = [
   { to: "/shop", label: "Shop" },
   { to: "/about", label: "Origin" },
   { to: "/contact", label: "Contact" },
+  { to: "/vault", label: "Vault" },
 ] as const;
 
 export function Navbar() {
