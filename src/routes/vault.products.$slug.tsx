@@ -170,7 +170,7 @@ function VaultProductPage() {
             <div className="py-6 text-sm text-neutral-700">
               {tab === "features" && (
                 <ul className="space-y-2">
-                  {product.features.map((f) => (
+                  {product.features.map((f: string) => (
                     <li key={f} className="flex gap-2.5">
                       <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-neutral-900" />
                       {f}
@@ -180,7 +180,7 @@ function VaultProductPage() {
               )}
               {tab === "specs" && (
                 <dl className="divide-y divide-neutral-200">
-                  {product.specs.map((s) => (
+                  {product.specs.map((s: { label: string; value: string }) => (
                     <div key={s.label} className="grid grid-cols-2 py-2.5">
                       <dt className="text-neutral-500">{s.label}</dt>
                       <dd className="text-neutral-900">{s.value}</dd>
