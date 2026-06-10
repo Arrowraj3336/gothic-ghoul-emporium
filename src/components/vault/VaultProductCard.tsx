@@ -13,7 +13,7 @@ export function VaultProductCard({ product, index = 0 }: { product: VaultProduct
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-[var(--vv-cream-deep)] ring-1 ring-[var(--vv-gold-soft)] transition-all duration-500 group-hover:ring-2 group-hover:ring-[var(--vv-gold)] group-hover:shadow-[0_20px_60px_-20px_rgba(154,30,42,0.35)]">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-[#0e1a14] ring-1 ring-[var(--vv-gold-soft)] transition-all duration-500 group-hover:ring-2 group-hover:ring-[var(--vv-gold)] group-hover:shadow-[0_20px_60px_-20px_rgba(124,77,219,0.45)]">
           {/* Gold corner brackets */}
           <span className="pointer-events-none absolute left-2 top-2 z-10 h-4 w-4 border-l-2 border-t-2 border-[var(--vv-gold)]" />
           <span className="pointer-events-none absolute right-2 top-2 z-10 h-4 w-4 border-r-2 border-t-2 border-[var(--vv-gold)]" />
