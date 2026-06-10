@@ -49,15 +49,15 @@ export function VaultProductCard({ product, index = 0 }: { product: VaultProduct
       </Link>
       <div className="mt-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--vv-ink-soft)]">{product.category}</div>
+          <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--vv-gold-light)]">{product.category}</div>
           <h3 className="mt-1 font-vault-heroic text-[14px] uppercase tracking-[0.1em] leading-tight text-[var(--vv-ink)] truncate">
-            <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="hover:text-[var(--vv-crimson)]">
+            <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="hover:text-[var(--vv-gold-light)]">
               {product.name}
             </Link>
           </h3>
         </div>
         <div className="text-right">
-          <div className="font-vault-heroic text-[15px] font-semibold text-[var(--vv-crimson)]">${product.price}</div>
+          <div className="font-vault-heroic text-[15px] font-semibold text-[var(--vv-gold-light)]">${product.price}</div>
           {product.compareAt && (
             <div className="text-[11px] text-[var(--vv-ink-soft)] line-through">${product.compareAt}</div>
           )}
