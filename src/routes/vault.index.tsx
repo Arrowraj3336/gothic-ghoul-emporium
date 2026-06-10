@@ -229,11 +229,11 @@ function VaultHome() {
       {/* ============== MORE ============== */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <div className="flex items-center gap-2 text-[var(--vv-crimson)]">
+          <div className="flex items-center gap-2 text-[var(--vv-gold-light)]">
             <WWStar className="h-3 w-3 text-[var(--vv-gold)]" />
             <div className="font-vault-heroic text-[11px] uppercase tracking-[0.35em]">II · From the Vault</div>
           </div>
-          <h2 className="mt-3 font-vault-heroic text-4xl text-[var(--vv-ink)] sm:text-5xl">Quiet bestsellers.</h2>
+          <h2 className="mt-3 font-vault-heroic text-4xl text-[var(--vv-ink)] sm:text-5xl">Whispered bestsellers.</h2>
         </div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-4">
           {more.map((p, i) => (
@@ -252,20 +252,20 @@ function VaultHome() {
             <WWTiara className="h-8 w-16" />
           </div>
           <h2 className="mt-5 font-vault-heroic text-4xl text-[var(--vv-ink)] sm:text-5xl">
-            Join the legion.
+            Swear fealty.
           </h2>
           <p className="mt-3 font-vault-serif text-[17px] italic text-[var(--vv-ink-soft)]">
-            First word on new drops, recipes, and quiet bestsellers.
+            First word on new decrees, conjurings, and quiet bestsellers.
           </p>
           <form onSubmit={(e) => e.preventDefault()} className="mx-auto mt-8 flex max-w-md flex-col gap-2 sm:flex-row">
             <input
               type="email"
               required
               placeholder="your@email.com"
-              className="flex-1 border-2 border-[var(--vv-ink)] bg-white px-5 py-3 text-sm placeholder:text-[var(--vv-ink-soft)] focus:border-[var(--vv-crimson)] focus:outline-none"
+              className="flex-1 border-2 border-[var(--vv-gold-soft)] bg-[#0e1a14] px-5 py-3 text-sm text-[var(--vv-ink)] placeholder:text-[var(--vv-ink-soft)] focus:border-[var(--vv-gold)] focus:outline-none"
             />
             <button className="bg-[var(--vv-crimson)] px-7 py-3 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-white ring-1 ring-[var(--vv-gold)] hover:bg-[var(--vv-crimson-deep)]">
-              Subscribe
+              Pledge
             </button>
           </form>
         </div>

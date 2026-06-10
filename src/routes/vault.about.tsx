@@ -3,8 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/vault/about")({
   head: () => ({
     meta: [
-      { title: "Our Story — Viral Vault" },
-      { name: "description", content: "Why Viral Vault exists — and how we make quietly viral kitchen appliances." },
+      { title: "The Doctrine — Viral Vault" },
+      { name: "description", content: "Why the House of Doom forges kitchen instruments — magic, science, and sovereign craft." },
     ],
   }),
   component: VaultAbout,
@@ -13,26 +13,32 @@ export const Route = createFileRoute("/vault/about")({
 function VaultAbout() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="text-[11px] uppercase tracking-[0.2em] text-neutral-500">Our story</div>
-      <h1 className="mt-3 font-vault-display text-5xl leading-tight text-neutral-900 sm:text-6xl">
-        Built for the kitchens that <em className="font-vault-italic font-normal text-neutral-500">actually</em> get used.
+      <div className="text-[11px] uppercase tracking-[0.2em] text-[var(--vv-gold-light)]">The doctrine</div>
+      <h1 className="mt-3 font-vault-display text-5xl leading-tight text-[var(--vv-ink)] sm:text-6xl">
+        Magic. Science. <em className="font-vault-italic font-normal text-[var(--vv-gold-light)]">One</em> sovereign craft.
       </h1>
-      <div className="mt-10 space-y-6 text-[16px] leading-[1.75] text-neutral-700">
+      <div className="mt-10 space-y-6 text-[16px] leading-[1.75] text-[var(--vv-ink-soft)]">
         <p>
-          Viral Vault started in a small studio in Brooklyn with a simple frustration: every
-          appliance worth using looked like it belonged in a hospital, and every appliance worth
-          looking at was made out of plastic that broke in eighteen months.
+          Viral Vault was decreed in the Latverian workshops on the eve of a quiet
+          equinox. The Sovereign held a single conviction: the modern kitchen had
+          surrendered to plastic, to noise, to obsolescence — and a kitchen so
+          surrendered is unworthy of those who feed an empire.
         </p>
         <p>
-          So we started over. We partnered with two factories in northern Italy and one in Osaka —
-          the same workshops trusted by professional kitchens — and asked them to make the things
-          we wanted on our own counters. No screens we didn't need. No fake-chrome plastic. No
-          branded chimes when you push a button.
+          So we began again. We summoned the last of the master artificers from
+          northern Italy and Osaka — workshops that have served emperors and
+          baristas alike — and bound each piece with a single oath: that magic and
+          science are merely two dialects of the same language, and that the
+          instruments of a great house must speak both.
         </p>
         <p>
-          What you see in the vault today is the result. Every piece is tested for at least 5,000
-          cycles before it ships, and we'll replace anything that fails in normal use for two
-          full years. We hope you cook with it every morning.
+          What you find in the Arsenal today is the result. Every instrument is
+          tested against five thousand cycles, sealed with a rune of warranty,
+          and crowned with the mark of Doom. We will replace anything that fails
+          you in two years. We hope you cook with it every morning.
+        </p>
+        <p className="font-vault-serif text-lg italic text-[var(--vv-gold-light)]">
+          — Issued under the seal of Doom, MMXXVI.
         </p>
       </div>
     </div>
