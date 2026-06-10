@@ -6,9 +6,9 @@ import { WWStar } from "./VaultIcons";
 import { useVaultCart } from "@/lib/vault-cart";
 
 const links = [
-  { to: "/vault" as const, label: "Pantheon" },
-  { to: "/vault/shop" as const, label: "Armory" },
-  { to: "/vault/about" as const, label: "Mythos" },
+  { to: "/vault" as const, label: "The Court" },
+  { to: "/vault/shop" as const, label: "Arsenal" },
+  { to: "/vault/about" as const, label: "Doctrine" },
 ];
 
 export function VaultNavbar() {
@@ -30,8 +30,8 @@ export function VaultNavbar() {
             <span className="font-vault-heroic text-xl tracking-[0.18em] uppercase">
               Viral Vault
             </span>
-            <span className="mt-1 text-[10px] tracking-[0.32em] uppercase text-[var(--vv-ink-soft)]">
-              Of Themyscira
+            <span className="mt-1 text-[10px] tracking-[0.32em] uppercase text-[var(--vv-gold)]">
+              House of Latveria
             </span>
           </span>
         </Link>
