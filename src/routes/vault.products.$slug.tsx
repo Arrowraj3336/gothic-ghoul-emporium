@@ -51,16 +51,21 @@ function VaultProductPage() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
         {/* Gallery */}
         <div className="lg:col-span-7">
-          <div className="overflow-hidden rounded-3xl bg-neutral-100">
+          <div className="relative overflow-hidden rounded-[2px] vv-plate">
             <img
               src={product.image}
               alt={product.name}
               className="aspect-[4/5] h-full w-full object-cover sm:aspect-[5/4]"
             />
+            {/* Brass corner brackets */}
+            <span className="pointer-events-none absolute left-3 top-3 z-10 h-6 w-6 border-l-2 border-t-2 border-[var(--vv-gold)]" />
+            <span className="pointer-events-none absolute right-3 top-3 z-10 h-6 w-6 border-r-2 border-t-2 border-[var(--vv-gold)]" />
+            <span className="pointer-events-none absolute bottom-3 left-3 z-10 h-6 w-6 border-b-2 border-l-2 border-[var(--vv-gold)]" />
+            <span className="pointer-events-none absolute bottom-3 right-3 z-10 h-6 w-6 border-b-2 border-r-2 border-[var(--vv-gold)]" />
           </div>
           <div className="mt-4 grid grid-cols-4 gap-3">
             {[0, 1, 2, 3].map((i) => (
-              <div key={i} className={`overflow-hidden rounded-xl bg-neutral-100 ${i === 0 ? "ring-1 ring-neutral-900" : ""}`}>
+              <div key={i} className={`overflow-hidden rounded-[2px] bg-[#0e1a14] ring-1 ${i === 0 ? "ring-[var(--vv-gold)]" : "ring-[var(--vv-gold-soft)]"}`}>
                 <img src={product.image} alt="" className="aspect-square w-full object-cover opacity-90" />
               </div>
             ))}
@@ -69,11 +74,14 @@ function VaultProductPage() {
 
         {/* Details */}
         <div className="lg:col-span-5">
-          <div className="text-[11px] uppercase tracking-[0.2em] text-neutral-500">{product.category}</div>
-          <h1 className="mt-2 font-vault-display text-4xl leading-tight text-neutral-900 sm:text-5xl">
+          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-[var(--vv-gold-light)]">
+            <span className="inline-block h-px w-6 bg-[var(--vv-gold)]" />
+            {product.category} · Sealed by Doom
+          </div>
+          <h1 className="mt-2 font-vault-display text-4xl leading-tight text-[var(--vv-ink)] sm:text-5xl">
             {product.name}
           </h1>
-          <p className="mt-3 text-[15px] text-neutral-600">{product.tagline}</p>
+          <p className="mt-3 font-vault-serif text-[16px] italic text-[var(--vv-ink-soft)]">{product.tagline}</p>
 
           <div className="mt-5 flex items-center gap-3">
             <div className="flex items-center gap-0.5">
