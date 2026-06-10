@@ -8,10 +8,10 @@ import { WWStar, WWTiara, WWLasso, WWWing } from "@/components/vault/VaultIcons"
 export const Route = createFileRoute("/vault/")({
   head: () => ({
     meta: [
-      { title: "Viral Vault — Heroic Kitchen Appliances" },
-      { name: "description", content: "Premium kitchen appliances forged with the spirit of a champion. Coffee, cooking, prep and breakfast — armored in gold." },
-      { property: "og:title", content: "Viral Vault — Armor for the Modern Kitchen" },
-      { property: "og:description", content: "Kitchen appliances inspired by the heroes of Themyscira." },
+      { title: "Viral Vault — Magic & Science from the House of Doom" },
+      { name: "description", content: "Latverian-engineered kitchen instruments. Sorcery and steel — forged in the workshops of Doom." },
+      { property: "og:title", content: "Viral Vault — The Doom Collection" },
+      { property: "og:description", content: "Where mysticism meets machinery. Kitchen instruments of the sovereign." },
     ],
   }),
   component: VaultHome,
@@ -42,47 +42,47 @@ function VaultHome() {
 
               <div className="mt-6 flex items-center justify-center gap-3 text-center lg:justify-start lg:text-left">
                 <span className="h-px w-10 bg-[var(--vv-gold)]" />
-                <span className="font-vault-heroic text-[11px] uppercase tracking-[0.4em] text-[var(--vv-crimson)]">
-                  Forged on Themyscira · MMXXVI
+                <span className="font-vault-heroic text-[11px] uppercase tracking-[0.4em] text-[var(--vv-gold-light)]">
+                  Forged in Latveria · MMXXVI
                 </span>
                 <span className="h-px w-10 bg-[var(--vv-gold)]" />
               </div>
 
               <h1 className="mt-6 text-center font-vault-heroic text-[44px] leading-[1.05] tracking-tight text-[var(--vv-ink)] sm:text-6xl lg:text-left lg:text-7xl">
-                Armor for the
+                Magic. Science.
                 <br />
-                <span className="text-[var(--vv-crimson)]">modern</span>{" "}
-                <em className="font-vault-italic font-normal text-[var(--vv-ink-soft)]">kitchen.</em>
+                <span className="text-[var(--vv-gold-light)]">One</span>{" "}
+                <em className="font-vault-italic font-normal text-[var(--vv-ink-soft)]">sovereign craft.</em>
               </h1>
 
               <p className="mx-auto mt-7 max-w-md text-center font-vault-serif text-[18px] italic leading-relaxed text-[var(--vv-ink-soft)] lg:mx-0 lg:text-left">
-                Heroic small appliances cast in brushed steel and burnished gold —
-                quietly powerful, unmistakably yours.
+                Kitchen instruments cast in gunmetal and arcane brass — engineered
+                in Latveria, where alchemy and engineering are the same discipline.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                 <Link
                   to="/vault/shop"
-                  className="group inline-flex items-center gap-2 bg-[var(--vv-crimson)] px-7 py-3.5 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-white shadow-[0_10px_30px_-10px_rgba(154,30,42,0.6)] ring-1 ring-[var(--vv-gold)] transition hover:bg-[var(--vv-crimson-deep)]"
+                  className="group inline-flex items-center gap-2 bg-[var(--vv-crimson)] px-7 py-3.5 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-white shadow-[0_10px_30px_-10px_rgba(31,107,74,0.7),0_0_0_1px_rgba(124,77,219,0.25)] ring-1 ring-[var(--vv-gold)] transition hover:bg-[var(--vv-crimson-deep)]"
                 >
-                  Enter the Armory
+                  Enter the Arsenal
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
                   to="/vault/about"
-                  className="inline-flex items-center gap-2 border-2 border-[var(--vv-ink)] bg-transparent px-7 py-3 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-[var(--vv-ink)] hover:bg-[var(--vv-ink)] hover:text-[var(--vv-cream)]"
+                  className="inline-flex items-center gap-2 border-2 border-[var(--vv-gold)] bg-transparent px-7 py-3 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-[var(--vv-gold-light)] hover:bg-[var(--vv-gold)] hover:text-[var(--vv-cream-deep)]"
                 >
-                  Our Mythos
+                  The Doctrine
                 </Link>
               </div>
 
               <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.25em] text-[var(--vv-ink-soft)] lg:justify-start">
                 <div className="flex items-center gap-2">
                   <WWStar className="h-3 w-3 text-[var(--vv-gold)]" />
-                  4.9 · 12,000 champions
+                  4.9 · 12,000 loyal subjects
                 </div>
                 <div className="hidden h-3 w-px bg-[var(--vv-gold-soft)] sm:block" />
-                <div>Featured · Bon Appétit · Cup of Jo</div>
+                <div>As seen in · Bon Appétit · Cup of Jo</div>
               </div>
             </div>
 
@@ -113,13 +113,13 @@ function VaultHome() {
                 </div>
 
                 {/* Floating spec card */}
-                <div className="absolute -bottom-5 -right-3 max-w-[200px] bg-[var(--vv-cream)] px-4 py-3 shadow-xl ring-1 ring-[var(--vv-gold)] sm:-right-6">
+                <div className="absolute -bottom-5 -right-3 max-w-[200px] vv-plate px-4 py-3 sm:-right-6">
                   <div className="flex items-center gap-1.5 text-[var(--vv-gold)]">
                     <WWStar className="h-3 w-3" />
-                    <span className="font-vault-heroic text-[10px] uppercase tracking-[0.3em] text-[var(--vv-crimson)]">Drop 01</span>
+                    <span className="font-vault-heroic text-[10px] uppercase tracking-[0.3em] text-[var(--vv-gold-light)]">Decree 01</span>
                   </div>
                   <div className="mt-1 font-vault-heroic text-sm text-[var(--vv-ink)]">Spring '26</div>
-                  <div className="mt-0.5 text-[11px] text-[var(--vv-ink-soft)]">12 pieces · live now</div>
+                  <div className="mt-0.5 text-[11px] text-[var(--vv-ink-soft)]">12 instruments · live now</div>
                 </div>
               </div>
             </div>
@@ -136,13 +136,13 @@ function VaultHome() {
       <section className="mx-auto mt-20 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-px overflow-hidden bg-[var(--vv-gold-soft)] ring-1 ring-[var(--vv-gold)] md:grid-cols-4">
           {[
-            { icon: Truck, label: "Free shipping", sub: "Champions ship free" },
-            { icon: ShieldCheck, label: "2-year oath", sub: "Warranty of honor" },
-            { icon: RotateCcw, label: "60-day return", sub: "No questions asked" },
-            { icon: WWStar, label: "12,000+ reviews", sub: "4.9 / 5 heroic" },
+            { icon: Truck, label: "Sovereign shipping", sub: "Free to your keep" },
+            { icon: ShieldCheck, label: "2-year decree", sub: "Warranty of Doom" },
+            { icon: RotateCcw, label: "60-day return", sub: "By imperial right" },
+            { icon: WWStar, label: "12,000+ subjects", sub: "4.9 / 5 sovereign" },
           ].map(({ icon: Icon, label, sub }) => (
-            <div key={label} className="flex items-start gap-3 bg-[var(--vv-cream)] px-5 py-7 sm:px-7">
-              <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--vv-crimson)]" />
+            <div key={label} className="flex items-start gap-3 bg-[var(--vv-cream-soft)] px-5 py-7 sm:px-7">
+              <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--vv-gold-light)]" />
               <div>
                 <div className="font-vault-heroic text-[12px] uppercase tracking-[0.2em] text-[var(--vv-ink)]">{label}</div>
                 <div className="mt-1 text-xs text-[var(--vv-ink-soft)]">{sub}</div>
@@ -156,16 +156,16 @@ function VaultHome() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-[var(--vv-crimson)]">
+            <div className="flex items-center gap-2 text-[var(--vv-gold-light)]">
               <WWStar className="h-3 w-3 text-[var(--vv-gold)]" />
-              <div className="font-vault-heroic text-[11px] uppercase tracking-[0.35em]">I · This Moon</div>
+              <div className="font-vault-heroic text-[11px] uppercase tracking-[0.35em]">I · By Decree of Doom</div>
             </div>
             <h2 className="mt-3 font-vault-heroic text-4xl text-[var(--vv-ink)] sm:text-5xl">
-              Champions of the kitchen.
+              Instruments of the sovereign.
             </h2>
           </div>
-          <Link to="/vault/shop" className="group inline-flex items-center gap-1.5 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-[var(--vv-ink)] hover:text-[var(--vv-crimson)]">
-            View armory <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          <Link to="/vault/shop" className="group inline-flex items-center gap-1.5 font-vault-heroic text-[12px] uppercase tracking-[0.25em] text-[var(--vv-gold-light)] hover:text-[var(--vv-gold)]">
+            View arsenal <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-4">
@@ -176,26 +176,31 @@ function VaultHome() {
       </section>
 
       {/* ============== EDITORIAL — heroic manifesto ============== */}
-      <section className="relative overflow-hidden bg-[var(--vv-ink)] py-24 text-[var(--vv-cream)]">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{
-          backgroundImage: "radial-gradient(circle at 20% 30%, var(--vv-gold) 1px, transparent 1px), radial-gradient(circle at 70% 60%, var(--vv-crimson) 1px, transparent 1px)",
+      <section className="relative overflow-hidden bg-[var(--vv-cream-deep)] py-24 text-[var(--vv-ink)]">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{
+          backgroundImage: "radial-gradient(circle at 20% 30%, var(--vv-gold) 1px, transparent 1px), radial-gradient(circle at 70% 60%, var(--vv-blue) 1px, transparent 1px)",
           backgroundSize: "40px 40px, 60px 60px",
         }} />
+        {/* Subtle ambient sigil */}
+        <div className="pointer-events-none absolute -right-32 top-1/2 hidden -translate-y-1/2 text-[var(--vv-gold)] opacity-[0.06] lg:block">
+          <WWLasso className="h-[560px] w-[560px]" />
+        </div>
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
           <div>
             <div className="text-[var(--vv-gold)]"><WWTiara className="h-9 w-16" /></div>
             <div className="mt-4 font-vault-heroic text-[11px] uppercase tracking-[0.35em] text-[var(--vv-gold)]">
-              — The Oath
+              — The Doctrine of Doom
             </div>
             <h2 className="mt-4 font-vault-heroic text-4xl leading-tight sm:text-5xl">
-              Built to last a thousand years.
+              Where sorcery meets steel.
               <br />
-              <em className="font-vault-italic font-normal text-[var(--vv-gold-light)]">Designed for tomorrow's table.</em>
+              <em className="font-vault-italic font-normal text-[var(--vv-gold-light)]">Built to outlast empires.</em>
             </h2>
-            <p className="mt-6 max-w-lg font-vault-serif text-[18px] italic leading-relaxed text-[var(--vv-cream-soft)]">
-              Every appliance leaves our workshop having survived five thousand cycles, the
-              scrutiny of seven master craftsmen, and the unblinking eye of the gods of design.
-              What you receive is not a machine. It is a vow.
+            <p className="mt-6 max-w-lg font-vault-serif text-[18px] italic leading-relaxed text-[var(--vv-ink-soft)]">
+              Every instrument leaves the Latverian workshops having survived five
+              thousand cycles, the scrutiny of seven master artificers, and a final
+              rune-binding sealed in the throne room itself. What you receive is
+              not an appliance. It is a relic that happens to make breakfast.
             </p>
             <Link to="/vault/about" className="group mt-9 inline-flex items-center gap-2 border-b-2 border-[var(--vv-gold)] pb-1 font-vault-heroic text-[12px] uppercase tracking-[0.3em] text-[var(--vv-gold)] hover:text-[var(--vv-gold-light)]">
               Read the chronicle <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -203,18 +208,18 @@ function VaultHome() {
           </div>
           <div className="grid grid-cols-2 gap-5">
             {[
-              { n: "XII", l: "Master designers" },
+              { n: "XII", l: "Master artificers" },
               { n: "V·yr", l: "Average lifespan" },
-              { n: "94%", l: "Loyalist customers" },
-              { n: "Ø", l: "Single-use plastic" },
+              { n: "94%", l: "Loyal subjects" },
+              { n: "Ø", l: "Mortal plastic" },
             ].map((s) => (
-              <div key={s.l} className="relative border border-[color-mix(in_oklab,var(--vv-gold)_45%,transparent)] bg-[color-mix(in_oklab,var(--vv-cream)_4%,transparent)] p-7 backdrop-blur">
+              <div key={s.l} className="relative vv-plate p-7">
                 <span className="absolute left-2 top-2 h-3 w-3 border-l border-t border-[var(--vv-gold)]" />
                 <span className="absolute right-2 top-2 h-3 w-3 border-r border-t border-[var(--vv-gold)]" />
                 <span className="absolute bottom-2 left-2 h-3 w-3 border-b border-l border-[var(--vv-gold)]" />
                 <span className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[var(--vv-gold)]" />
                 <div className="font-vault-heroic text-4xl text-[var(--vv-gold-light)]">{s.n}</div>
-                <div className="mt-2 text-[11px] uppercase tracking-[0.25em] text-[var(--vv-cream-soft)]">{s.l}</div>
+                <div className="mt-2 text-[11px] uppercase tracking-[0.25em] text-[var(--vv-ink-soft)]">{s.l}</div>
               </div>
             ))}
           </div>
