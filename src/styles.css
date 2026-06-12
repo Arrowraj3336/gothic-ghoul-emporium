@@ -54,33 +54,23 @@
   /* Dark Decor — black & bloody red */
   --background: oklch(0.04 0.005 25);
   --foreground: oklch(0.96 0.005 25);
-
   --card: oklch(0.08 0.012 25);
   --card-foreground: oklch(0.96 0.005 25);
-
   --popover: oklch(0.06 0.01 25);
   --popover-foreground: oklch(0.96 0.005 25);
-
   --primary: oklch(0.5 0.22 25);
   --primary-foreground: oklch(0.98 0.005 25);
-
   --secondary: oklch(0.12 0.015 25);
   --secondary-foreground: oklch(0.96 0.005 25);
-
   --muted: oklch(0.1 0.008 25);
   --muted-foreground: oklch(0.62 0.02 25);
-
   --accent: oklch(0.5 0.22 25);
   --accent-foreground: oklch(0.98 0.005 25);
-
   --destructive: oklch(0.55 0.24 25);
   --destructive-foreground: oklch(0.98 0 0);
-
   --border: oklch(0.16 0.02 25);
   --input: oklch(0.12 0.015 25);
   --ring: oklch(0.5 0.22 25);
-
-  /* "signal" token kept for compatibility — now bloody red */
   --signal: oklch(0.55 0.24 25);
   --signal-glow: oklch(0.55 0.24 25 / 0.55);
 }
@@ -142,55 +132,21 @@
   }
 }
 
-/* Existing decorative anims */
-@keyframes signal-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.06); }
-}
-@keyframes signal-flicker {
-  0%, 100% { opacity: 1; }
-  42% { opacity: 0.3; } 43% { opacity: 1; } 45% { opacity: 0.5; } 46% { opacity: 1; }
-}
+@keyframes signal-pulse { 0%,100% { opacity:.4; transform:scale(1);} 50% { opacity:1; transform:scale(1.06);} }
+@keyframes signal-flicker { 0%,100% { opacity:1;} 42% { opacity:.3;} 43% { opacity:1;} 45% { opacity:.5;} 46% { opacity:1;} }
 @keyframes bat-fly {
   0% { transform: translateX(-120vw) translateY(20vh) scale(0.4) rotate(-8deg); opacity: 0; }
   20% { opacity: 1; } 80% { opacity: 1; }
   100% { transform: translateX(120vw) translateY(-20vh) scale(1.6) rotate(8deg); opacity: 0; }
 }
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-}
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fade-in {
-  from { opacity: 0; } to { opacity: 1; }
-}
+@keyframes float-slow { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-12px);} }
+@keyframes rise-in { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform:none;} }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
-/* === Product page transition: black → ray → bat reveal → fog dissolve === */
-@keyframes pt-ray-rise {
-  0% { opacity: 0; transform: translateY(40%) scaleY(0.4); }
-  40% { opacity: 1; transform: translateY(0) scaleY(1); }
-  85% { opacity: 1; }
-  100% { opacity: 0.4; transform: translateY(-10%) scaleY(1); }
-}
-@keyframes pt-bat-reveal {
-  0%, 25% { opacity: 0; transform: scale(0.4); filter: blur(20px); }
-  45% { opacity: 1; transform: scale(1.05); filter: blur(0); }
-  70% { opacity: 1; transform: scale(1); filter: blur(0); }
-  100% { opacity: 0; transform: scale(1.4); filter: blur(8px); }
-}
-@keyframes pt-fog {
-  0% { opacity: 0; }
-  35% { opacity: 0; }
-  55% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes pt-curtain {
-  0%, 60% { opacity: 1; }
-  100% { opacity: 0; }
-}
+@keyframes pt-ray-rise { 0% { opacity:0; transform: translateY(40%) scaleY(.4);} 40% { opacity:1; transform:none;} 85% { opacity:1;} 100% { opacity:.4; transform: translateY(-10%) scaleY(1);} }
+@keyframes pt-bat-reveal { 0%,25% { opacity:0; transform: scale(.4); filter: blur(20px);} 45% { opacity:1; transform: scale(1.05); filter:none;} 70% { opacity:1; transform: scale(1); filter:none;} 100% { opacity:0; transform: scale(1.4); filter: blur(8px);} }
+@keyframes pt-fog { 0% { opacity:0;} 35% { opacity:0;} 55% { opacity:1;} 100% { opacity:0;} }
+@keyframes pt-curtain { 0%,60% { opacity:1;} 100% { opacity:0;} }
 
 .animate-signal-pulse { animation: signal-pulse 4s ease-in-out infinite; }
 .animate-signal-flicker { animation: signal-flicker 6s linear infinite; }
@@ -205,43 +161,44 @@
 .pt-fog { animation: pt-fog 2.2s ease-in-out forwards; }
 
 /* ========================================================================
-   VIRAL VAULT — Dr. Doom themed scope (Latverian forest-green + arcane violet)
-   Token names are kept (--vv-crimson, --vv-gold, --vv-cream, --vv-ink) for
-   continuity; values are remapped to the Doom palette.
+   VIRAL VAULT — Dr. Doom Retro Minimal (white + dark forest green only)
    ======================================================================== */
 .vault-scope {
-  /* Primary action — Latverian forest emerald */
-  --vv-crimson: #1f6b4a;
-  --vv-crimson-deep: #0d3a26;
-  /* Arcane accent — Doom's sorcery violet */
-  --vv-blue: #7c4ddb;
-  --vv-blue-deep: #3a1f7a;
-  /* Antique brass / hammered gold (mask trim) */
-  --vv-gold: #c8993f;
-  --vv-gold-light: #f0cf7a;
-  --vv-gold-soft: rgba(200, 153, 63, 0.32);
-  /* Surfaces — castle stone & gunmetal */
-  --vv-cream: #0a1410;
-  --vv-cream-deep: #050a08;
-  --vv-cream-soft: #13231c;
+  /* Primary action — deep Latverian forest */
+  --vv-crimson: #0f3d26;          /* primary green (was crimson token) */
+  --vv-crimson-deep: #082619;
+  --vv-green: #0f3d26;
+  --vv-green-deep: #082619;
+  --vv-green-soft: #e6efe9;       /* very pale wash */
+  --vv-green-line: rgba(15, 61, 38, 0.18);
+
+  /* Legacy accent tokens remapped to muted greens (no purple/gold left) */
+  --vv-blue: #14563a;
+  --vv-blue-deep: #082619;
+  --vv-gold: #0f3d26;
+  --vv-gold-light: #14563a;
+  --vv-gold-soft: rgba(15, 61, 38, 0.16);
+
+  /* Surfaces — pure white */
+  --vv-cream: #ffffff;
+  --vv-cream-deep: #f7f8f6;
+  --vv-cream-soft: #ffffff;
+
   /* Text */
-  --vv-ink: #ecefe9;
-  --vv-ink-soft: #8aa099;
+  --vv-ink: #0a1f15;
+  --vv-ink-soft: #5b6e64;
 
   --font-vault-heroic: "Cinzel", "Trajan Pro", "Times New Roman", serif;
   --font-vault-serif: "Cormorant Garamond", "Fraunces", serif;
   --font-vault-sans-ww: "Inter", system-ui, sans-serif;
 
-  background:
-    radial-gradient(1100px 520px at 50% -8%, rgba(31, 107, 74, 0.30), transparent 70%),
-    radial-gradient(900px 600px at 85% 105%, rgba(124, 77, 219, 0.14), transparent 70%),
-    linear-gradient(180deg, #0a1410 0%, #050a08 100%);
+  background: #ffffff;
   color: var(--vv-ink);
   font-family: var(--font-vault-sans-ww);
-  color-scheme: dark;
+  color-scheme: light;
 }
-.vault-scope ::selection { background: var(--vv-crimson); color: #fff; }
-.vault-scope ::-webkit-scrollbar-thumb { background: var(--vv-gold); }
+.vault-scope ::selection { background: var(--vv-green); color: #fff; }
+.vault-scope ::-webkit-scrollbar-thumb { background: var(--vv-green); }
 .vault-scope h1, .vault-scope h2, .vault-scope h3, .vault-scope h4 {
   font-family: var(--font-vault-heroic);
   letter-spacing: 0.05em;
@@ -253,136 +210,148 @@
 .vault-scope .font-vault-serif  { font-family: var(--font-vault-serif); }
 .vault-scope .font-vault-italic { font-family: var(--font-vault-serif); font-style: italic; letter-spacing: 0; }
 
-/* Latverian meander — angular, machined */
+/* Hairline Latverian meander — angular, single-tone */
 .vault-scope .vv-meander {
   background-image: repeating-linear-gradient(
     90deg,
-    var(--vv-gold) 0 14px,
-    transparent 14px 16px,
-    var(--vv-gold) 16px 18px,
-    transparent 18px 32px
+    var(--vv-green) 0 10px,
+    transparent 10px 14px,
+    var(--vv-green) 14px 16px,
+    transparent 16px 28px
   );
-  height: 3px;
-  opacity: 0.65;
+  height: 2px;
+  opacity: 0.45;
 }
 .vault-scope .vv-grain { position: relative; }
 .vault-scope .vv-grain::after {
   content: "";
   position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
-  opacity: 0.08; pointer-events: none; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.05; pointer-events: none; mix-blend-mode: multiply;
 }
 
-/* Hammered-metal panel */
+/* Retro plate — paper card on white */
 .vault-scope .vv-plate {
-  background: linear-gradient(180deg, #182b22 0%, #0e1a14 100%);
-  border: 1px solid var(--vv-gold-soft);
-  box-shadow: inset 0 1px 0 rgba(200,153,63,0.18), 0 30px 60px -30px rgba(0,0,0,0.8);
+  background: #ffffff;
+  border: 1px solid var(--vv-green-line);
+  box-shadow: 0 1px 0 var(--vv-green-line), 0 24px 60px -40px rgba(15,61,38,0.25);
 }
 
-/* === Color overrides so neutral-themed pages inherit the Doom palette === */
-.vault-scope .bg-white { background-color: var(--vv-cream-soft) !important; }
-.vault-scope .bg-neutral-50 { background-color: #0e1a14 !important; }
-.vault-scope .bg-neutral-100 { background-color: #182b22 !important; }
-.vault-scope .bg-neutral-900 { background-color: var(--vv-crimson) !important; color: #fff !important; }
-.vault-scope .hover\:bg-neutral-700:hover { background-color: var(--vv-crimson-deep) !important; }
-.vault-scope .hover\:bg-neutral-50:hover { background-color: #0e1a14 !important; }
+/* === Tailwind neutral overrides → white + green minimal === */
+.vault-scope .bg-white { background-color: #ffffff !important; }
+.vault-scope .bg-neutral-50 { background-color: var(--vv-cream-deep) !important; }
+.vault-scope .bg-neutral-100 { background-color: var(--vv-green-soft) !important; }
+.vault-scope .bg-neutral-900 { background-color: var(--vv-green) !important; color: #fff !important; }
+.vault-scope .hover\:bg-neutral-700:hover { background-color: var(--vv-green-deep) !important; }
+.vault-scope .hover\:bg-neutral-50:hover { background-color: var(--vv-cream-deep) !important; }
 .vault-scope .text-neutral-900 { color: var(--vv-ink) !important; }
-.vault-scope .text-neutral-700 { color: var(--vv-ink) !important; }
+.vault-scope .text-neutral-700 { color: #1f3a2c !important; }
 .vault-scope .text-neutral-600 { color: var(--vv-ink-soft) !important; }
 .vault-scope .text-neutral-500 { color: var(--vv-ink-soft) !important; }
-.vault-scope .text-neutral-400 { color: #5a6e67 !important; }
-.vault-scope .border-neutral-200 { border-color: var(--vv-gold-soft) !important; }
-.vault-scope .border-neutral-300 { border-color: var(--vv-gold-soft) !important; }
-.vault-scope .border-neutral-900 { border-color: var(--vv-gold) !important; }
-.vault-scope .hover\:text-neutral-900:hover { color: var(--vv-gold-light) !important; }
-.vault-scope .hover\:text-neutral-500:hover { color: var(--vv-gold-light) !important; }
-.vault-scope .hover\:border-neutral-900:hover { border-color: var(--vv-gold) !important; }
-.vault-scope .placeholder\:text-neutral-400::placeholder { color: #5a6e67 !important; }
-.vault-scope .focus\:border-neutral-900:focus { border-color: var(--vv-gold) !important; outline-color: var(--vv-gold) !important; }
-.vault-scope .divide-neutral-200 > * + * { border-color: var(--vv-gold-soft) !important; }
-.vault-scope .ring-neutral-900 { --tw-ring-color: var(--vv-gold) !important; }
-.vault-scope .bg-emerald-50 { background-color: rgba(31,107,74,0.2) !important; }
-.vault-scope .text-emerald-700 { color: var(--vv-gold-light) !important; }
+.vault-scope .text-neutral-400 { color: #8a9b91 !important; }
+.vault-scope .border-neutral-200 { border-color: var(--vv-green-line) !important; }
+.vault-scope .border-neutral-300 { border-color: var(--vv-green-line) !important; }
+.vault-scope .border-neutral-900 { border-color: var(--vv-green) !important; }
+.vault-scope .hover\:text-neutral-900:hover { color: var(--vv-green) !important; }
+.vault-scope .hover\:text-neutral-500:hover { color: var(--vv-green) !important; }
+.vault-scope .hover\:border-neutral-900:hover { border-color: var(--vv-green) !important; }
+.vault-scope .placeholder\:text-neutral-400::placeholder { color: #8a9b91 !important; }
+.vault-scope .focus\:border-neutral-900:focus { border-color: var(--vv-green) !important; outline-color: var(--vv-green) !important; }
+.vault-scope .divide-neutral-200 > * + * { border-color: var(--vv-green-line) !important; }
+.vault-scope .ring-neutral-900 { --tw-ring-color: var(--vv-green) !important; }
+.vault-scope .bg-emerald-50 { background-color: var(--vv-green-soft) !important; }
+.vault-scope .text-emerald-700 { color: var(--vv-green) !important; }
 .vault-scope input, .vault-scope select, .vault-scope textarea {
-  background-color: #0e1a14 !important;
+  background-color: #ffffff !important;
   color: var(--vv-ink) !important;
-  border-color: var(--vv-gold-soft) !important;
+  border-color: var(--vv-green-line) !important;
+}
+.vault-scope input:focus, .vault-scope select:focus, .vault-scope textarea:focus {
+  border-color: var(--vv-green) !important;
+  box-shadow: 0 0 0 3px rgba(15,61,38,0.10) !important;
+  outline: none !important;
 }
 
-/* === Doom transition: armored cloak panels + arcane sigil + mask bloom === */
-@keyframes vt-panel-left {
-  0% { transform: translateX(-100%); }
-  35% { transform: translateX(0); }
-  70% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+/* ===== Homepage loader: Doom levitates → green laser → flash → reveal ===== */
+@keyframes vt-doom-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
-@keyframes vt-panel-right {
-  0% { transform: translateX(100%); }
-  35% { transform: translateX(0); }
-  70% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
+@keyframes vt-doom-enter {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  20% { opacity: 1; transform: translateY(0) scale(1); }
+  85% { opacity: 1; transform: translateY(-8px) scale(1.02); }
+  100% { opacity: 0; transform: translateY(-20px) scale(1.05); }
 }
-@keyframes vt-lasso-spin {
-  0% { opacity: 0; transform: rotate(-90deg) scale(0.3); }
-  35% { opacity: 1; transform: rotate(180deg) scale(1); }
-  75% { opacity: 1; transform: rotate(540deg) scale(1.08); }
-  100% { opacity: 0; transform: rotate(720deg) scale(1.5); }
+@keyframes vt-cloak-sway {
+  0%, 100% { transform: skewX(-2deg); }
+  50% { transform: skewX(2deg); }
 }
-@keyframes vt-logo-bloom {
-  0%, 25% { opacity: 0; transform: scale(0.4) rotate(-6deg); }
-  50% { opacity: 1; transform: scale(1.06); filter: drop-shadow(0 0 30px rgba(124,77,219,0.85)); }
-  80% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.3); }
+@keyframes vt-laser-grow {
+  0%, 40% { transform: scaleX(0); opacity: 0; }
+  55% { transform: scaleX(1); opacity: 1; }
+  70% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
 }
-@keyframes vt-burst {
-  0%, 20% { opacity: 0; transform: scale(0.3); }
-  45% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(2.4); }
+@keyframes vt-laser-glow {
+  0%, 40% { opacity: 0; }
+  60% { opacity: 0.9; }
+  100% { opacity: 0; }
 }
-.vault-transition-root .vt-panel {
-  position: absolute; top: 0; bottom: 0; width: 56%;
+@keyframes vt-flash {
+  0%, 65% { opacity: 0; }
+  72% { opacity: 1; }
+  100% { opacity: 0; }
 }
-.vault-transition-root .vt-panel-left {
-  left: 0;
-  background: linear-gradient(120deg, #050a08 0%, #0d3a26 55%, #1f6b4a 100%);
-  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
-  animation: vt-panel-left 1.7s cubic-bezier(0.7, 0, 0.2, 1) forwards;
-  box-shadow: inset -12px 0 40px rgba(0,0,0,0.65);
+@keyframes vt-curtain-out {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; }
 }
-.vault-transition-root .vt-panel-right {
-  right: 0;
-  background: linear-gradient(240deg, #1a0d2e 0%, #2d1758 60%, #4a2890 100%);
-  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
-  animation: vt-panel-right 1.7s cubic-bezier(0.7, 0, 0.2, 1) forwards;
-  box-shadow: inset 12px 0 40px rgba(0,0,0,0.65);
+.vault-loader-root {
+  background: #ffffff;
+  animation: vt-curtain-out 3.4s ease-out forwards;
 }
-.vault-transition-root .vt-lasso {
-  color: #c8993f;
-  animation: vt-lasso-spin 1.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  filter: drop-shadow(0 0 22px rgba(124, 77, 219, 0.85));
+.vault-loader-root .vt-doom {
+  animation: vt-doom-enter 3.4s cubic-bezier(.22,1,.36,1) forwards;
 }
-.vault-transition-root .vt-logo {
-  animation: vt-logo-bloom 1.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.vault-loader-root .vt-doom-inner {
+  animation: vt-doom-float 3.6s ease-in-out infinite;
 }
-.vault-transition-root .vt-burst {
-  width: 18px; height: 18px;
-  background: radial-gradient(circle, #f0cf7a 0%, #7c4ddb 35%, transparent 75%);
-  border-radius: 50%;
+.vault-loader-root .vt-cloak {
+  transform-origin: top center;
+  animation: vt-cloak-sway 2.4s ease-in-out infinite;
+}
+.vault-loader-root .vt-laser {
+  transform-origin: right center;
+  animation: vt-laser-grow 3.4s cubic-bezier(.7,0,.2,1) forwards;
   box-shadow:
-    0 0 80px 50px rgba(124, 77, 219, 0.55),
-    0 0 220px 140px rgba(31, 107, 74, 0.45);
-  animation: vt-burst 1.7s ease-out forwards;
+    0 0 14px 4px rgba(15,61,38,0.85),
+    0 0 60px 18px rgba(15,61,38,0.55),
+    0 0 140px 40px rgba(15,61,38,0.30);
+}
+.vault-loader-root .vt-laser-core {
+  animation: vt-laser-glow 3.4s cubic-bezier(.7,0,.2,1) forwards;
+}
+.vault-loader-root .vt-flash {
+  background: radial-gradient(circle at center, #2a8c5e 0%, #0f3d26 40%, rgba(15,61,38,0) 75%);
+  animation: vt-flash 3.4s ease-out forwards;
 }
 
-/* Doom arcane sparks (subtle ambient) */
+/* Subtle ambient float (used across sections) */
 @keyframes vv-spark {
-  0%, 100% { opacity: 0.15; transform: translateY(0) scale(1); }
-  50% { opacity: 0.55; transform: translateY(-6px) scale(1.15); }
+  0%, 100% { opacity: 0.20; transform: translateY(0) scale(1); }
+  50% { opacity: 0.55; transform: translateY(-6px) scale(1.1); }
 }
-.vault-scope .vv-spark { animation: vv-spark 3.6s ease-in-out infinite; }
+.vault-scope .vv-spark { animation: vv-spark 4s ease-in-out infinite; }
 
-/* Accessibility: respect reduced-motion */
+/* Slow sigil rotation for ambient backgrounds */
+@keyframes vv-sigil-rotate {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+.vault-scope .vv-sigil { animation: vv-sigil-rotate 80s linear infinite; }
+
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -391,8 +360,5 @@
     scroll-behavior: auto !important;
   }
   .pt-curtain, .pt-ray, .pt-bat, .pt-fog { animation: none !important; opacity: 0 !important; }
-  .vault-transition-root .vt-panel,
-  .vault-transition-root .vt-lasso,
-  .vault-transition-root .vt-logo,
-  .vault-transition-root .vt-burst { animation: none !important; opacity: 0 !important; }
+  .vault-loader-root { animation: none !important; opacity: 0 !important; display: none !important; }
 }
