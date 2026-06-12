@@ -1,27 +1,34 @@
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { VaultLogo } from "./VaultLogo";
 
 /**
- * Dr. Doom themed transition for the Viral Vault sub-site.
- * Two armored cloak panels (forest emerald + arcane violet) sweep in,
- * an arcane sigil rotates, a violet spark bursts, then the Doom mask blooms
- * before the panels retract.
+ * Viral Vault homepage loader.
+ * White stage → Dr. Doom silhouette levitating with cloak sway → a green focus
+ * laser races in from the right edge to the center → the screen flashes green →
+ * the homepage is revealed.
+ *
+ * Plays ONCE per session, only on the first visit to /vault homepage
+ * (not on /vault/shop, /vault/cart, etc., and not on subsequent client-side
+ * navigations back to /vault).
  */
 export function VaultTransition() {
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const [playKey, setPlayKey] = useState(0);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!path.startsWith("/vault")) return;
-    if (typeof window !== "undefined") {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
-    }
-    setPlayKey((k) => k + 1);
+    // Only on the vault homepage
+    if (path !== "/vault" && path !== "/vault/") return;
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Show once per browser session
+    try {
+      if (sessionStorage.getItem("vv-intro-played") === "1") return;
+      sessionStorage.setItem("vv-intro-played", "1");
+    } catch {}
+
     setVisible(true);
-    const t = setTimeout(() => setVisible(false), 1700);
+    const t = setTimeout(() => setVisible(false), 3500);
     return () => clearTimeout(t);
   }, [path]);
 
@@ -29,53 +36,114 @@ export function VaultTransition() {
 
   return (
     <div
-      key={playKey}
-      className="vault-transition-root pointer-events-none fixed inset-0 z-[200] overflow-hidden"
+      className="vault-loader-root pointer-events-none fixed inset-0 z-[200] overflow-hidden"
       aria-hidden="true"
     >
-      <div className="vt-panel vt-panel-left" />
-      <div className="vt-panel vt-panel-right" />
-
-      <div className="absolute inset-0 grid place-items-center">
-        <div className="vt-burst" />
-      </div>
-
-      <div className="absolute inset-0 grid place-items-center">
-        <svg
-          viewBox="0 0 200 200"
-          className="vt-lasso h-[min(72vw,540px)] w-[min(72vw,540px)]"
-          fill="none"
-        >
-          <defs>
-            <linearGradient id="vt-rune-grad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#f0cf7a" />
-              <stop offset="50%" stopColor="#c8993f" />
-              <stop offset="100%" stopColor="#7c4ddb" />
-            </linearGradient>
-          </defs>
-          <circle cx="100" cy="100" r="92" stroke="url(#vt-rune-grad)" strokeWidth="1.6" strokeDasharray="4 6" />
-          <circle cx="100" cy="100" r="76" stroke="url(#vt-rune-grad)" strokeWidth="1.1" strokeDasharray="2 5" opacity="0.75" />
-          <circle cx="100" cy="100" r="58" stroke="url(#vt-rune-grad)" strokeWidth="0.8" strokeDasharray="6 3" opacity="0.55" />
-          {[0, 90, 180, 270].map((a) => (
-            <g key={a} transform={`rotate(${a} 100 100)`}>
-              <path d="M100 4 L 104 14 L 96 14 Z" fill="url(#vt-rune-grad)" />
-            </g>
-          ))}
-          <path
-            d="M100 70 L106 88 L124 88 L110 100 L116 118 L100 108 L84 118 L90 100 L76 88 L94 88 Z"
-            fill="none"
-            stroke="url(#vt-rune-grad)"
-            strokeWidth="1.4"
-            opacity="0.9"
-          />
-        </svg>
-      </div>
-
-      <div className="absolute inset-0 grid place-items-center">
-        <div className="vt-logo">
-          <VaultLogo className="h-28 w-28 drop-shadow-[0_0_40px_rgba(124,77,219,0.7)]" />
+      {/* Doom silhouette, levitating center */}
+      <div className="vt-doom absolute inset-0 grid place-items-center">
+        <div className="vt-doom-inner relative h-[min(70vh,540px)] w-[min(70vh,540px)]">
+          <DoomFigure className="h-full w-full text-[#0f3d26]" />
         </div>
       </div>
+
+      {/* Incoming green focus laser — from right edge to dead center */}
+      <div className="absolute inset-0 grid place-items-center">
+        <div
+          className="vt-laser h-[6px] w-1/2"
+          style={{ background: "linear-gradient(90deg, rgba(15,61,38,0) 0%, #14563a 30%, #2a8c5e 70%, #ffffff 100%)" }}
+        />
+      </div>
+      <div className="absolute inset-0 grid place-items-center">
+        <div
+          className="vt-laser-core h-2 w-2 rounded-full"
+          style={{ background: "#fff", boxShadow: "0 0 20px 8px #2a8c5e, 0 0 80px 30px rgba(15,61,38,0.7)" }}
+        />
+      </div>
+
+      {/* Green flash sweep at impact */}
+      <div className="vt-flash absolute inset-0" />
     </div>
+  );
+}
+
+/** Hooded Doom — minimal vector silhouette with a flowing cloak. */
+function DoomFigure({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 240 320" className={className} fill="none" aria-hidden="true">
+      {/* Cloak — sways via parent transform */}
+      <g className="vt-cloak">
+        <path
+          d="M40 110 C 30 180, 10 240, 24 320 L 60 320 C 60 250, 80 200, 96 170 Z"
+          fill="currentColor"
+          opacity="0.92"
+        />
+        <path
+          d="M200 110 C 210 180, 230 240, 216 320 L 180 320 C 180 250, 160 200, 144 170 Z"
+          fill="currentColor"
+          opacity="0.92"
+        />
+        <path
+          d="M70 120 C 65 200, 60 270, 70 320 L 170 320 C 180 270, 175 200, 170 120 Z"
+          fill="currentColor"
+          opacity="0.7"
+        />
+        {/* Cloak inner folds */}
+        <path
+          d="M90 160 C 92 220, 95 280, 100 320"
+          stroke="#ffffff"
+          strokeWidth="1"
+          opacity="0.18"
+          fill="none"
+        />
+        <path
+          d="M150 160 C 148 220, 145 280, 140 320"
+          stroke="#ffffff"
+          strokeWidth="1"
+          opacity="0.18"
+          fill="none"
+        />
+      </g>
+
+      {/* Body / chest plate */}
+      <path
+        d="M85 130 L 155 130 L 162 220 L 78 220 Z"
+        fill="currentColor"
+      />
+      {/* Belt */}
+      <rect x="80" y="210" width="80" height="8" fill="#ffffff" opacity="0.25" />
+      {/* Sash buckle */}
+      <circle cx="120" cy="214" r="5" fill="#ffffff" opacity="0.4" />
+
+      {/* Hood */}
+      <path
+        d="M70 60 C 80 30, 160 30, 170 60 L 175 140 C 160 160, 80 160, 65 140 Z"
+        fill="currentColor"
+      />
+
+      {/* Mask faceplate */}
+      <path
+        d="M90 75 C 96 65, 144 65, 150 75 L 150 130 C 145 145, 130 152, 120 152 C 110 152, 95 145, 90 130 Z"
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      />
+      {/* Eye slits */}
+      <path d="M100 95 L 114 92 L 114 102 L 100 102 Z" fill="currentColor" />
+      <path d="M140 95 L 126 92 L 126 102 L 140 102 Z" fill="currentColor" />
+      {/* Mouth grille */}
+      <rect x="108" y="120" width="24" height="2" fill="currentColor" />
+      <rect x="110" y="126" width="20" height="2" fill="currentColor" />
+      <rect x="113" y="132" width="14" height="2" fill="currentColor" />
+
+      {/* Arms — folded, regal */}
+      <path
+        d="M82 138 L 60 200 L 78 210 L 95 158 Z"
+        fill="currentColor"
+      />
+      <path
+        d="M158 138 L 180 200 L 162 210 L 145 158 Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
