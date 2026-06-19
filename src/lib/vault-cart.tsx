@@ -1,72 +1,63 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { vaultProducts, type VaultProduct } from "./vault-products";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { vaultProducts } from "./vault-products";
 
-export type VaultCartItem = { slug: string; qty: number };
-
+type CartItem = { slug: string; qty: number };
 type Ctx = {
-  items: VaultCartItem[];
-  add: (slug: string, qty?: number) => void;
-  remove: (slug: string) => void;
-  setQty: (slug: string, qty: number) => void;
-  clear: () => void;
+  items: CartItem[];
   count: number;
   subtotal: number;
-  detailed: { product: VaultProduct; qty: number; lineTotal: number }[];
+  detailed: { product: (typeof vaultProducts)[number]; qty: number; lineTotal: number }[];
+  add: (slug: string, qty?: number) => void;
+  setQty: (slug: string, qty: number) => void;
+  remove: (slug: string) => void;
+  clear: () => void;
 };
 
-const CtxObj = createContext<Ctx | null>(null);
-const KEY = "viral-vault-cart-v1";
+const XmenCartContext = createContext<Ctx | null>(null);
+const KEY = "xmen-cart-v1";
 
-export function VaultCartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<VaultCartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+export function XmenCartProvider({ children }: { children: React.ReactNode }) {
+  const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = typeof window !== "undefined" ? localStorage.getItem(KEY) : null;
       if (raw) setItems(JSON.parse(raw));
     } catch {}
-    setHydrated(true);
   }, []);
-
   useEffect(() => {
-    if (hydrated) localStorage.setItem(KEY, JSON.stringify(items));
-  }, [items, hydrated]);
-
-  const value = useMemo<Ctx>(() => {
-    const detailed = items
-      .map((i) => {
-        const product = vaultProducts.find((p) => p.slug === i.slug);
-        if (!product) return null;
-        return { product, qty: i.qty, lineTotal: product.price * i.qty };
-      })
-      .filter(Boolean) as Ctx["detailed"];
-
-    return {
-      items,
-      add: (slug, qty = 1) =>
-        setItems((prev) => {
-          const existing = prev.find((p) => p.slug === slug);
-          if (existing) return prev.map((p) => (p.slug === slug ? { ...p, qty: p.qty + qty } : p));
-          return [...prev, { slug, qty }];
-        }),
-      remove: (slug) => setItems((prev) => prev.filter((p) => p.slug !== slug)),
-      setQty: (slug, qty) =>
-        setItems((prev) =>
-          qty <= 0 ? prev.filter((p) => p.slug !== slug) : prev.map((p) => (p.slug === slug ? { ...p, qty } : p)),
-        ),
-      clear: () => setItems([]),
-      count: items.reduce((s, i) => s + i.qty, 0),
-      subtotal: detailed.reduce((s, d) => s + d.lineTotal, 0),
-      detailed,
-    };
+    try { localStorage.setItem(KEY, JSON.stringify(items)); } catch {}
   }, [items]);
 
-  return <CtxObj.Provider value={value}>{children}</CtxObj.Provider>;
+  const add = useCallback((slug: string, qty = 1) => {
+    setItems((prev) => {
+      const existing = prev.find((i) => i.slug === slug);
+      if (existing) return prev.map((i) => (i.slug === slug ? { ...i, qty: i.qty + qty } : i));
+      return [...prev, { slug, qty }];
+    });
+  }, []);
+  const setQty = useCallback((slug: string, qty: number) => {
+    setItems((prev) => qty <= 0 ? prev.filter((i) => i.slug !== slug) : prev.map((i) => i.slug === slug ? { ...i, qty } : i));
+  }, []);
+  const remove = useCallback((slug: string) => setItems((prev) => prev.filter((i) => i.slug !== slug)), []);
+  const clear = useCallback(() => setItems([]), []);
+
+  const detailed = useMemo(() => items.flatMap((it) => {
+    const p = vaultProducts.find((p) => p.slug === it.slug);
+    return p ? [{ product: p, qty: it.qty, lineTotal: p.price * it.qty }] : [];
+  }), [items]);
+  const subtotal = useMemo(() => detailed.reduce((a, b) => a + b.lineTotal, 0), [detailed]);
+  const count = useMemo(() => items.reduce((a, b) => a + b.qty, 0), [items]);
+
+  return (
+    <XmenCartContext.Provider value={{ items, count, subtotal, detailed, add, setQty, remove, clear }}>
+      {children}
+    </XmenCartContext.Provider>
+  );
 }
 
-export function useVaultCart() {
-  const c = useContext(CtxObj);
-  if (!c) throw new Error("useVaultCart must be used inside VaultCartProvider");
-  return c;
+export function useXmenCart() {
+  const v = useContext(XmenCartContext);
+  if (!v) throw new Error("useXmenCart must be inside XmenCartProvider");
+  return v;
 }

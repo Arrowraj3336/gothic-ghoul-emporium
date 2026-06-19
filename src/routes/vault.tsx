@@ -1,8 +1,9 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { VaultCartProvider } from "@/lib/vault-cart";
-import { VaultNavbar } from "@/components/vault/VaultNavbar";
-import { VaultFooter } from "@/components/vault/VaultFooter";
-import { VaultTransition } from "@/components/vault/VaultTransition";
+import { CartProvider } from "@/lib/cart";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { KonamiBat } from "@/components/KonamiBat";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/vault")({
   component: VaultLayout,
@@ -10,15 +11,16 @@ export const Route = createFileRoute("/vault")({
 
 function VaultLayout() {
   return (
-    <VaultCartProvider>
-      <div className="vault-scope flex min-h-screen flex-col bg-white text-neutral-900">
-        <VaultTransition />
-        <VaultNavbar />
+    <CartProvider>
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
         <main className="flex-1">
           <Outlet />
         </main>
-        <VaultFooter />
+        <Footer />
       </div>
-    </VaultCartProvider>
+      <KonamiBat />
+      <Toaster />
+    </CartProvider>
   );
 }

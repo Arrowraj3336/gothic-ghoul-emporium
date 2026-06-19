@@ -10,27 +10,24 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CartProvider } from "@/lib/cart";
-import { KonamiBat } from "@/components/KonamiBat";
+import { XmenCartProvider } from "@/lib/vault-cart";
+import { XmenNavbar } from "@/components/XmenNavbar";
+import { XmenFooter } from "@/components/XmenFooter";
+import { XmenTransition } from "@/components/XmenTransition";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="xmen-scope flex min-h-screen items-center justify-center bg-white px-4">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-8xl text-signal text-glow">404</h1>
-        <h2 className="mt-4 font-display text-xl uppercase tracking-[0.25em]">Lost in the Shadows</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
-          This corridor of Gotham doesn't exist. Even the Bat can't find it.
+        <h1 className="font-xmen-display text-7xl text-xmen-red">404</h1>
+        <h2 className="mt-4 font-xmen-display text-xl uppercase tracking-[0.25em] text-xmen-ink">Mutation Not Detected</h2>
+        <p className="mt-3 text-sm text-xmen-ink-soft">
+          Cerebro can't locate this corridor of the Institute.
         </p>
         <div className="mt-8">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center border border-signal bg-transparent px-6 py-3 font-display text-xs uppercase tracking-[0.3em] text-signal transition hover:bg-signal hover:text-primary-foreground hover:shadow-signal"
-          >
-            Return to the Manor
+          <Link to="/" className="inline-flex items-center justify-center border-2 border-xmen-red bg-xmen-red px-6 py-3 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-yellow hover:text-xmen-ink hover:border-xmen-yellow transition">
+            Return to the Institute
           </Link>
         </div>
       </div>
@@ -42,18 +39,18 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-white px-4">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-2xl uppercase tracking-[0.2em] text-signal">Signal Lost</h1>
-        <p className="mt-3 text-sm text-muted-foreground">A flicker in the night. Try again.</p>
+        <h1 className="font-xmen-display text-2xl uppercase tracking-[0.2em] text-xmen-red">Signal Disrupted</h1>
+        <p className="mt-3 text-sm text-neutral-600">A psionic flicker. Try again.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => { router.invalidate(); reset(); }}
-            className="border border-signal px-5 py-2.5 font-display text-xs uppercase tracking-[0.25em] text-signal hover:bg-signal hover:text-primary-foreground"
+            className="border-2 border-xmen-red bg-xmen-red px-5 py-2.5 font-xmen-display text-xs uppercase tracking-[0.25em] text-white hover:bg-xmen-yellow hover:text-xmen-ink hover:border-xmen-yellow"
           >
             Retry
           </button>
-          <a href="/" className="border border-border px-5 py-2.5 font-display text-xs uppercase tracking-[0.25em] text-foreground hover:border-foreground">
+          <a href="/" className="border-2 border-neutral-300 px-5 py-2.5 font-xmen-display text-xs uppercase tracking-[0.25em] text-xmen-ink hover:border-xmen-ink">
             Home
           </a>
         </div>
@@ -67,15 +64,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Dark Decor — Aesthetic Dark Home Decor" },
-      { name: "description", content: "Hand-finished, gothic-inspired home decor pieces for those who prefer the night. Lighting, decor, accents and furnishings — all in matte black." },
-      { name: "author", content: "Dark Decor" },
-      { property: "og:title", content: "Dark Decor — Aesthetic Dark Home Decor" },
-      { property: "og:description", content: "Hand-finished, gothic-inspired home decor pieces for those who prefer the night." },
+      { title: "Viral Vault — Gear for the Gifted" },
+      { name: "description", content: "Viral Vault — futuristic kitchen and home gear engineered for the gifted. An X-Men-inspired storefront for tomorrow's home." },
+      { property: "og:title", content: "Viral Vault — Gear for the Gifted" },
+      { property: "og:description", content: "X-Men-inspired storefront. Powered kitchen & home gear, engineered like Cerebro." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Dark Decor — Aesthetic Dark Home Decor" },
-      { name: "twitter:description", content: "Hand-finished, gothic-inspired home decor pieces for those who prefer the night." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -83,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Bebas+Neue&display=swap",
       },
     ],
   }),
@@ -94,8 +88,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const isDecor = path.startsWith("/vault");
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={isDecor ? "dark" : ""}>
       <head>
         <HeadContent />
       </head>
@@ -110,27 +106,24 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const isVault = path.startsWith("/vault");
+  const isDecor = path.startsWith("/vault");
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isVault ? (
-        <>
-          <Outlet />
-          <Toaster />
-        </>
+      {isDecor ? (
+        <Outlet />
       ) : (
-        <CartProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
+        <XmenCartProvider>
+          <div className="xmen-scope flex min-h-screen flex-col bg-white text-xmen-ink">
+            <XmenTransition />
+            <XmenNavbar />
             <main className="flex-1">
               <Outlet />
             </main>
-            <Footer />
+            <XmenFooter />
           </div>
-          <KonamiBat />
           <Toaster />
-        </CartProvider>
+        </XmenCartProvider>
       )}
     </QueryClientProvider>
   );
