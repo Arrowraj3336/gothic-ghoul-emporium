@@ -4,7 +4,7 @@ import { BatSignalSky } from "@/components/BatSignal";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/vault/contact")({
   head: () => ({
     meta: [
       { title: "Signal Us — Contact Dark Decor" },

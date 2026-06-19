@@ -5,7 +5,7 @@ import { CheckCircle2, Lock } from "lucide-react";
 import { BatLogo } from "@/components/BatLogo";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/checkout")({
+export const Route = createFileRoute("/vault/checkout")({
   head: () => ({ meta: [{ title: "Checkout — Dark Decor" }] }),
   component: Checkout,
 });
@@ -22,7 +22,7 @@ function Checkout() {
     return (
       <div className="mx-auto max-w-xl px-4 py-32 text-center">
         <h1 className="font-display text-3xl">Nothing to checkout.</h1>
-        <Link to="/shop" className="mt-6 inline-block border-b border-signal pb-1 font-display text-xs uppercase tracking-[0.3em] text-signal">
+        <Link to="/vault/shop" className="mt-6 inline-block border-b border-signal pb-1 font-display text-xs uppercase tracking-[0.3em] text-signal">
           To the Armory
         </Link>
       </div>
@@ -42,7 +42,7 @@ function Checkout() {
           <span className="text-signal">#GH-{Math.floor(Math.random() * 99999).toString().padStart(5, "0")}</span>
         </div>
         <div className="mt-10">
-          <Link to="/" className="border border-signal bg-signal px-7 py-4 font-display text-xs uppercase tracking-[0.3em] text-primary-foreground hover:shadow-signal">
+          <Link to="/vault" className="border border-signal bg-signal px-7 py-4 font-display text-xs uppercase tracking-[0.3em] text-primary-foreground hover:shadow-signal">
             Return to the Manor
           </Link>
         </div>
@@ -61,7 +61,7 @@ function Checkout() {
         onSubmit={(e) => {
           e.preventDefault();
           toast.success("Signal received");
-          setTimeout(() => { setDone(true); clear(); navigate({ to: "/checkout" }); }, 600);
+          setTimeout(() => { setDone(true); clear(); navigate({ to: "/vault/checkout" }); }, 600);
         }}
         className="grid gap-10 lg:grid-cols-[1fr_400px]"
       >

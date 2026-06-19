@@ -4,7 +4,7 @@ import { products, categories, type Product } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
 import { BatLogo } from "@/components/BatLogo";
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/vault/shop")({
   head: () => ({
     meta: [
       { title: "Armory — Shop All | Dark Decor" },

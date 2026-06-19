@@ -3,7 +3,7 @@ import { useCart } from "@/lib/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
 import { BatLogo } from "@/components/BatLogo";
 
-export const Route = createFileRoute("/cart")({
+export const Route = createFileRoute("/vault/cart")({
   head: () => ({
     meta: [
       { title: "Cart — Dark Decor" },
@@ -28,7 +28,7 @@ function CartPage() {
           Nothing has been summoned yet. Choose a piece from the Armory and the night will deliver it.
         </p>
         <Link
-          to="/shop"
+          to="/vault/shop"
           className="mt-8 inline-flex items-center gap-2 border border-signal bg-signal px-7 py-4 font-display text-xs uppercase tracking-[0.3em] text-primary-foreground hover:shadow-signal"
         >
           Enter the Armory <ArrowRight className="h-3.5 w-3.5" />
@@ -53,7 +53,7 @@ function CartPage() {
         <ul className="divide-y divide-border border-y border-border">
           {detailed.map(({ product, qty, lineTotal }) => (
             <li key={product.slug} className="flex gap-4 py-6">
-              <Link to="/products/$slug" params={{ slug: product.slug }} className="block w-24 shrink-0 sm:w-32">
+              <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="block w-24 shrink-0 sm:w-32">
                 <div className="aspect-square overflow-hidden border border-border bg-card">
                   <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
                 </div>
@@ -62,7 +62,7 @@ function CartPage() {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="font-mono text-[10px] uppercase tracking-widest text-signal">{product.collection}</div>
-                    <Link to="/products/$slug" params={{ slug: product.slug }}>
+                    <Link to="/vault/products/$slug" params={{ slug: product.slug }}>
                       <h3 className="mt-1 font-display text-base hover:text-signal">{product.name}</h3>
                     </Link>
                     <p className="mt-1 text-xs text-muted-foreground">{product.category}</p>
@@ -103,12 +103,12 @@ function CartPage() {
             </p>
           )}
           <Link
-            to="/checkout"
+            to="/vault/checkout"
             className="mt-6 flex w-full items-center justify-center gap-2 border border-signal bg-signal px-6 py-4 font-display text-xs uppercase tracking-[0.3em] text-primary-foreground hover:shadow-signal"
           >
             <ShoppingBag className="h-3.5 w-3.5" /> Proceed to Checkout
           </Link>
-          <Link to="/shop" className="mt-3 block text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground hover:text-signal">
+          <Link to="/vault/shop" className="mt-3 block text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground hover:text-signal">
             ← Keep browsing
           </Link>
         </aside>

@@ -10,53 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VaultRouteImport } from './routes/vault'
-import { Route as ShopRouteImport } from './routes/shop'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultIndexRouteImport } from './routes/vault.index'
 import { Route as VaultShopRouteImport } from './routes/vault.shop'
+import { Route as VaultContactRouteImport } from './routes/vault.contact'
 import { Route as VaultCheckoutRouteImport } from './routes/vault.checkout'
 import { Route as VaultCartRouteImport } from './routes/vault.cart'
 import { Route as VaultAboutRouteImport } from './routes/vault.about'
-import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VaultProductsSlugRouteImport } from './routes/vault.products.$slug'
 
 const VaultRoute = VaultRouteImport.update({
   id: '/vault',
   path: '/vault',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CartRoute = CartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VaultIndexRoute = VaultIndexRouteImport.update({
@@ -67,6 +31,11 @@ const VaultIndexRoute = VaultIndexRouteImport.update({
 const VaultShopRoute = VaultShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => VaultRoute,
+} as any)
+const VaultContactRoute = VaultContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => VaultRoute,
 } as any)
 const VaultCheckoutRoute = VaultCheckoutRouteImport.update({
@@ -84,11 +53,6 @@ const VaultAboutRoute = VaultAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => VaultRoute,
 } as any)
-const ProductsSlugRoute = ProductsSlugRouteImport.update({
-  id: '/products/$slug',
-  path: '/products/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const VaultProductsSlugRoute = VaultProductsSlugRouteImport.update({
   id: '/products/$slug',
   path: '/products/$slug',
@@ -96,49 +60,31 @@ const VaultProductsSlugRoute = VaultProductsSlugRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/shop': typeof ShopRoute
   '/vault': typeof VaultRouteWithChildren
-  '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault/': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/shop': typeof ShopRoute
-  '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/shop': typeof ShopRoute
   '/vault': typeof VaultRouteWithChildren
-  '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault/': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
@@ -146,62 +92,37 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/about'
-    | '/cart'
-    | '/checkout'
-    | '/contact'
-    | '/shop'
     | '/vault'
-    | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault/'
     | '/vault/products/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/about'
-    | '/cart'
-    | '/checkout'
-    | '/contact'
-    | '/shop'
-    | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault'
     | '/vault/products/$slug'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/cart'
-    | '/checkout'
-    | '/contact'
-    | '/shop'
     | '/vault'
-    | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault/'
     | '/vault/products/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  CartRoute: typeof CartRoute
-  CheckoutRoute: typeof CheckoutRoute
-  ContactRoute: typeof ContactRoute
-  ShopRoute: typeof ShopRoute
   VaultRoute: typeof VaultRouteWithChildren
-  ProductsSlugRoute: typeof ProductsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -211,48 +132,6 @@ declare module '@tanstack/react-router' {
       path: '/vault'
       fullPath: '/vault'
       preLoaderRoute: typeof VaultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/vault/': {
@@ -267,6 +146,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/vault/shop'
       preLoaderRoute: typeof VaultShopRouteImport
+      parentRoute: typeof VaultRoute
+    }
+    '/vault/contact': {
+      id: '/vault/contact'
+      path: '/contact'
+      fullPath: '/vault/contact'
+      preLoaderRoute: typeof VaultContactRouteImport
       parentRoute: typeof VaultRoute
     }
     '/vault/checkout': {
@@ -290,13 +176,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VaultAboutRouteImport
       parentRoute: typeof VaultRoute
     }
-    '/products/$slug': {
-      id: '/products/$slug'
-      path: '/products/$slug'
-      fullPath: '/products/$slug'
-      preLoaderRoute: typeof ProductsSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/vault/products/$slug': {
       id: '/vault/products/$slug'
       path: '/products/$slug'
@@ -311,6 +190,7 @@ interface VaultRouteChildren {
   VaultAboutRoute: typeof VaultAboutRoute
   VaultCartRoute: typeof VaultCartRoute
   VaultCheckoutRoute: typeof VaultCheckoutRoute
+  VaultContactRoute: typeof VaultContactRoute
   VaultShopRoute: typeof VaultShopRoute
   VaultIndexRoute: typeof VaultIndexRoute
   VaultProductsSlugRoute: typeof VaultProductsSlugRoute
@@ -320,6 +200,7 @@ const VaultRouteChildren: VaultRouteChildren = {
   VaultAboutRoute: VaultAboutRoute,
   VaultCartRoute: VaultCartRoute,
   VaultCheckoutRoute: VaultCheckoutRoute,
+  VaultContactRoute: VaultContactRoute,
   VaultShopRoute: VaultShopRoute,
   VaultIndexRoute: VaultIndexRoute,
   VaultProductsSlugRoute: VaultProductsSlugRoute,
@@ -328,25 +209,8 @@ const VaultRouteChildren: VaultRouteChildren = {
 const VaultRouteWithChildren = VaultRoute._addFileChildren(VaultRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  CartRoute: CartRoute,
-  CheckoutRoute: CheckoutRoute,
-  ContactRoute: ContactRoute,
-  ShopRoute: ShopRoute,
   VaultRoute: VaultRouteWithChildren,
-  ProductsSlugRoute: ProductsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

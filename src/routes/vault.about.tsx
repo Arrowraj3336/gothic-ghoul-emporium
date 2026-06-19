@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BatLogo } from "@/components/BatLogo";
 import hero from "@/assets/hero-gotham.jpg";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/vault/about")({
   head: () => ({
     meta: [
       { title: "Origin — About Dark Decor" },

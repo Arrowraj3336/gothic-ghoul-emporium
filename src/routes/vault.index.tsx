@@ -6,7 +6,7 @@ import { ArrowRight, Shield, Truck, Sparkles, Moon } from "lucide-react";
 import { BatLogo } from "@/components/BatLogo";
 import { HeroVideo } from "@/components/HeroVideo";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/vault/")({
   head: () => ({
     meta: [
       { title: "Dark Decor — Aesthetic Dark Home Decor" },
@@ -54,13 +54,13 @@ function Index() {
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10">
                 <Link
-                  to="/shop"
+                  to="/vault/shop"
                   className="group inline-flex items-center gap-2 border border-signal bg-signal px-6 py-3.5 font-display text-[11px] uppercase tracking-[0.35em] text-primary-foreground transition hover:shadow-signal sm:px-7 sm:py-4"
                 >
                   Enter Shop <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
-                  to="/about"
+                  to="/vault/about"
                   className="inline-flex items-center gap-2 border border-border bg-background/60 px-6 py-3.5 font-display text-[11px] uppercase tracking-[0.35em] text-foreground/90 backdrop-blur transition hover:border-signal hover:text-signal sm:px-7 sm:py-4"
                 >
                   The Origin
@@ -98,7 +98,7 @@ function Index() {
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">Chapter 01</div>
             <h2 className="mt-2 font-display text-3xl sm:text-5xl">Featured Pieces</h2>
           </div>
-          <Link to="/shop" className="group inline-flex items-center gap-2 font-display text-[11px] uppercase tracking-[0.35em] text-muted-foreground hover:text-signal">
+          <Link to="/vault/shop" className="group inline-flex items-center gap-2 font-display text-[11px] uppercase tracking-[0.35em] text-muted-foreground hover:text-signal">
             View All <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -155,7 +155,7 @@ function Index() {
               chosen for their weight and silence. No mass production. No bright primaries. No mercy
               for the mediocre.
             </p>
-            <Link to="/about" className="mt-8 inline-flex items-center gap-2 border-b border-signal pb-1 font-display text-[11px] uppercase tracking-[0.35em] text-signal">
+            <Link to="/vault/about" className="mt-8 inline-flex items-center gap-2 border-b border-signal pb-1 font-display text-[11px] uppercase tracking-[0.35em] text-signal">
               Read the full origin <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>

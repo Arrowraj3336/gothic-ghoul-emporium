@@ -20,7 +20,7 @@ import { toast } from "sonner";
 
 const SITE_URL = "https://gothic-ghoul-emporium.lovable.app";
 
-export const Route = createFileRoute("/products/$slug")({
+export const Route = createFileRoute("/vault/products/$slug")({
   loader: ({ params }) => {
     const product = getProduct(params.slug);
     if (!product) throw notFound();
@@ -89,7 +89,7 @@ export const Route = createFileRoute("/products/$slug")({
     <div className="mx-auto max-w-2xl px-4 py-32 text-center">
       <h1 className="font-display text-2xl sm:text-3xl">Piece not found in the catalog.</h1>
       <Link
-        to="/shop"
+        to="/vault/shop"
         className="mt-6 inline-block border-b border-signal pb-1 font-display text-xs uppercase tracking-[0.3em] text-signal"
       >
         Back to Shop
@@ -114,9 +114,9 @@ function ProductPage() {
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex flex-wrap items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:text-[11px]">
-          <Link to="/" className="hover:text-signal">Home</Link>
+          <Link to="/vault" className="hover:text-signal">Home</Link>
           <span>/</span>
-          <Link to="/shop" className="hover:text-signal">Shop</Link>
+          <Link to="/vault/shop" className="hover:text-signal">Shop</Link>
           <span>/</span>
           <span className="text-foreground/70">{product.category}</span>
           <span>/</span>
@@ -124,7 +124,7 @@ function ProductPage() {
         </nav>
 
         <Link
-          to="/shop"
+          to="/vault/shop"
           className="mt-4 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-signal sm:text-[11px]"
         >
           <ChevronLeft className="h-3 w-3" /> Back
@@ -304,7 +304,7 @@ function ProductPage() {
           <div className="mb-8 flex items-end justify-between">
             <h2 className="font-display text-2xl sm:text-3xl">From the same shadow</h2>
             <Link
-              to="/shop"
+              to="/vault/shop"
               className="font-display text-[11px] uppercase tracking-[0.35em] text-muted-foreground hover:text-signal"
             >
               View all
