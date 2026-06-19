@@ -214,7 +214,7 @@ function ProductPage() {
               {tab === "description" && <p>{product.description}</p>}
               {tab === "specs" && (
                 <ul className="divide-y-2 divide-xmen-ink border-y-2 border-xmen-ink">
-                  {product.specs.map((s) => (
+                  {product.specs.map((s: { label: string; value: string }) => (
                     <li key={s.label} className="flex items-center justify-between py-3 text-sm">
                       <span className="font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-ink-soft">{s.label}</span>
                       <span className="font-xmen-display">{s.value}</span>
