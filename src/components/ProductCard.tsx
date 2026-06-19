@@ -11,7 +11,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       className="group relative animate-rise-in"
       style={{ animationDelay: `${index * 70}ms` }}
     >
-      <Link to="/products/$slug" params={{ slug: product.slug }} className="block">
+      <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="block">
         <div className="relative aspect-[4/5] overflow-hidden border border-border bg-card clip-frame">
           <img
             src={product.image}
@@ -44,7 +44,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       <div className="mt-3 flex items-start justify-between gap-3 sm:mt-4 sm:gap-4">
         <div className="min-w-0">
           <h3 className="font-display text-sm sm:text-base leading-tight truncate">
-            <Link to="/products/$slug" params={{ slug: product.slug }} className="hover:text-signal transition-colors">
+            <Link to="/vault/products/$slug" params={{ slug: product.slug }} className="hover:text-signal transition-colors">
               {product.name}
             </Link>
           </h3>

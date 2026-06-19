@@ -1,270 +1,322 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { getProduct, products } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { useState } from "react";
-import { getVaultProduct, vaultProducts } from "@/lib/vault-products";
-import { useVaultCart } from "@/lib/vault-cart";
-import { VaultProductCard } from "@/components/vault/VaultProductCard";
-import { Star, Minus, Plus, Truck, ShieldCheck, RotateCcw, ChevronRight } from "lucide-react";
+import {
+  Minus,
+  Plus,
+  ShoppingBag,
+  Star,
+  Truck,
+  RotateCcw,
+  Shield,
+  ChevronLeft,
+  Heart,
+  Share2,
+} from "lucide-react";
+import { ProductCard } from "@/components/ProductCard";
+import { ProductTransition } from "@/components/ProductTransition";
 import { toast } from "sonner";
-import { ArcaneSigil, DoomBlasters } from "@/components/vault/VaultIcons";
+
+const SITE_URL = "https://gothic-ghoul-emporium.lovable.app";
 
 export const Route = createFileRoute("/vault/products/$slug")({
   loader: ({ params }) => {
-    const product = getVaultProduct(params.slug);
+    const product = getProduct(params.slug);
     if (!product) throw notFound();
     return { product };
   },
-  head: ({ loaderData }) => {
-    if (!loaderData) return { meta: [{ title: "Relic — Viral Vault" }] };
+  head: ({ loaderData, params }) => {
+    if (!loaderData) return { meta: [] };
     const { product } = loaderData;
+    const url = `${SITE_URL}/products/${params.slug}`;
+    const image = `${SITE_URL}${product.image}`;
+    const title = `${product.name} — Dark Decor`;
+    const description = product.tagline;
+    const ld = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      name: product.name,
+      image: [image],
+      description: product.description,
+      sku: product.slug,
+      brand: { "@type": "Brand", name: "Dark Decor" },
+      category: product.category,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: product.rating,
+        reviewCount: product.reviews,
+      },
+      offers: {
+        "@type": "Offer",
+        url,
+        priceCurrency: "USD",
+        price: product.price.toFixed(2),
+        availability:
+          product.stock > 0
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        itemCondition: "https://schema.org/NewCondition",
+      },
+    };
     return {
       meta: [
-        { title: `${product.name} — Viral Vault` },
-        { name: "description", content: product.tagline },
-        { property: "og:title", content: product.name },
-        { property: "og:description", content: product.tagline },
+        { title },
+        { name: "description", content: description },
         { property: "og:type", content: "product" },
-        { property: "og:image", content: product.image },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:image", content: image },
+        { property: "og:image:alt", content: product.name },
+        { property: "product:price:amount", content: product.price.toFixed(2) },
+        { property: "product:price:currency", content: "USD" },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: product.image },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: image },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(ld),
+        },
       ],
     };
   },
-  component: VaultProductPage,
+  notFoundComponent: () => (
+    <div className="mx-auto max-w-2xl px-4 py-32 text-center">
+      <h1 className="font-display text-2xl sm:text-3xl">Piece not found in the catalog.</h1>
+      <Link
+        to="/vault/shop"
+        className="mt-6 inline-block border-b border-signal pb-1 font-display text-xs uppercase tracking-[0.3em] text-signal"
+      >
+        Back to Shop
+      </Link>
+    </div>
+  ),
+  component: ProductPage,
 });
 
-function VaultProductPage() {
+function ProductPage() {
   const { product } = Route.useLoaderData();
-  const { add } = useVaultCart();
+  const { add } = useCart();
   const [qty, setQty] = useState(1);
-  const [tab, setTab] = useState<"features" | "specs" | "shipping">("features");
-  const [activeThumb, setActiveThumb] = useState(0);
+  const [tab, setTab] = useState<"description" | "specs" | "shipping">("description");
 
-  const related = vaultProducts
-    .filter((p) => p.slug !== product.slug && p.category === product.category)
-    .slice(0, 4);
+  const related = products.filter((p) => p.slug !== product.slug).slice(0, 4);
 
   return (
-    <div className="relative">
-      {/* Ambient sigil */}
-      <div className="pointer-events-none absolute -right-40 top-20 hidden text-[var(--vv-green)] opacity-[0.05] lg:block">
-        <ArcaneSigil className="vv-sigil h-[520px] w-[520px]" />
-      </div>
+    <>
+      <ProductTransition />
 
-      {/* Breadcrumbs */}
-      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
-        <nav className="flex items-center gap-1 text-[11px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)]">
-          <Link to="/vault" className="hover:text-[var(--vv-green)]">Court</Link>
-          <ChevronRight className="h-3 w-3" />
-          <Link to="/vault/shop" className="hover:text-[var(--vv-green)]">Armory</Link>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-[var(--vv-green)]">{product.name}</span>
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
+        {/* Breadcrumb */}
+        <nav className="flex flex-wrap items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:text-[11px]">
+          <Link to="/vault" className="hover:text-signal">Home</Link>
+          <span>/</span>
+          <Link to="/vault/shop" className="hover:text-signal">Shop</Link>
+          <span>/</span>
+          <span className="text-foreground/70">{product.category}</span>
+          <span>/</span>
+          <span className="text-signal">{product.name}</span>
         </nav>
-      </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
-        {/* Gallery */}
-        <div className="lg:col-span-7">
-          <div className="relative overflow-hidden border border-[var(--vv-green-line)] bg-white vv-grain">
-            <img
-              key={activeThumb}
-              src={product.image}
-              alt={product.name}
-              className="aspect-[4/5] h-full w-full object-cover animate-fade-in sm:aspect-[5/4]"
-            />
-            <span className="pointer-events-none absolute left-3 top-3 z-10 h-6 w-6 border-l border-t border-[var(--vv-green)]" />
-            <span className="pointer-events-none absolute right-3 top-3 z-10 h-6 w-6 border-r border-t border-[var(--vv-green)]" />
-            <span className="pointer-events-none absolute bottom-3 left-3 z-10 h-6 w-6 border-b border-l border-[var(--vv-green)]" />
-            <span className="pointer-events-none absolute bottom-3 right-3 z-10 h-6 w-6 border-b border-r border-[var(--vv-green)]" />
+        <Link
+          to="/vault/shop"
+          className="mt-4 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:text-signal sm:text-[11px]"
+        >
+          <ChevronLeft className="h-3 w-3" /> Back
+        </Link>
 
-            {product.badge && (
-              <div className="absolute left-4 top-4 z-20 bg-[var(--vv-green)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
-                {product.badge}
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+          {/* Image gallery */}
+          <div className="animate-rise-in">
+            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-card clip-frame shadow-frame">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="h-full w-full object-cover"
+                width={1000}
+                height={1250}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
+              <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 border border-border bg-background/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest backdrop-blur">
+                <span className="h-1 w-1 rounded-full bg-signal animate-pulse" />
+                {product.collection}
               </div>
-            )}
-          </div>
-          <div className="mt-4 grid grid-cols-4 gap-3">
-            {[0, 1, 2, 3].map((i) => (
-              <button
-                key={i}
-                onClick={() => setActiveThumb(i)}
-                aria-label={`View ${i + 1}`}
-                className={[
-                  "relative overflow-hidden bg-white transition",
-                  activeThumb === i
-                    ? "ring-2 ring-[var(--vv-green)]"
-                    : "ring-1 ring-[var(--vv-green-line)] hover:ring-[var(--vv-green)]",
-                ].join(" ")}
-              >
-                <img src={product.image} alt="" className="aspect-square w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Details */}
-        <div className="lg:col-span-5">
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-[var(--vv-green)]">
-            <span className="inline-block h-px w-6 bg-[var(--vv-green)]" />
-            {product.category} · Sealed by Doom
-          </div>
-          <h1 className="mt-2 font-vault-display text-4xl leading-tight text-[var(--vv-ink)] sm:text-5xl">
-            {product.name}
-          </h1>
-          <p className="mt-3 font-vault-serif text-[16px] italic text-[var(--vv-ink-soft)]">{product.tagline}</p>
-
-          <div className="mt-5 flex items-center gap-3">
-            <div className="flex items-center gap-0.5 text-[var(--vv-green)]">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-current" />
-              ))}
+              <div className="absolute right-4 top-4 flex gap-2">
+                <button className="grid h-9 w-9 place-items-center border border-border bg-background/80 text-foreground/80 backdrop-blur transition hover:border-signal hover:text-signal">
+                  <Heart className="h-3.5 w-3.5" />
+                </button>
+                <button className="grid h-9 w-9 place-items-center border border-border bg-background/80 text-foreground/80 backdrop-blur transition hover:border-signal hover:text-signal">
+                  <Share2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </div>
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)]">
-              {product.rating} · {product.reviews.toLocaleString()} subjects
-            </span>
-          </div>
 
-          <div className="mt-6 flex items-baseline gap-3">
-            <div className="font-vault-display text-3xl text-[var(--vv-green)]">${product.price}</div>
-            {product.compareAt && (
-              <>
-                <div className="text-base text-[var(--vv-ink-soft)] line-through">${product.compareAt}</div>
-                <span className="border border-[var(--vv-green)] bg-[var(--vv-green-soft)] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--vv-green)]">
-                  Save ${product.compareAt - product.price}
-                </span>
-              </>
-            )}
-          </div>
-
-          <p className="mt-6 text-[15px] leading-relaxed text-[var(--vv-ink)]">{product.description}</p>
-
-          {/* Qty + CTA */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <div className="inline-flex items-center border border-[var(--vv-green-line)] bg-white">
-              <button
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="grid h-12 w-12 place-items-center text-[var(--vv-ink-soft)] hover:bg-[var(--vv-green-soft)] hover:text-[var(--vv-green)]"
-                aria-label="Decrease"
-              >
-                <Minus className="h-4 w-4" />
-              </button>
-              <div className="min-w-10 text-center text-sm font-medium tabular-nums">{qty}</div>
-              <button
-                onClick={() => setQty((q) => q + 1)}
-                className="grid h-12 w-12 place-items-center text-[var(--vv-ink-soft)] hover:bg-[var(--vv-green-soft)] hover:text-[var(--vv-green)]"
-                aria-label="Increase"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
-            <button
-              onClick={() => {
-                add(product.slug, qty);
-                toast.success(`${product.name} sealed in the reliquary`, { description: `× ${qty}` });
-              }}
-              className="flex-1 bg-[var(--vv-green)] px-6 py-3 font-vault-heroic text-[12px] uppercase tracking-[0.28em] text-white transition hover:bg-[var(--vv-green-deep)]"
-            >
-              Claim · ${product.price * qty}
-            </button>
-          </div>
-          <Link
-            to="/vault/checkout"
-            className="mt-3 block w-full border border-[var(--vv-green)] bg-white py-3 text-center font-vault-heroic text-[12px] uppercase tracking-[0.28em] text-[var(--vv-green)] hover:bg-[var(--vv-green)] hover:text-white"
-          >
-            Submit tribute now
-          </Link>
-
-          {/* Service strip */}
-          <div className="mt-8 grid grid-cols-3 gap-3 border-t border-[var(--vv-green-line)] pt-6 text-[10px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)]">
-            <div className="flex flex-col items-center gap-1.5 text-center">
-              <Truck className="h-4 w-4 text-[var(--vv-green)]" /> Free over $75
-            </div>
-            <div className="flex flex-col items-center gap-1.5 text-center">
-              <ShieldCheck className="h-4 w-4 text-[var(--vv-green)]" /> 2-year decree
-            </div>
-            <div className="flex flex-col items-center gap-1.5 text-center">
-              <RotateCcw className="h-4 w-4 text-[var(--vv-green)]" /> 60-day return
-            </div>
-          </div>
-
-          {/* Tabs */}
-          <div className="mt-10 border-t border-[var(--vv-green-line)]">
-            <div className="flex gap-6 border-b border-[var(--vv-green-line)]">
-              {(
-                [
-                  ["features", "Conjurings"],
-                  ["specs", "Codex"],
-                  ["shipping", "Dispatch"],
-                ] as const
-              ).map(([key, label]) => (
+            {/* thumbnail strip (single image — repeat as placeholders) */}
+            <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
+              {[0, 1, 2, 3].map((i) => (
                 <button
-                  key={key}
-                  onClick={() => setTab(key)}
-                  className={[
-                    "border-b-2 py-3 font-vault-heroic text-[11px] uppercase tracking-[0.25em] transition",
-                    tab === key
-                      ? "border-[var(--vv-green)] text-[var(--vv-green)]"
-                      : "border-transparent text-[var(--vv-ink-soft)] hover:text-[var(--vv-green)]",
-                  ].join(" ")}
+                  key={i}
+                  className={`relative aspect-square overflow-hidden border ${i === 0 ? "border-signal" : "border-border opacity-60 hover:opacity-100"} bg-card transition`}
                 >
-                  {label}
+                  <img src={product.image} alt="" className="h-full w-full object-cover" />
                 </button>
               ))}
             </div>
-            <div className="py-6 text-sm text-[var(--vv-ink)]">
-              {tab === "features" && (
-                <ul className="space-y-2">
-                  {product.features.map((f: string) => (
-                    <li key={f} className="flex gap-2.5">
-                      <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-[var(--vv-green)]" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {tab === "specs" && (
-                <dl className="divide-y divide-[var(--vv-green-line)]">
-                  {product.specs.map((s: { label: string; value: string }) => (
-                    <div key={s.label} className="grid grid-cols-2 py-2.5">
-                      <dt className="text-[var(--vv-ink-soft)]">{s.label}</dt>
-                      <dd className="text-[var(--vv-ink)]">{s.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              {tab === "shipping" && (
-                <div className="space-y-3 leading-relaxed">
-                  <p>Free imperial dispatch on tributes over $75. Express courier at checkout.</p>
-                  <p>Most relics ride within 24 hours from the Latverian keep.</p>
-                  <p>60-day return, no questions. Even if Doom has held it.</p>
+          </div>
+
+          {/* Details */}
+          <div className="animate-rise-in" style={{ animationDelay: "100ms" }}>
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal sm:text-[11px]">
+              {product.category} / {product.collection}
+            </div>
+            <h1 className="mt-2 font-display text-3xl leading-tight sm:text-5xl">{product.name}</h1>
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground">{product.tagline}</p>
+
+            <div className="mt-5 flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-3.5 w-3.5 ${i < Math.round(product.rating) ? "fill-signal text-signal" : "text-border"}`}
+                  />
+                ))}
+              </div>
+              <span className="font-mono text-[11px] text-muted-foreground">
+                {product.rating} · {product.reviews} reviews
+              </span>
+              <span className="font-mono text-[11px] text-signal">
+                {product.stock > 10 ? "● In Stock" : `● Only ${product.stock} left`}
+              </span>
+            </div>
+
+            <div className="mt-6 flex items-baseline gap-3 border-y border-border py-5 sm:mt-8 sm:py-6">
+              <span className="font-display text-3xl sm:text-4xl text-signal">${product.price}</span>
+              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground line-through">
+                ${Math.round(product.price * 1.25)}
+              </span>
+              <span className="ml-auto border border-signal/40 bg-signal/10 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-signal">
+                -20% Night Sale
+              </span>
+            </div>
+
+            {/* Quantity + CTA */}
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <div className="flex items-center border border-border self-start">
+                <button
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  className="grid h-12 w-12 place-items-center hover:text-signal"
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </button>
+                <div className="grid h-12 w-12 place-items-center border-x border-border font-mono text-sm">
+                  {qty}
                 </div>
-              )}
+                <button
+                  onClick={() => setQty((q) => q + 1)}
+                  className="grid h-12 w-12 place-items-center hover:text-signal"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <button
+                onClick={() => {
+                  add(product.slug, qty);
+                  toast.success(`${product.name} × ${qty} added`, {
+                    description: "Sealed in matte black.",
+                  });
+                }}
+                className="flex flex-1 items-center justify-center gap-2 border border-signal bg-signal px-6 py-3.5 font-display text-[11px] uppercase tracking-[0.35em] text-primary-foreground transition hover:shadow-signal"
+              >
+                <ShoppingBag className="h-3.5 w-3.5" /> Add to Cart
+              </button>
+            </div>
+
+            {/* Trust */}
+            <div className="mt-6 grid grid-cols-3 gap-2 border border-border bg-card/40 p-3 text-center sm:gap-3 sm:p-4">
+              {[
+                { Icon: Truck, label: "Free $200+" },
+                { Icon: RotateCcw, label: "30-day returns" },
+                { Icon: Shield, label: "Lifetime warranty" },
+              ].map(({ Icon, label }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center gap-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-muted-foreground"
+                >
+                  <Icon className="h-4 w-4 text-signal" />
+                  {label}
+                </div>
+              ))}
+            </div>
+
+            {/* Tabs */}
+            <div className="mt-10">
+              <div className="flex flex-wrap gap-1 border-b border-border">
+                {([
+                  ["description", "Description"],
+                  ["specs", "Specifications"],
+                  ["shipping", "Shipping"],
+                ] as const).map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setTab(key)}
+                    className={`relative px-4 py-3 font-display text-[10px] uppercase tracking-[0.3em] transition ${
+                      tab === key ? "text-signal" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {label}
+                    {tab === key && (
+                      <span className="absolute -bottom-px left-0 right-0 h-px bg-signal shadow-signal" />
+                    )}
+                  </button>
+                ))}
+              </div>
+              <div className="pt-5 text-sm leading-relaxed text-foreground/90">
+                {tab === "description" && <p>{product.description}</p>}
+                {tab === "specs" && (
+                  <ul className="divide-y divide-border border-y border-border">
+                    {product.details.map((d: string) => (
+                      <li key={d} className="flex items-center gap-3 py-3 text-sm">
+                        <span className="h-1 w-1 rounded-full bg-signal" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {tab === "shipping" && (
+                  <div className="space-y-3 text-sm text-muted-foreground">
+                    <p>Free standard shipping on orders over $200. Express options at checkout.</p>
+                    <p>30-day returns for unused pieces in original packaging.</p>
+                    <p>Bat-courier dispatched within 48 hours from Gotham warehouse.</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Related */}
-      {related.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-          <div className="mb-8 flex items-end justify-between gap-3">
-            <div className="flex items-center gap-3 text-[var(--vv-green)]">
-              <DoomBlasters className="h-7 w-16" />
-              <h2 className="font-vault-display text-2xl text-[var(--vv-ink)] sm:text-3xl">From the same guild</h2>
-            </div>
+        {/* Related */}
+        <section className="mt-20 sm:mt-28">
+          <div className="mb-8 flex items-end justify-between">
+            <h2 className="font-display text-2xl sm:text-3xl">From the same shadow</h2>
             <Link
               to="/vault/shop"
-              className="text-[11px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)] hover:text-[var(--vv-green)]"
+              className="font-display text-[11px] uppercase tracking-[0.35em] text-muted-foreground hover:text-signal"
             >
-              View armory →
+              View all
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
             {related.map((p, i) => (
-              <VaultProductCard product={p} key={p.slug} index={i} />
+              <ProductCard product={p} key={p.slug} index={i} />
             ))}
           </div>
         </section>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

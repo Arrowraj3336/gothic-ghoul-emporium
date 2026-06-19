@@ -1,90 +1,117 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import heroVideo from "../../public/hero-bg.mp4.asset.json";
-import { products, collections } from "@/lib/products";
-import { ProductCard } from "@/components/ProductCard";
-import { ArrowRight, Shield, Truck, Sparkles, Moon } from "lucide-react";
-import { BatLogo } from "@/components/BatLogo";
-import { HeroVideo } from "@/components/HeroVideo";
+import { vaultProducts, vaultCategories } from "@/lib/vault-products";
+import { XmenProductCard } from "@/components/XmenProductCard";
+import { ArrowRight, Shield, Truck, Sparkles, Zap } from "lucide-react";
+import { XLogo, CerebroIcon, ClawsIcon, VisorIcon, LightningBolt } from "@/components/XmenIcons";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dark Decor — Aesthetic Dark Home Decor" },
-      { name: "description", content: "Hand-finished, gothic-luxe home decor. Lighting, decor, accents and furnishings for those who prefer the night." },
-      { property: "og:title", content: "Dark Decor" },
-      { property: "og:description", content: "Aesthetic home decor for those who prefer the night." },
+      { title: "Viral Vault — Gear for the Gifted" },
+      { name: "description", content: "An X-Men-inspired storefront for futuristic kitchen and home gear. Engineered like Cerebro, packaged for the gifted." },
+      { property: "og:title", content: "Viral Vault — Gear for the Gifted" },
+      { property: "og:description", content: "Powered kitchen & home gear from the Xavier Institute for Gifted Home-Makers." },
     ],
   }),
-  component: Index,
+  component: Home,
 });
 
-function Index() {
-  const featured = products.slice(0, 4);
-  const drops = products.slice(4, 8);
+function Home() {
+  const featured = vaultProducts.slice(0, 4);
+  const drops = vaultProducts.slice(4, 8);
 
   return (
     <div>
-      {/* HERO VIDEO BOX */}
-      <section className="mx-auto max-w-7xl px-3 pt-6 sm:px-6 sm:pt-10 lg:px-8 lg:pt-14">
-        <div className="relative isolate overflow-hidden border border-border bg-black clip-frame shadow-frame">
-          {/* Background video — lazy, reduced-motion / saveData aware */}
-          <HeroVideo src={heroVideo.url} className="absolute inset-0" />
-          {/* dark vignette + gradient overlay for legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/30" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0.02_0_0/0.7)_100%)]" />
-          <div className="absolute inset-0 bg-grid-fine opacity-30" />
+      {/* HERO */}
+      <section className="relative overflow-hidden border-b-2 border-xmen-ink">
+        {/* ambient hex grid */}
+        <div className="absolute inset-0 xm-hex opacity-70" />
+        {/* halftone diagonals */}
+        <div className="pointer-events-none absolute -left-20 -top-20 h-80 w-80 xm-halftone opacity-30 xm-spin-slow" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 xm-halftone-yellow opacity-40" />
+        {/* big X watermark */}
+        <XLogo className="pointer-events-none absolute -right-16 top-1/2 hidden h-[520px] w-[520px] -translate-y-1/2 text-xmen-red/10 md:block" />
 
-          {/* corner brackets */}
-          <CornerBrackets />
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16 lg:py-32 lg:px-8">
+          <div>
+            <div className="inline-flex items-center gap-2 border-2 border-xmen-ink bg-xmen-yellow px-3 py-1.5 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-ink">
+              <span className="h-1.5 w-1.5 bg-xmen-red animate-pulse" />
+              Issue Nº 01 · Cerebro online
+            </div>
+            <h1 className="mt-6 font-xmen-display text-5xl leading-[0.95] tracking-tight sm:text-7xl lg:text-[7.5rem]">
+              GEAR <br />
+              <span className="text-xmen-red">FOR THE</span> <br />
+              GIFTED.
+            </h1>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-xmen-ink-soft sm:text-lg">
+              Viral Vault is the Xavier Institute of home appliances —
+              precision-built tools for cooks with abilities the world isn't ready for yet.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link
+                to="/shop"
+                className="group inline-flex items-center gap-2 border-2 border-xmen-ink bg-xmen-red px-7 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white transition hover:bg-xmen-yellow hover:text-xmen-ink"
+              >
+                Enter the Armory <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 border-2 border-xmen-ink bg-white px-7 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-xmen-ink transition hover:bg-xmen-yellow"
+              >
+                Read the Mythos
+              </Link>
+            </div>
+            <div className="mt-10 grid grid-cols-3 gap-4 border-t-2 border-xmen-ink pt-6 max-w-md">
+              {[
+                { n: "47", l: "Mutant SKUs" },
+                { n: "12k", l: "Subscribers" },
+                { n: "★ 4.9", l: "Rating" },
+              ].map((s) => (
+                <div key={s.l}>
+                  <div className="font-xmen-display text-3xl text-xmen-red">{s.n}</div>
+                  <div className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <div className="relative grid min-h-[78vh] place-items-center px-5 py-16 sm:min-h-[82vh] sm:px-12 sm:py-24">
-            <div className="w-full max-w-3xl text-center animate-rise-in">
-              <div className="mx-auto inline-flex items-center gap-2 border border-signal/30 bg-background/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-signal backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-signal animate-pulse" />
-                Vol. VII — Winter Drop Live
+          {/* Hero visual stack — comic-panel */}
+          <div className="relative">
+            <div className="relative aspect-[4/5] w-full xm-frame xm-frame-red overflow-hidden">
+              <img src={vaultProducts[0].image} alt={vaultProducts[0].name} className="h-full w-full object-cover" />
+              <div className="absolute left-3 top-3 border-2 border-xmen-ink bg-xmen-yellow px-2 py-1 font-xmen-display text-[11px] uppercase tracking-widest">
+                Issue #01 · Cover
               </div>
-              <h1 className="mt-6 font-display text-4xl leading-[1.05] sm:text-6xl lg:text-7xl">
-                DECOR <br className="sm:hidden" />
-                BORN OF THE <br />
-                <span className="text-signal text-glow">DARK</span>.
-              </h1>
-              <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/70 sm:mt-6 sm:text-base">
-                Futuristic, hand-finished pieces in matte obsidian, smoked glass and brushed brass.
-                Engineered for the corners of your home that prefer the night.
-              </p>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10">
-                <Link
-                  to="/shop"
-                  className="group inline-flex items-center gap-2 border border-signal bg-signal px-6 py-3.5 font-display text-[11px] uppercase tracking-[0.35em] text-primary-foreground transition hover:shadow-signal sm:px-7 sm:py-4"
-                >
-                  Enter Shop <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 border border-border bg-background/60 px-6 py-3.5 font-display text-[11px] uppercase tracking-[0.35em] text-foreground/90 backdrop-blur transition hover:border-signal hover:text-signal sm:px-7 sm:py-4"
-                >
-                  The Origin
-                </Link>
+              <div className="absolute bottom-3 right-3 border-2 border-xmen-ink bg-white px-3 py-1.5">
+                <div className="font-xmen-display text-sm uppercase tracking-widest text-xmen-red">{vaultProducts[0].name}</div>
+                <div className="font-xmen-mono text-[10px] text-xmen-ink-soft">${vaultProducts[0].price}</div>
               </div>
+            </div>
+            {/* floating accents */}
+            <div className="absolute -left-6 -bottom-6 hidden h-24 w-24 border-2 border-xmen-ink bg-xmen-yellow xm-clip sm:grid place-items-center xm-float">
+              <LightningBolt className="h-10 w-5 text-xmen-ink" />
+            </div>
+            <div className="absolute -right-4 top-12 hidden h-16 w-16 border-2 border-xmen-ink bg-white sm:grid place-items-center">
+              <CerebroIcon className="h-9 w-9 text-xmen-red" />
             </div>
           </div>
         </div>
       </section>
 
       {/* VALUE PROPS */}
-      <section className="mt-16 sm:mt-24 border-y border-border bg-card/30">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-border md:grid-cols-4 md:divide-y-0">
+      <section className="border-b-2 border-xmen-ink bg-xmen-paper-soft">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x-2 divide-y-2 divide-xmen-ink md:grid-cols-4 md:divide-y-0">
           {[
-            { icon: Shield, label: "Lifetime Warranty", sub: "On every cast iron piece" },
-            { icon: Truck, label: "Free Shipping", sub: "On orders over $200" },
-            { icon: Sparkles, label: "Hand-finished", sub: "Small batch production" },
-            { icon: Moon, label: "Night-mode Only", sub: "Dark by design" },
+            { icon: Shield, label: "5-Yr Warranty", sub: "Adamantium-grade builds" },
+            { icon: Truck, label: "Free Shipping", sub: "On orders over $150" },
+            { icon: Sparkles, label: "Hand-Tuned", sub: "Calibrated in the Danger Room" },
+            { icon: Zap, label: "Cerebro Tested", sub: "Vetted by Beast & Forge" },
           ].map(({ icon: Icon, label, sub }) => (
-            <div key={label} className="flex flex-col items-start gap-2 px-4 py-7 sm:flex-row sm:items-center sm:gap-4 sm:px-8">
-              <Icon className="h-5 w-5 shrink-0 text-signal" />
+            <div key={label} className="flex flex-col items-start gap-2 px-4 py-7 sm:flex-row sm:items-center sm:gap-4 sm:px-6">
+              <Icon className="h-5 w-5 shrink-0 text-xmen-red" />
               <div>
-                <div className="font-display text-[11px] uppercase tracking-[0.3em]">{label}</div>
-                <div className="mt-1 text-[11px] text-muted-foreground">{sub}</div>
+                <div className="font-xmen-display text-sm uppercase tracking-[0.2em]">{label}</div>
+                <div className="mt-1 text-[11px] text-xmen-ink-soft">{sub}</div>
               </div>
             </div>
           ))}
@@ -95,115 +122,114 @@ function Index() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-12">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">Chapter 01</div>
-            <h2 className="mt-2 font-display text-3xl sm:text-5xl">Featured Pieces</h2>
+            <div className="inline-flex items-center gap-2 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">
+              <ClawsIcon className="h-3 w-3" /> Chapter 01 — Featured
+            </div>
+            <h2 className="mt-2 font-xmen-display text-4xl sm:text-6xl">FIRST-CLASS GEAR.</h2>
           </div>
-          <Link to="/shop" className="group inline-flex items-center gap-2 font-display text-[11px] uppercase tracking-[0.35em] text-muted-foreground hover:text-signal">
+          <Link to="/shop" className="group inline-flex items-center gap-2 font-xmen-display text-xs uppercase tracking-[0.3em] text-xmen-ink hover:text-xmen-red">
             View All <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-2 gap-5 sm:gap-7 md:grid-cols-3 lg:grid-cols-4">
           {featured.map((p, i) => (
-            <ProductCard product={p} key={p.slug} index={i} />
+            <XmenProductCard product={p} key={p.slug} index={i} />
           ))}
         </div>
       </section>
 
-      {/* COLLECTIONS BANNER */}
-      <section className="relative overflow-hidden border-y border-border bg-background py-16 sm:py-24">
-        <div className="absolute inset-0 bg-grid opacity-40" />
-        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-signal/40 to-transparent" />
+      {/* CATEGORIES BANNER */}
+      <section className="relative overflow-hidden border-y-2 border-xmen-ink bg-xmen-ink py-16 sm:py-24">
+        <div className="absolute inset-0 xm-halftone opacity-20" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <BatLogo className="mx-auto h-9 w-20 text-signal animate-float-slow" />
-          <h2 className="mt-6 font-display text-2xl sm:text-5xl">Five Collections. One Code.</h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
-            Each piece belongs to a chapter of the long night.
+          <XLogo className="mx-auto h-12 w-12 text-xmen-yellow xm-float" />
+          <h2 className="mt-6 font-xmen-display text-4xl text-white sm:text-6xl">FOUR SQUADS. ONE INSTITUTE.</h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-white/70">
+            Each category trains in its own corner of the Danger Room.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:mt-10">
-            {collections.map((c) => (
-              <span key={c} className="border border-border bg-card px-3 py-1.5 sm:px-4 sm:py-2 font-display text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-foreground/80 transition hover:border-signal hover:text-signal">
+            {vaultCategories.map((c) => (
+              <Link
+                key={c}
+                to="/shop"
+                className="border-2 border-white bg-transparent px-4 py-2 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:bg-xmen-yellow hover:text-xmen-ink hover:border-xmen-yellow"
+              >
                 {c}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* NEW DROPS */}
+      {/* DROPS */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        <div className="mb-10 sm:mb-12">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">Chapter 02</div>
-          <h2 className="mt-2 font-display text-3xl sm:text-5xl">Latest Drops</h2>
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-2 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">
+            <VisorIcon className="h-3 w-6" /> Chapter 02 — Fresh Drops
+          </div>
+          <h2 className="mt-2 font-xmen-display text-4xl sm:text-6xl">NEW MUTATIONS.</h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-2 gap-5 sm:gap-7 md:grid-cols-3 lg:grid-cols-4">
           {drops.map((p, i) => (
-            <ProductCard product={p} key={p.slug} index={i} />
+            <XmenProductCard product={p} key={p.slug} index={i} />
           ))}
         </div>
       </section>
 
       {/* MANIFESTO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 noise" />
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:py-24 sm:px-6 lg:px-8 lg:grid-cols-2 lg:items-center">
+      <section className="relative overflow-hidden border-y-2 border-xmen-ink bg-xmen-yellow">
+        <div className="absolute inset-0 xm-hatch opacity-[0.04]" />
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:py-28 sm:px-6 lg:px-8 lg:grid-cols-2 lg:items-center">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// MANIFESTO</div>
-            <h2 className="mt-3 font-display text-3xl sm:text-5xl">We don't fear the dark. <br/>We <span className="text-signal">furnish</span> it.</h2>
-            <p className="mt-6 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              Dark Decor was founded on a single idea: that elegance lives in shadow.
-              Every piece in our catalog is hand-finished in small batches, cast in materials
-              chosen for their weight and silence. No mass production. No bright primaries. No mercy
-              for the mediocre.
+            <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// MANIFESTO</div>
+            <h2 className="mt-3 font-xmen-display text-4xl leading-[0.95] sm:text-6xl">
+              YOU'RE NOT <br/> <span className="text-xmen-red">A CUSTOMER.</span> <br/> YOU'RE A MUTANT.
+            </h2>
+            <p className="mt-6 max-w-xl text-base text-xmen-ink/80 leading-relaxed">
+              Every Viral Vault piece is engineered for the unfair advantage.
+              Pour faster than Quicksilver. Plate sharper than Cyclops. Whip cream
+              with the patience of Xavier. The kitchen is the new Danger Room.
             </p>
-            <Link to="/about" className="mt-8 inline-flex items-center gap-2 border-b border-signal pb-1 font-display text-[11px] uppercase tracking-[0.35em] text-signal">
-              Read the full origin <ArrowRight className="h-3.5 w-3.5" />
+            <Link to="/about" className="mt-8 inline-flex items-center gap-2 border-b-2 border-xmen-ink pb-1 font-xmen-display text-xs uppercase tracking-[0.3em] text-xmen-ink">
+              Read the full mythos <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
-          <div className="relative">
-            <div className="aspect-square border border-border bg-card p-8 sm:p-10 shadow-elevated clip-frame">
-              <BatLogo className="h-full w-full text-signal/90 animate-float-slow" />
+          <div className="relative grid place-items-center">
+            <div className="relative h-72 w-72 sm:h-96 sm:w-96">
+              <div className="absolute inset-0 border-4 border-xmen-ink bg-white grid place-items-center xm-frame xm-frame-red">
+                <XLogo className="h-40 w-40 text-xmen-red sm:h-56 sm:w-56" />
+              </div>
+              <ClawsIcon className="absolute -left-8 -top-8 h-16 w-16 text-xmen-ink xm-float" />
+              <LightningBolt className="absolute -right-6 -bottom-6 h-20 w-10 text-xmen-ink" />
             </div>
-            <div className="absolute -inset-4 -z-10 bg-signal/10 blur-3xl" />
           </div>
         </div>
       </section>
 
       {/* NEWSLETTER */}
-      <section className="border-t border-border bg-card/40">
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:py-20 text-center sm:px-6 lg:px-8">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// THE BAT-SIGNAL</div>
-          <h2 className="mt-3 font-display text-2xl sm:text-4xl">Subscribe to the night.</h2>
-          <p className="mt-3 text-sm text-muted-foreground">
-            First access to drops, restocks, and the occasional vigilante missive.
+      <section className="bg-white">
+        <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24 text-center sm:px-6 lg:px-8">
+          <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// CEREBRO BROADCAST</div>
+          <h2 className="mt-3 font-xmen-display text-4xl sm:text-5xl">JOIN THE INSTITUTE.</h2>
+          <p className="mt-3 text-sm text-xmen-ink-soft">
+            First word on every drop, restock, and Danger-Room sale.
           </p>
           <form onSubmit={(e) => e.preventDefault()} className="mx-auto mt-8 flex max-w-md flex-col gap-2 sm:flex-row">
             <input
               type="email"
               required
-              placeholder="your@dark.email"
-              className="flex-1 border border-border bg-background px-4 py-3 font-mono text-sm placeholder:text-muted-foreground focus:border-signal focus:outline-none"
+              placeholder="your@mutant.email"
+              className="flex-1 px-4 py-3 font-xmen-mono text-sm"
             />
-            <button className="border border-signal bg-signal px-6 py-3 font-display text-[11px] uppercase tracking-[0.35em] text-primary-foreground hover:shadow-signal">
-              Signal Me
+            <button className="border-2 border-xmen-ink bg-xmen-red px-6 py-3 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-yellow hover:text-xmen-ink">
+              Enlist
             </button>
           </form>
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60">
-            Psst — try typing <span className="text-signal">"bat"</span> anywhere on this site.
+          <p className="mt-4 font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft/70">
+            Easter egg — press <span className="border border-xmen-ink px-1.5 py-0.5 text-xmen-ink">↑↑↓↓←→←→BA</span> anywhere.
           </p>
         </div>
       </section>
     </div>
-  );
-}
-
-function CornerBrackets() {
-  const base = "absolute h-5 w-5 border-signal/60";
-  return (
-    <>
-      <span className={`${base} left-3 top-3 border-l border-t`} />
-      <span className={`${base} right-3 top-3 border-r border-t`} />
-      <span className={`${base} left-3 bottom-3 border-l border-b`} />
-      <span className={`${base} right-3 bottom-3 border-r border-b`} />
-    </>
   );
 }

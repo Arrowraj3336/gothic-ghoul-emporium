@@ -160,198 +160,143 @@
 .pt-bat { animation: pt-bat-reveal 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 .pt-fog { animation: pt-fog 2.2s ease-in-out forwards; }
 
+
 /* ========================================================================
-   VIRAL VAULT — Dr. Doom Retro Minimal (white + dark forest green only)
+   VIRAL VAULT — X-MEN edition (white background + bold X-Men palette)
    ======================================================================== */
-.vault-scope {
-  /* Primary action — deep Latverian forest */
-  --vv-crimson: #0f3d26;          /* primary green (was crimson token) */
-  --vv-crimson-deep: #082619;
-  --vv-green: #0f3d26;
-  --vv-green-deep: #082619;
-  --vv-green-soft: #e6efe9;       /* very pale wash */
-  --vv-green-line: rgba(15, 61, 38, 0.18);
+.xmen-scope {
+  --xm-yellow: #ffd400;
+  --xm-yellow-soft: #fff4b8;
+  --xm-red: #d71920;
+  --xm-red-deep: #9a0f15;
+  --xm-blue: #1f3a93;
+  --xm-blue-deep: #11225a;
+  --xm-ink: #0a0a14;
+  --xm-ink-soft: #5b6070;
+  --xm-paper: #ffffff;
+  --xm-paper-soft: #f7f7f4;
+  --xm-line: rgba(10,10,20,0.10);
+  --xm-line-strong: rgba(10,10,20,0.30);
 
-  /* Legacy accent tokens remapped to muted greens (no purple/gold left) */
-  --vv-blue: #14563a;
-  --vv-blue-deep: #082619;
-  --vv-gold: #0f3d26;
-  --vv-gold-light: #14563a;
-  --vv-gold-soft: rgba(15, 61, 38, 0.16);
-
-  /* Surfaces — pure white */
-  --vv-cream: #ffffff;
-  --vv-cream-deep: #f7f8f6;
-  --vv-cream-soft: #ffffff;
-
-  /* Text */
-  --vv-ink: #0a1f15;
-  --vv-ink-soft: #5b6e64;
-
-  --font-vault-heroic: "Cinzel", "Trajan Pro", "Times New Roman", serif;
-  --font-vault-serif: "Cormorant Garamond", "Fraunces", serif;
-  --font-vault-sans-ww: "Inter", system-ui, sans-serif;
+  --font-xmen-display: "Bebas Neue", "Orbitron", "Arial Narrow", system-ui, sans-serif;
+  --font-xmen-mono: "JetBrains Mono", monospace;
+  --font-xmen-sans: "Inter", system-ui, sans-serif;
 
   background: #ffffff;
-  color: var(--vv-ink);
-  font-family: var(--font-vault-sans-ww);
+  color: var(--xm-ink);
+  font-family: var(--font-xmen-sans);
   color-scheme: light;
 }
-.vault-scope ::selection { background: var(--vv-green); color: #fff; }
-.vault-scope ::-webkit-scrollbar-thumb { background: var(--vv-green); }
-.vault-scope h1, .vault-scope h2, .vault-scope h3, .vault-scope h4 {
-  font-family: var(--font-vault-heroic);
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  color: var(--vv-ink);
-}
-.vault-scope .font-vault-display { font-family: var(--font-vault-heroic) !important; letter-spacing: 0.04em; }
-.vault-scope .font-vault-heroic { font-family: var(--font-vault-heroic); }
-.vault-scope .font-vault-serif  { font-family: var(--font-vault-serif); }
-.vault-scope .font-vault-italic { font-family: var(--font-vault-serif); font-style: italic; letter-spacing: 0; }
-
-/* Hairline Latverian meander — angular, single-tone */
-.vault-scope .vv-meander {
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--vv-green) 0 10px,
-    transparent 10px 14px,
-    var(--vv-green) 14px 16px,
-    transparent 16px 28px
-  );
-  height: 2px;
-  opacity: 0.45;
-}
-.vault-scope .vv-grain { position: relative; }
-.vault-scope .vv-grain::after {
-  content: "";
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
-  opacity: 0.05; pointer-events: none; mix-blend-mode: multiply;
+.xmen-scope ::selection { background: var(--xm-yellow); color: var(--xm-ink); }
+.xmen-scope ::-webkit-scrollbar-thumb { background: var(--xm-red); }
+.xmen-scope h1, .xmen-scope h2, .xmen-scope h3, .xmen-scope h4 {
+  font-family: var(--font-xmen-display);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: var(--xm-ink);
 }
 
-/* Retro plate — paper card on white */
-.vault-scope .vv-plate {
-  background: #ffffff;
-  border: 1px solid var(--vv-green-line);
-  box-shadow: 0 1px 0 var(--vv-green-line), 0 24px 60px -40px rgba(15,61,38,0.25);
+.xmen-scope .text-xmen-red { color: var(--xm-red); }
+.xmen-scope .text-xmen-yellow { color: var(--xm-yellow); }
+.xmen-scope .text-xmen-blue { color: var(--xm-blue); }
+.xmen-scope .text-xmen-ink { color: var(--xm-ink); }
+.xmen-scope .text-xmen-ink-soft { color: var(--xm-ink-soft); }
+.xmen-scope .bg-xmen-red { background-color: var(--xm-red); }
+.xmen-scope .bg-xmen-yellow { background-color: var(--xm-yellow); }
+.xmen-scope .bg-xmen-blue { background-color: var(--xm-blue); }
+.xmen-scope .bg-xmen-ink { background-color: var(--xm-ink); }
+.xmen-scope .bg-xmen-paper-soft { background-color: var(--xm-paper-soft); }
+.xmen-scope .border-xmen-red { border-color: var(--xm-red) !important; }
+.xmen-scope .border-xmen-yellow { border-color: var(--xm-yellow) !important; }
+.xmen-scope .border-xmen-blue { border-color: var(--xm-blue) !important; }
+.xmen-scope .border-xmen-ink { border-color: var(--xm-ink) !important; }
+.xmen-scope .border-xmen-line { border-color: var(--xm-line) !important; }
+.xmen-scope .font-xmen-display { font-family: var(--font-xmen-display) !important; letter-spacing: 0.06em; }
+.xmen-scope .font-xmen-mono { font-family: var(--font-xmen-mono) !important; }
+
+.xmen-scope .xm-hex {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle at 1px 1px, rgba(10,10,20,0.07) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.xmen-scope .xm-halftone {
+  background-image: radial-gradient(circle at center, var(--xm-red) 1.4px, transparent 1.6px);
+  background-size: 14px 14px;
+}
+.xmen-scope .xm-halftone-yellow {
+  background-image: radial-gradient(circle at center, var(--xm-yellow) 1.6px, transparent 1.8px);
+  background-size: 12px 12px;
+}
+.xmen-scope .xm-frame {
+  background: #fff;
+  border: 2px solid var(--xm-ink);
+  box-shadow: 6px 6px 0 0 var(--xm-ink);
+}
+.xmen-scope .xm-frame-red { box-shadow: 6px 6px 0 0 var(--xm-red); }
+.xmen-scope .xm-frame-yellow { box-shadow: 6px 6px 0 0 var(--xm-yellow); }
+.xmen-scope .xm-frame-blue { box-shadow: 6px 6px 0 0 var(--xm-blue); }
+.xmen-scope .xm-clip {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
 }
 
-/* === Tailwind neutral overrides → white + green minimal === */
-.vault-scope .bg-white { background-color: #ffffff !important; }
-.vault-scope .bg-neutral-50 { background-color: var(--vv-cream-deep) !important; }
-.vault-scope .bg-neutral-100 { background-color: var(--vv-green-soft) !important; }
-.vault-scope .bg-neutral-900 { background-color: var(--vv-green) !important; color: #fff !important; }
-.vault-scope .hover\:bg-neutral-700:hover { background-color: var(--vv-green-deep) !important; }
-.vault-scope .hover\:bg-neutral-50:hover { background-color: var(--vv-cream-deep) !important; }
-.vault-scope .text-neutral-900 { color: var(--vv-ink) !important; }
-.vault-scope .text-neutral-700 { color: #1f3a2c !important; }
-.vault-scope .text-neutral-600 { color: var(--vv-ink-soft) !important; }
-.vault-scope .text-neutral-500 { color: var(--vv-ink-soft) !important; }
-.vault-scope .text-neutral-400 { color: #8a9b91 !important; }
-.vault-scope .border-neutral-200 { border-color: var(--vv-green-line) !important; }
-.vault-scope .border-neutral-300 { border-color: var(--vv-green-line) !important; }
-.vault-scope .border-neutral-900 { border-color: var(--vv-green) !important; }
-.vault-scope .hover\:text-neutral-900:hover { color: var(--vv-green) !important; }
-.vault-scope .hover\:text-neutral-500:hover { color: var(--vv-green) !important; }
-.vault-scope .hover\:border-neutral-900:hover { border-color: var(--vv-green) !important; }
-.vault-scope .placeholder\:text-neutral-400::placeholder { color: #8a9b91 !important; }
-.vault-scope .focus\:border-neutral-900:focus { border-color: var(--vv-green) !important; outline-color: var(--vv-green) !important; }
-.vault-scope .divide-neutral-200 > * + * { border-color: var(--vv-green-line) !important; }
-.vault-scope .ring-neutral-900 { --tw-ring-color: var(--vv-green) !important; }
-.vault-scope .bg-emerald-50 { background-color: var(--vv-green-soft) !important; }
-.vault-scope .text-emerald-700 { color: var(--vv-green) !important; }
-.vault-scope input, .vault-scope select, .vault-scope textarea {
+.xmen-scope .bg-white { background-color: #ffffff !important; }
+.xmen-scope .bg-neutral-50,
+.xmen-scope .bg-neutral-100 { background-color: var(--xm-paper-soft) !important; }
+.xmen-scope .text-neutral-900 { color: var(--xm-ink) !important; }
+.xmen-scope .text-neutral-700,
+.xmen-scope .text-neutral-600 { color: #2d2f3a !important; }
+.xmen-scope .text-neutral-500 { color: var(--xm-ink-soft) !important; }
+.xmen-scope .border-neutral-200,
+.xmen-scope .border-neutral-300 { border-color: var(--xm-line) !important; }
+.xmen-scope input, .xmen-scope select, .xmen-scope textarea {
   background-color: #ffffff !important;
-  color: var(--vv-ink) !important;
-  border-color: var(--vv-green-line) !important;
+  color: var(--xm-ink) !important;
+  border: 2px solid var(--xm-ink) !important;
+  border-radius: 0 !important;
 }
-.vault-scope input:focus, .vault-scope select:focus, .vault-scope textarea:focus {
-  border-color: var(--vv-green) !important;
-  box-shadow: 0 0 0 3px rgba(15,61,38,0.10) !important;
+.xmen-scope input:focus, .xmen-scope select:focus, .xmen-scope textarea:focus {
+  border-color: var(--xm-red) !important;
+  box-shadow: 4px 4px 0 0 var(--xm-yellow) !important;
   outline: none !important;
 }
 
-/* ===== Homepage loader: Doom levitates → green laser → flash → reveal ===== */
-@keyframes vt-doom-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+@keyframes xm-scan-sweep {
+  0% { transform: translateY(-110%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(110%); opacity: 0; }
 }
-@keyframes vt-doom-enter {
-  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-  20% { opacity: 1; transform: translateY(0) scale(1); }
-  85% { opacity: 1; transform: translateY(-8px) scale(1.02); }
-  100% { opacity: 0; transform: translateY(-20px) scale(1.05); }
+@keyframes xm-x-reveal {
+  0%, 25% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  50% { opacity: 1; transform: scale(1.05) rotate(0); }
+  75% { opacity: 1; transform: scale(1) rotate(0); }
+  100% { opacity: 0; transform: scale(1.6) rotate(0); }
 }
-@keyframes vt-cloak-sway {
-  0%, 100% { transform: skewX(-2deg); }
-  50% { transform: skewX(2deg); }
+@keyframes xm-ring-pulse {
+  0%, 25% { opacity: 0; transform: scale(0.5); }
+  55% { opacity: 0.9; transform: scale(1.6); }
+  100% { opacity: 0; transform: scale(2.4); }
 }
-@keyframes vt-laser-grow {
+@keyframes xm-curtain {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes xm-slash {
   0%, 40% { transform: scaleX(0); opacity: 0; }
   55% { transform: scaleX(1); opacity: 1; }
-  70% { transform: scaleX(1); opacity: 1; }
   100% { transform: scaleX(1); opacity: 0; }
 }
-@keyframes vt-laser-glow {
-  0%, 40% { opacity: 0; }
-  60% { opacity: 0.9; }
-  100% { opacity: 0; }
-}
-@keyframes vt-flash {
-  0%, 65% { opacity: 0; }
-  72% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes vt-curtain-out {
-  0%, 80% { opacity: 1; }
-  100% { opacity: 0; }
-}
-.vault-loader-root {
-  background: #ffffff;
-  animation: vt-curtain-out 3.4s ease-out forwards;
-}
-.vault-loader-root .vt-doom {
-  animation: vt-doom-enter 3.4s cubic-bezier(.22,1,.36,1) forwards;
-}
-.vault-loader-root .vt-doom-inner {
-  animation: vt-doom-float 3.6s ease-in-out infinite;
-}
-.vault-loader-root .vt-cloak {
-  transform-origin: top center;
-  animation: vt-cloak-sway 2.4s ease-in-out infinite;
-}
-.vault-loader-root .vt-laser {
-  transform-origin: right center;
-  animation: vt-laser-grow 3.4s cubic-bezier(.7,0,.2,1) forwards;
-  box-shadow:
-    0 0 14px 4px rgba(15,61,38,0.85),
-    0 0 60px 18px rgba(15,61,38,0.55),
-    0 0 140px 40px rgba(15,61,38,0.30);
-}
-.vault-loader-root .vt-laser-core {
-  animation: vt-laser-glow 3.4s cubic-bezier(.7,0,.2,1) forwards;
-}
-.vault-loader-root .vt-flash {
-  background: radial-gradient(circle at center, #2a8c5e 0%, #0f3d26 40%, rgba(15,61,38,0) 75%);
-  animation: vt-flash 3.4s ease-out forwards;
-}
+.xmen-loader { background: #ffffff; animation: xm-curtain 2.6s ease-out forwards; }
+.xmen-loader .xm-sweep { animation: xm-scan-sweep 2.4s cubic-bezier(.65,0,.35,1) forwards; }
+.xmen-loader .xm-x { animation: xm-x-reveal 2.6s cubic-bezier(.22,1,.36,1) forwards; }
+.xmen-loader .xm-ring { animation: xm-ring-pulse 2.4s ease-out forwards; }
+.xmen-loader .xm-slash { animation: xm-slash 2.4s cubic-bezier(.7,0,.2,1) forwards; transform-origin: left center; }
 
-/* Subtle ambient float (used across sections) */
-@keyframes vv-spark {
-  0%, 100% { opacity: 0.20; transform: translateY(0) scale(1); }
-  50% { opacity: 0.55; transform: translateY(-6px) scale(1.1); }
-}
-.vault-scope .vv-spark { animation: vv-spark 4s ease-in-out infinite; }
+@keyframes xm-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+.xmen-scope .xm-float { animation: xm-float 5s ease-in-out infinite; }
+@keyframes xm-spin-slow { from { transform: rotate(0);} to { transform: rotate(360deg);} }
+.xmen-scope .xm-spin-slow { animation: xm-spin-slow 60s linear infinite; }
 
-/* Slow sigil rotation for ambient backgrounds */
-@keyframes vv-sigil-rotate {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
-}
-.vault-scope .vv-sigil { animation: vv-sigil-rotate 80s linear infinite; }
-
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -360,5 +305,5 @@
     scroll-behavior: auto !important;
   }
   .pt-curtain, .pt-ray, .pt-bat, .pt-fog { animation: none !important; opacity: 0 !important; }
-  .vault-loader-root { animation: none !important; opacity: 0 !important; display: none !important; }
+  .xmen-loader { animation: none !important; opacity: 0 !important; display: none !important; }
 }

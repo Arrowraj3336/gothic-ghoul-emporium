@@ -1,14 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BatLogo } from "@/components/BatLogo";
-import hero from "@/assets/hero-gotham.jpg";
+import { XLogo, ClawsIcon, CerebroIcon, VisorIcon, LightningBolt } from "@/components/XmenIcons";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Origin — About Dark Decor" },
-      { name: "description", content: "The origin story of Dark Decor: hand-finished dark home decor for those who prefer the night." },
-      { property: "og:title", content: "Our Origin — Dark Decor" },
-      { property: "og:description", content: "Where Dark Decor came from, and why we work only after dusk." },
+      { title: "Mythos — About Viral Vault" },
+      { name: "description", content: "The origin of Viral Vault — an X-Men-inspired storefront for tomorrow's home." },
+      { property: "og:title", content: "Mythos — Viral Vault" },
+      { property: "og:description", content: "How a band of cooks, engineers and gifted home-makers built the X-Vault." },
     ],
   }),
   component: About,
@@ -17,68 +16,69 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <div>
-      <section className="relative isolate overflow-hidden">
-        <img src={hero} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background" />
-        <div className="relative mx-auto max-w-4xl px-4 py-32 text-center sm:px-6">
-          <BatLogo className="mx-auto h-10 w-20 text-signal animate-float-slow" />
-          <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// CHAPTER ZERO</div>
-          <h1 className="mt-3 font-display text-5xl sm:text-7xl">An Origin in the Dark.</h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            Dark Decor was founded in a converted warehouse in Lower Gotham, by three designers who
-            were tired of beige. We make pieces for the rooms the sun forgets.
+      <section className="relative overflow-hidden border-b-2 border-xmen-ink">
+        <div className="absolute inset-0 xm-hex opacity-60" />
+        <XLogo className="pointer-events-none absolute -right-24 top-1/2 h-[460px] w-[460px] -translate-y-1/2 text-xmen-red/10" />
+        <div className="relative mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28 text-center">
+          <XLogo className="mx-auto h-14 w-14 text-xmen-red xm-float" />
+          <div className="mt-6 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// CHAPTER ZERO</div>
+          <h1 className="mt-3 font-xmen-display text-5xl leading-[0.95] sm:text-7xl">A SCHOOL FOR THE GIFTED.</h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base text-xmen-ink-soft sm:text-lg">
+            Viral Vault was founded by three cooks, a metallurgist and a former barista
+            who could pour a perfect rosetta with her eyes closed. We build appliances for
+            the people the world isn't quite ready for.
           </p>
         </div>
       </section>
 
-      {/* Pillars */}
-      <section className="mx-auto max-w-5xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-3">
+      <section className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid gap-6 md:grid-cols-3">
           {[
-            { num: "01", title: "Material Honesty", body: "Cast iron is cast iron. Brass is brass. Nothing pretending to be something it isn't." },
-            { num: "02", title: "Small Batches", body: "Every collection is limited. When it's gone, it's gone into the night for good." },
-            { num: "03", title: "Built for Shadow", body: "Designed to look their best at dusk, by candlelight, in the silence after midnight." },
+            { Icon: ClawsIcon, num: "01", title: "Adamantium Builds", body: "Every chassis is over-engineered. Drop-tested, dishwasher-vetted, decade-warrantied." },
+            { Icon: CerebroIcon, num: "02", title: "Cerebro Tested", body: "We psionically tune every motor. (Okay — we just use very good engineers.)" },
+            { Icon: VisorIcon, num: "03", title: "Quiet Power", body: "Designed to look sharp on the counter and disappear into a calm morning routine." },
           ].map((p) => (
-            <div key={p.num} className="border border-border bg-card/40 p-8">
-              <div className="font-display text-5xl text-signal/40">{p.num}</div>
-              <h3 className="mt-4 font-display text-xl">{p.title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{p.body}</p>
+            <div key={p.num} className="border-2 border-xmen-ink bg-white p-8 xm-frame">
+              <p.Icon className="h-9 w-9 text-xmen-red" />
+              <div className="mt-4 font-xmen-display text-4xl text-xmen-red/40">{p.num}</div>
+              <h3 className="mt-2 font-xmen-display text-2xl">{p.title}</h3>
+              <p className="mt-3 text-sm text-xmen-ink-soft leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="border-y border-border bg-card/30">
-        <div className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// THE CHRONOLOGY</div>
-          <h2 className="mt-3 font-display text-3xl sm:text-5xl">Five years in the dark.</h2>
-          <ol className="mt-12 space-y-10 border-l border-border pl-8">
+      <section className="border-y-2 border-xmen-ink bg-xmen-yellow">
+        <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// THE CHRONOLOGY</div>
+          <h2 className="mt-3 font-xmen-display text-4xl sm:text-6xl">A FEW DECADES IN THE INSTITUTE.</h2>
+          <ol className="mt-12 space-y-10 border-l-2 border-xmen-ink pl-8">
             {[
-              { year: "2019", title: "The Cape Foundry", body: "Founded by three industrial designers in a converted Gotham warehouse." },
-              { year: "2021", title: "First Cape Crusader Collection", body: "Our debut series of cast-iron lighting and matte ceramics sells out in 11 days." },
-              { year: "2023", title: "Arkham & Vigilante", body: "Two new collections expand the catalog into mirrors, glass, and heavy textiles." },
-              { year: "2025", title: "Wayne Manor Capsule", body: "A flagship furnishing collaboration with a certain anonymous benefactor." },
+              { year: "1963", title: "Issue #1 — The Founders", body: "Five gifted home-makers open a tiny test kitchen above a comic-book store." },
+              { year: "1992", title: "The Animated Era", body: "Our first commercial stand mixer hits the catalog. It is still a bestseller today." },
+              { year: "2000", title: "The Cinematic Run", body: "We expand into coffee and breakfast — the Atelier and Luma drop in the same season." },
+              { year: "2026", title: "The Viral Vault", body: "We move online with a full X-Men-inspired storefront. Welcome to the Institute." },
             ].map((e) => (
               <li key={e.year} className="relative">
-                <span className="absolute -left-[37px] grid h-4 w-4 place-items-center rounded-full border border-signal bg-background">
-                  <span className="h-1.5 w-1.5 rounded-full bg-signal animate-pulse" />
+                <span className="absolute -left-[37px] grid h-4 w-4 place-items-center border-2 border-xmen-ink bg-xmen-red">
+                  <span className="h-1.5 w-1.5 bg-white animate-pulse" />
                 </span>
-                <div className="font-mono text-[11px] uppercase tracking-widest text-signal">{e.year}</div>
-                <div className="mt-1 font-display text-xl">{e.title}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{e.body}</div>
+                <div className="font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-red">{e.year}</div>
+                <div className="mt-1 font-xmen-display text-2xl">{e.title}</div>
+                <div className="mt-1 text-sm text-xmen-ink/80">{e.body}</div>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
-        <p className="font-display text-2xl italic text-foreground/80 sm:text-3xl">
-          “We don't sell home decor.<br /> We sell the room you become at night.”
+      <section className="relative mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
+        <LightningBolt className="mx-auto h-10 w-5 text-xmen-red" />
+        <p className="mt-6 font-xmen-display text-3xl leading-tight text-xmen-ink sm:text-4xl">
+          "TO ME, MY APPLIANCES."
         </p>
-        <div className="mt-6 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          — The Founders, Dark Decor
+        <div className="mt-4 font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-ink-soft">
+          — The Founders, Viral Vault
         </div>
       </section>
     </div>

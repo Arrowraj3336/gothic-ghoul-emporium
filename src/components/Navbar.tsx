@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="group flex items-center gap-2.5">
+        <Link to="/vault" className="group flex items-center gap-2.5">
           <BatLogo className="h-6 w-12 text-foreground transition-all group-hover:text-signal group-hover:drop-shadow-[0_0_12px_var(--signal-glow)]" />
           <span className="font-display text-base sm:text-lg tracking-[0.3em] uppercase">
             Dark<span className="text-signal">·</span>Decor
@@ -54,7 +54,7 @@ export function Navbar() {
             <Search className="h-4 w-4" />
           </button>
           <Link
-            to="/cart"
+            to="/vault/cart"
             aria-label="Cart"
             className="relative grid h-9 w-9 place-items-center rounded-sm text-muted-foreground transition hover:text-signal hover:bg-secondary"
           >

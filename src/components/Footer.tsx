@@ -35,18 +35,18 @@ export function Footer() {
           <div>
             <h4 className="font-display text-xs tracking-[0.3em] uppercase text-signal">Shop</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/shop" className="hover:text-foreground">All Pieces</Link></li>
-              <li><Link to="/shop" className="hover:text-foreground">Lighting</Link></li>
-              <li><Link to="/shop" className="hover:text-foreground">Decor</Link></li>
-              <li><Link to="/shop" className="hover:text-foreground">Accents</Link></li>
+              <li><Link to="/vault/shop" className="hover:text-foreground">All Pieces</Link></li>
+              <li><Link to="/vault/shop" className="hover:text-foreground">Lighting</Link></li>
+              <li><Link to="/vault/shop" className="hover:text-foreground">Decor</Link></li>
+              <li><Link to="/vault/shop" className="hover:text-foreground">Accents</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-display text-xs tracking-[0.3em] uppercase text-signal">House</h4>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/about" className="hover:text-foreground">Our Origin</Link></li>
-              <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
+              <li><Link to="/vault/about" className="hover:text-foreground">Our Origin</Link></li>
+              <li><Link to="/vault/contact" className="hover:text-foreground">Contact</Link></li>
               <li><a href="#" className="hover:text-foreground">Shipping</a></li>
               <li><a href="#" className="hover:text-foreground">Returns</a></li>
             </ul>

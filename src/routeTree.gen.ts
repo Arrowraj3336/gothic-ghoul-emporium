@@ -18,6 +18,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultIndexRouteImport } from './routes/vault.index'
 import { Route as VaultShopRouteImport } from './routes/vault.shop'
+import { Route as VaultContactRouteImport } from './routes/vault.contact'
 import { Route as VaultCheckoutRouteImport } from './routes/vault.checkout'
 import { Route as VaultCartRouteImport } from './routes/vault.cart'
 import { Route as VaultAboutRouteImport } from './routes/vault.about'
@@ -69,6 +70,11 @@ const VaultShopRoute = VaultShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => VaultRoute,
 } as any)
+const VaultContactRoute = VaultContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => VaultRoute,
+} as any)
 const VaultCheckoutRoute = VaultCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault/': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
   '/vault/checkout': typeof VaultCheckoutRoute
+  '/vault/contact': typeof VaultContactRoute
   '/vault/shop': typeof VaultShopRoute
   '/vault/': typeof VaultIndexRoute
   '/vault/products/$slug': typeof VaultProductsSlugRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault/'
     | '/vault/products/$slug'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault'
     | '/vault/products/$slug'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/vault/about'
     | '/vault/cart'
     | '/vault/checkout'
+    | '/vault/contact'
     | '/vault/shop'
     | '/vault/'
     | '/vault/products/$slug'
@@ -269,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VaultShopRouteImport
       parentRoute: typeof VaultRoute
     }
+    '/vault/contact': {
+      id: '/vault/contact'
+      path: '/contact'
+      fullPath: '/vault/contact'
+      preLoaderRoute: typeof VaultContactRouteImport
+      parentRoute: typeof VaultRoute
+    }
     '/vault/checkout': {
       id: '/vault/checkout'
       path: '/checkout'
@@ -311,6 +330,7 @@ interface VaultRouteChildren {
   VaultAboutRoute: typeof VaultAboutRoute
   VaultCartRoute: typeof VaultCartRoute
   VaultCheckoutRoute: typeof VaultCheckoutRoute
+  VaultContactRoute: typeof VaultContactRoute
   VaultShopRoute: typeof VaultShopRoute
   VaultIndexRoute: typeof VaultIndexRoute
   VaultProductsSlugRoute: typeof VaultProductsSlugRoute
@@ -320,6 +340,7 @@ const VaultRouteChildren: VaultRouteChildren = {
   VaultAboutRoute: VaultAboutRoute,
   VaultCartRoute: VaultCartRoute,
   VaultCheckoutRoute: VaultCheckoutRoute,
+  VaultContactRoute: VaultContactRoute,
   VaultShopRoute: VaultShopRoute,
   VaultIndexRoute: VaultIndexRoute,
   VaultProductsSlugRoute: VaultProductsSlugRoute,
