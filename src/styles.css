@@ -160,3 +160,150 @@
 .pt-bat { animation: pt-bat-reveal 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 .pt-fog { animation: pt-fog 2.2s ease-in-out forwards; }
 
+
+/* ========================================================================
+   VIRAL VAULT — X-MEN edition (white background + bold X-Men palette)
+   ======================================================================== */
+.xmen-scope {
+  --xm-yellow: #ffd400;
+  --xm-yellow-soft: #fff4b8;
+  --xm-red: #d71920;
+  --xm-red-deep: #9a0f15;
+  --xm-blue: #1f3a93;
+  --xm-blue-deep: #11225a;
+  --xm-ink: #0a0a14;
+  --xm-ink-soft: #5b6070;
+  --xm-paper: #ffffff;
+  --xm-paper-soft: #f7f7f4;
+  --xm-line: rgba(10,10,20,0.10);
+  --xm-line-strong: rgba(10,10,20,0.30);
+
+  --font-xmen-display: "Bebas Neue", "Orbitron", "Arial Narrow", system-ui, sans-serif;
+  --font-xmen-mono: "JetBrains Mono", monospace;
+  --font-xmen-sans: "Inter", system-ui, sans-serif;
+
+  background: #ffffff;
+  color: var(--xm-ink);
+  font-family: var(--font-xmen-sans);
+  color-scheme: light;
+}
+.xmen-scope ::selection { background: var(--xm-yellow); color: var(--xm-ink); }
+.xmen-scope ::-webkit-scrollbar-thumb { background: var(--xm-red); }
+.xmen-scope h1, .xmen-scope h2, .xmen-scope h3, .xmen-scope h4 {
+  font-family: var(--font-xmen-display);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: var(--xm-ink);
+}
+
+.xmen-scope .text-xmen-red { color: var(--xm-red); }
+.xmen-scope .text-xmen-yellow { color: var(--xm-yellow); }
+.xmen-scope .text-xmen-blue { color: var(--xm-blue); }
+.xmen-scope .text-xmen-ink { color: var(--xm-ink); }
+.xmen-scope .text-xmen-ink-soft { color: var(--xm-ink-soft); }
+.xmen-scope .bg-xmen-red { background-color: var(--xm-red); }
+.xmen-scope .bg-xmen-yellow { background-color: var(--xm-yellow); }
+.xmen-scope .bg-xmen-blue { background-color: var(--xm-blue); }
+.xmen-scope .bg-xmen-ink { background-color: var(--xm-ink); }
+.xmen-scope .bg-xmen-paper-soft { background-color: var(--xm-paper-soft); }
+.xmen-scope .border-xmen-red { border-color: var(--xm-red) !important; }
+.xmen-scope .border-xmen-yellow { border-color: var(--xm-yellow) !important; }
+.xmen-scope .border-xmen-blue { border-color: var(--xm-blue) !important; }
+.xmen-scope .border-xmen-ink { border-color: var(--xm-ink) !important; }
+.xmen-scope .border-xmen-line { border-color: var(--xm-line) !important; }
+.xmen-scope .font-xmen-display { font-family: var(--font-xmen-display) !important; letter-spacing: 0.06em; }
+.xmen-scope .font-xmen-mono { font-family: var(--font-xmen-mono) !important; }
+
+.xmen-scope .xm-hex {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle at 1px 1px, rgba(10,10,20,0.07) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.xmen-scope .xm-halftone {
+  background-image: radial-gradient(circle at center, var(--xm-red) 1.4px, transparent 1.6px);
+  background-size: 14px 14px;
+}
+.xmen-scope .xm-halftone-yellow {
+  background-image: radial-gradient(circle at center, var(--xm-yellow) 1.6px, transparent 1.8px);
+  background-size: 12px 12px;
+}
+.xmen-scope .xm-frame {
+  background: #fff;
+  border: 2px solid var(--xm-ink);
+  box-shadow: 6px 6px 0 0 var(--xm-ink);
+}
+.xmen-scope .xm-frame-red { box-shadow: 6px 6px 0 0 var(--xm-red); }
+.xmen-scope .xm-frame-yellow { box-shadow: 6px 6px 0 0 var(--xm-yellow); }
+.xmen-scope .xm-frame-blue { box-shadow: 6px 6px 0 0 var(--xm-blue); }
+.xmen-scope .xm-clip {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.xmen-scope .bg-white { background-color: #ffffff !important; }
+.xmen-scope .bg-neutral-50,
+.xmen-scope .bg-neutral-100 { background-color: var(--xm-paper-soft) !important; }
+.xmen-scope .text-neutral-900 { color: var(--xm-ink) !important; }
+.xmen-scope .text-neutral-700,
+.xmen-scope .text-neutral-600 { color: #2d2f3a !important; }
+.xmen-scope .text-neutral-500 { color: var(--xm-ink-soft) !important; }
+.xmen-scope .border-neutral-200,
+.xmen-scope .border-neutral-300 { border-color: var(--xm-line) !important; }
+.xmen-scope input, .xmen-scope select, .xmen-scope textarea {
+  background-color: #ffffff !important;
+  color: var(--xm-ink) !important;
+  border: 2px solid var(--xm-ink) !important;
+  border-radius: 0 !important;
+}
+.xmen-scope input:focus, .xmen-scope select:focus, .xmen-scope textarea:focus {
+  border-color: var(--xm-red) !important;
+  box-shadow: 4px 4px 0 0 var(--xm-yellow) !important;
+  outline: none !important;
+}
+
+@keyframes xm-scan-sweep {
+  0% { transform: translateY(-110%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(110%); opacity: 0; }
+}
+@keyframes xm-x-reveal {
+  0%, 25% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  50% { opacity: 1; transform: scale(1.05) rotate(0); }
+  75% { opacity: 1; transform: scale(1) rotate(0); }
+  100% { opacity: 0; transform: scale(1.6) rotate(0); }
+}
+@keyframes xm-ring-pulse {
+  0%, 25% { opacity: 0; transform: scale(0.5); }
+  55% { opacity: 0.9; transform: scale(1.6); }
+  100% { opacity: 0; transform: scale(2.4); }
+}
+@keyframes xm-curtain {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes xm-slash {
+  0%, 40% { transform: scaleX(0); opacity: 0; }
+  55% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+.xmen-loader { background: #ffffff; animation: xm-curtain 2.6s ease-out forwards; }
+.xmen-loader .xm-sweep { animation: xm-scan-sweep 2.4s cubic-bezier(.65,0,.35,1) forwards; }
+.xmen-loader .xm-x { animation: xm-x-reveal 2.6s cubic-bezier(.22,1,.36,1) forwards; }
+.xmen-loader .xm-ring { animation: xm-ring-pulse 2.4s ease-out forwards; }
+.xmen-loader .xm-slash { animation: xm-slash 2.4s cubic-bezier(.7,0,.2,1) forwards; transform-origin: left center; }
+
+@keyframes xm-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+.xmen-scope .xm-float { animation: xm-float 5s ease-in-out infinite; }
+@keyframes xm-spin-slow { from { transform: rotate(0);} to { transform: rotate(360deg);} }
+.xmen-scope .xm-spin-slow { animation: xm-spin-slow 60s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pt-curtain, .pt-ray, .pt-bat, .pt-fog { animation: none !important; opacity: 0 !important; }
+  .xmen-loader { animation: none !important; opacity: 0 !important; display: none !important; }
+}
