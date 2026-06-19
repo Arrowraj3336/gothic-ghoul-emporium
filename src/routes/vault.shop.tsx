@@ -1,82 +1,84 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { vaultProducts, vaultCategories, type VaultProduct } from "@/lib/vault-products";
-import { VaultProductCard } from "@/components/vault/VaultProductCard";
-import { ArcaneSigil } from "@/components/vault/VaultIcons";
+import { products, categories, type Product } from "@/lib/products";
+import { ProductCard } from "@/components/ProductCard";
+import { BatLogo } from "@/components/BatLogo";
 
-export const Route = createFileRoute("/vault/shop")({
+export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
-      { title: "The Armory — Viral Vault" },
-      { name: "description", content: "Every instrument in the Latverian armory — coffee, cooking, prep and breakfast, sealed by Doom." },
+      { title: "Armory — Shop All | Dark Decor" },
+      { name: "description", content: "Browse every piece in the Dark Decor catalog. Lighting, decor, accents and furnishings, all hand-finished in matte black." },
+      { property: "og:title", content: "Shop — Dark Decor" },
+      { property: "og:description", content: "Hand-finished gothic-luxe home decor." },
     ],
   }),
-  component: VaultShop,
+  component: Shop,
 });
 
-function VaultShop() {
-  const [cat, setCat] = useState<VaultProduct["category"] | "All">("All");
+function Shop() {
+  const [cat, setCat] = useState<Product["category"] | "All">("All");
   const [sort, setSort] = useState<"featured" | "price-asc" | "price-desc">("featured");
 
   const list = useMemo(() => {
-    let l = cat === "All" ? vaultProducts : vaultProducts.filter((p) => p.category === cat);
+    let l = cat === "All" ? products : products.filter((p) => p.category === cat);
     if (sort === "price-asc") l = [...l].sort((a, b) => a.price - b.price);
     if (sort === "price-desc") l = [...l].sort((a, b) => b.price - a.price);
     return l;
   }, [cat, sort]);
 
   return (
-    <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute -right-40 top-0 hidden text-[var(--vv-green)] opacity-[0.05] lg:block">
-        <ArcaneSigil className="vv-sigil h-[520px] w-[520px]" />
-      </div>
-
-      <header className="mb-12 max-w-3xl">
-        <div className="text-[11px] uppercase tracking-[0.28em] text-[var(--vv-green)]">The Armory</div>
-        <h1 className="mt-3 font-vault-display text-5xl leading-tight text-[var(--vv-ink)] sm:text-6xl">
-          The vault.
-        </h1>
-        <p className="mt-4 font-vault-serif text-[17px] italic text-[var(--vv-ink-soft)]">
-          Every relic in the Latverian catalogue. Filter by guild, sort by tribute.
-        </p>
+    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <header className="relative mb-16 overflow-hidden border border-border bg-card/40 px-8 py-16 text-center">
+        <div className="absolute inset-0 bg-grid opacity-30" />
+        <div className="relative">
+          <BatLogo className="mx-auto h-8 w-16 text-signal" />
+          <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-signal">// THE ARMORY</div>
+          <h1 className="mt-3 font-display text-4xl sm:text-6xl">Every Piece. One Code.</h1>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
+            Browse the full Dark Decor catalog. Filter by category, sort by price, summon by night.
+          </p>
+        </div>
       </header>
 
-      <div className="mb-10 flex flex-col gap-4 border-b border-[var(--vv-green-line)] pb-5 sm:flex-row sm:items-center sm:justify-between">
+      {/* Filter bar */}
+      <div className="mb-10 flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          {(["All", ...vaultCategories] as const).map((c) => (
+          {(["All", ...categories] as const).map((c) => (
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={[
-                "border px-4 py-1.5 text-[11px] uppercase tracking-[0.18em] transition",
+              className={`border px-4 py-2 font-display text-[11px] uppercase tracking-[0.25em] transition ${
                 cat === c
-                  ? "border-[var(--vv-green)] bg-[var(--vv-green)] text-white"
-                  : "border-[var(--vv-green-line)] bg-white text-[var(--vv-ink)] hover:border-[var(--vv-green)]",
-              ].join(" ")}
+                  ? "border-signal bg-signal text-primary-foreground shadow-signal"
+                  : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+              }`}
             >
               {c}
             </button>
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)]">Decree</span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Sort</span>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as typeof sort)}
-            className="border border-[var(--vv-green-line)] bg-white px-3 py-1.5 text-xs text-[var(--vv-ink)] focus:border-[var(--vv-green)] focus:outline-none"
+            className="border border-border bg-background px-3 py-2 font-mono text-xs text-foreground focus:border-signal focus:outline-none"
           >
-            <option value="featured">Sovereign's order</option>
-            <option value="price-asc">Tribute · low to high</option>
-            <option value="price-desc">Tribute · high to low</option>
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price ↑</option>
+            <option value="price-desc">Price ↓</option>
           </select>
         </div>
       </div>
 
-      <div className="mb-6 text-[11px] uppercase tracking-[0.22em] text-[var(--vv-ink-soft)]">{list.length} relics</div>
+      <div className="mb-6 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+        Showing {list.length} {list.length === 1 ? "piece" : "pieces"}
+      </div>
 
-      <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {list.map((p, i) => (
-          <VaultProductCard product={p} key={p.slug} index={i} />
+          <ProductCard product={p} key={p.slug} index={i} />
         ))}
       </div>
     </div>
