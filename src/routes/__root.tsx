@@ -14,6 +14,7 @@ import { XmenCartProvider } from "@/lib/vault-cart";
 import { XmenNavbar } from "@/components/XmenNavbar";
 import { XmenFooter } from "@/components/XmenFooter";
 import { XmenTransition } from "@/components/XmenTransition";
+import { XmenEasterEggs } from "@/components/XmenEasterEggs";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
