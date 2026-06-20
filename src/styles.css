@@ -50,8 +50,6 @@
 
 :root {
   --radius: 0.125rem;
-
-  /* Dark Decor — black & bloody red */
   --background: oklch(0.04 0.005 25);
   --foreground: oklch(0.96 0.005 25);
   --card: oklch(0.08 0.012 25);
@@ -162,83 +160,180 @@
 
 
 /* ========================================================================
-   VIRAL VAULT — X-MEN edition (white background + bold X-Men palette)
+   VIRAL VAULT — X-MEN edition v2 (aesthetic + futuristic, light base)
    ======================================================================== */
 .xmen-scope {
-  --xm-yellow: #ffd400;
-  --xm-yellow-soft: #fff4b8;
-  --xm-red: #d71920;
-  --xm-red-deep: #9a0f15;
-  --xm-blue: #1f3a93;
+  /* Refined palette: paper white base, ink near-black, X-class crimson,
+     steel-blue, electric cyan, amber accent. No more brutal yellow. */
+  --xm-paper: #f7f6f3;
+  --xm-paper-soft: #efeee9;
+  --xm-paper-warm: #fbfaf6;
+  --xm-ink: #0b0d10;
+  --xm-ink-2: #1a1d22;
+  --xm-ink-soft: #5b6270;
+  --xm-line: rgba(11,13,16,0.10);
+  --xm-line-strong: rgba(11,13,16,0.32);
+
+  --xm-red: #c8202a;        /* X-class crimson */
+  --xm-red-deep: #7a0e16;
+  --xm-red-glow: rgba(200,32,42,0.45);
+  --xm-blue: #1f3a93;       /* Cyclops steel */
+  --xm-cyan: #4cc9ff;       /* Cerebro pulse */
+  --xm-amber: #d4a017;      /* subtle hi-light */
+  --xm-violet: #6b3fa0;     /* Magneto */
+  --xm-phoenix: #ff5b1f;    /* Phoenix flame */
+
+  /* Legacy aliases (so existing class names keep working) */
+  --xm-yellow: var(--xm-amber);
+  --xm-yellow-soft: #fbeeb8;
+  --xm-red-deep-legacy: var(--xm-red-deep);
   --xm-blue-deep: #11225a;
-  --xm-ink: #0a0a14;
-  --xm-ink-soft: #5b6070;
-  --xm-paper: #ffffff;
-  --xm-paper-soft: #f7f7f4;
-  --xm-line: rgba(10,10,20,0.10);
-  --xm-line-strong: rgba(10,10,20,0.30);
 
-  --font-xmen-display: "Bebas Neue", "Orbitron", "Arial Narrow", system-ui, sans-serif;
-  --font-xmen-mono: "JetBrains Mono", monospace;
+  --font-xmen-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-xmen-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-xmen-sans: "Inter", system-ui, sans-serif;
+  --font-xmen-serif: "Fraunces", "Times New Roman", serif;
 
-  background: #ffffff;
+  background: var(--xm-paper);
   color: var(--xm-ink);
   font-family: var(--font-xmen-sans);
   color-scheme: light;
 }
-.xmen-scope ::selection { background: var(--xm-yellow); color: var(--xm-ink); }
+.xmen-scope ::selection { background: var(--xm-red); color: #fff; }
 .xmen-scope ::-webkit-scrollbar-thumb { background: var(--xm-red); }
 .xmen-scope h1, .xmen-scope h2, .xmen-scope h3, .xmen-scope h4 {
   font-family: var(--font-xmen-display);
-  letter-spacing: 0.04em;
-  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-weight: 600;
   color: var(--xm-ink);
 }
+.xmen-scope h1 { letter-spacing: -0.02em; font-weight: 700; }
 
 .xmen-scope .text-xmen-red { color: var(--xm-red); }
-.xmen-scope .text-xmen-yellow { color: var(--xm-yellow); }
+.xmen-scope .text-xmen-yellow { color: var(--xm-amber); }
 .xmen-scope .text-xmen-blue { color: var(--xm-blue); }
+.xmen-scope .text-xmen-cyan { color: var(--xm-cyan); }
 .xmen-scope .text-xmen-ink { color: var(--xm-ink); }
 .xmen-scope .text-xmen-ink-soft { color: var(--xm-ink-soft); }
 .xmen-scope .bg-xmen-red { background-color: var(--xm-red); }
-.xmen-scope .bg-xmen-yellow { background-color: var(--xm-yellow); }
+.xmen-scope .bg-xmen-yellow { background-color: var(--xm-amber); }
 .xmen-scope .bg-xmen-blue { background-color: var(--xm-blue); }
 .xmen-scope .bg-xmen-ink { background-color: var(--xm-ink); }
 .xmen-scope .bg-xmen-paper-soft { background-color: var(--xm-paper-soft); }
 .xmen-scope .border-xmen-red { border-color: var(--xm-red) !important; }
-.xmen-scope .border-xmen-yellow { border-color: var(--xm-yellow) !important; }
+.xmen-scope .border-xmen-yellow { border-color: var(--xm-amber) !important; }
 .xmen-scope .border-xmen-blue { border-color: var(--xm-blue) !important; }
 .xmen-scope .border-xmen-ink { border-color: var(--xm-ink) !important; }
 .xmen-scope .border-xmen-line { border-color: var(--xm-line) !important; }
-.xmen-scope .font-xmen-display { font-family: var(--font-xmen-display) !important; letter-spacing: 0.06em; }
+.xmen-scope .font-xmen-display { font-family: var(--font-xmen-display) !important; letter-spacing: -0.01em; }
 .xmen-scope .font-xmen-mono { font-family: var(--font-xmen-mono) !important; }
+.xmen-scope .font-xmen-serif { font-family: var(--font-xmen-serif) !important; }
 
+/* Subtle futuristic grid / dot-matrix */
 .xmen-scope .xm-hex {
-  background-color: #ffffff;
-  background-image: radial-gradient(circle at 1px 1px, rgba(10,10,20,0.07) 1px, transparent 0);
-  background-size: 24px 24px;
+  background-color: var(--xm-paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(11,13,16,0.06) 1px, transparent 0);
+  background-size: 22px 22px;
 }
+.xmen-scope .xm-grid-fine {
+  background-image:
+    linear-gradient(rgba(11,13,16,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11,13,16,0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+/* legacy halftone — now whisper-soft, no longer poppy */
 .xmen-scope .xm-halftone {
-  background-image: radial-gradient(circle at center, var(--xm-red) 1.4px, transparent 1.6px);
-  background-size: 14px 14px;
+  background-image: radial-gradient(circle at center, rgba(200,32,42,0.16) 1.2px, transparent 1.4px);
+  background-size: 16px 16px;
 }
 .xmen-scope .xm-halftone-yellow {
-  background-image: radial-gradient(circle at center, var(--xm-yellow) 1.6px, transparent 1.8px);
-  background-size: 12px 12px;
+  background-image: radial-gradient(circle at center, rgba(212,160,23,0.20) 1.2px, transparent 1.4px);
+  background-size: 14px 14px;
 }
+
+/* Frames — futuristic surface: hairline border + soft layered shadow.
+   Replaces the old chunky 6px offset block-shadow brutalism. */
 .xmen-scope .xm-frame {
   background: #fff;
-  border: 2px solid var(--xm-ink);
-  box-shadow: 6px 6px 0 0 var(--xm-ink);
+  border: 1px solid var(--xm-line);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 rgba(11,13,16,0.04),
+    0 12px 28px -16px rgba(11,13,16,0.22),
+    0 30px 60px -40px rgba(200,32,42,0.18);
 }
-.xmen-scope .xm-frame-red { box-shadow: 6px 6px 0 0 var(--xm-red); }
-.xmen-scope .xm-frame-yellow { box-shadow: 6px 6px 0 0 var(--xm-yellow); }
-.xmen-scope .xm-frame-blue { box-shadow: 6px 6px 0 0 var(--xm-blue); }
+.xmen-scope .xm-frame-red {
+  border-color: rgba(200,32,42,0.45);
+  box-shadow:
+    0 1px 0 rgba(200,32,42,0.10),
+    0 14px 32px -16px rgba(200,32,42,0.30),
+    0 36px 70px -40px rgba(200,32,42,0.25);
+}
+.xmen-scope .xm-frame-yellow {
+  border-color: rgba(212,160,23,0.45);
+  box-shadow:
+    0 1px 0 rgba(212,160,23,0.10),
+    0 14px 32px -16px rgba(212,160,23,0.30);
+}
+.xmen-scope .xm-frame-blue {
+  border-color: rgba(31,58,147,0.45);
+  box-shadow:
+    0 1px 0 rgba(31,58,147,0.10),
+    0 14px 32px -16px rgba(31,58,147,0.30);
+}
 .xmen-scope .xm-clip {
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
 }
+.xmen-scope .xm-chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .35rem .65rem;
+  border: 1px solid var(--xm-line-strong);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-xmen-mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--xm-ink);
+}
+.xmen-scope .xm-chip-red { color: var(--xm-red); border-color: rgba(200,32,42,0.45); }
+.xmen-scope .xm-glass {
+  background: rgba(255,255,255,0.65);
+  border: 1px solid var(--xm-line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.xmen-scope .xm-rule {
+  height: 1px; width: 100%;
+  background: linear-gradient(90deg, transparent, var(--xm-line-strong), transparent);
+}
+.xmen-scope .xm-glow-red {
+  box-shadow: 0 0 0 1px rgba(200,32,42,0.4), 0 0 28px -2px var(--xm-red-glow);
+}
 
+/* Buttons — refined futuristic */
+.xmen-scope .xm-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .85rem 1.4rem;
+  font-family: var(--font-xmen-display);
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid var(--xm-ink);
+  background: var(--xm-ink);
+  color: #fff;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+}
+.xmen-scope .xm-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -12px rgba(11,13,16,0.45); }
+.xmen-scope .xm-btn-red { background: var(--xm-red); border-color: var(--xm-red); }
+.xmen-scope .xm-btn-red:hover { box-shadow: 0 12px 28px -10px var(--xm-red-glow); }
+.xmen-scope .xm-btn-ghost { background: transparent; color: var(--xm-ink); border-color: var(--xm-line-strong); }
+.xmen-scope .xm-btn-ghost:hover { border-color: var(--xm-ink); background: rgba(11,13,16,0.04); }
+
+/* Legacy compat — flatten old neo-brutalist tokens to futuristic equivalents */
 .xmen-scope .bg-white { background-color: #ffffff !important; }
 .xmen-scope .bg-neutral-50,
 .xmen-scope .bg-neutral-100 { background-color: var(--xm-paper-soft) !important; }
@@ -248,54 +343,135 @@
 .xmen-scope .text-neutral-500 { color: var(--xm-ink-soft) !important; }
 .xmen-scope .border-neutral-200,
 .xmen-scope .border-neutral-300 { border-color: var(--xm-line) !important; }
+
 .xmen-scope input, .xmen-scope select, .xmen-scope textarea {
   background-color: #ffffff !important;
   color: var(--xm-ink) !important;
-  border: 2px solid var(--xm-ink) !important;
-  border-radius: 0 !important;
+  border: 1px solid var(--xm-line-strong) !important;
+  border-radius: 2px !important;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
 .xmen-scope input:focus, .xmen-scope select:focus, .xmen-scope textarea:focus {
   border-color: var(--xm-red) !important;
-  box-shadow: 4px 4px 0 0 var(--xm-yellow) !important;
+  box-shadow: 0 0 0 4px rgba(200,32,42,0.12) !important;
   outline: none !important;
 }
 
-@keyframes xm-scan-sweep {
-  0% { transform: translateY(-110%); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(110%); opacity: 0; }
+/* ===========================================================
+   X-Mansion Gate Transition
+   Two angled black panels close in an X then open to reveal.
+   =========================================================== */
+@keyframes xm-gate-tl-in {
+  0% { transform: translate(-105%, -105%); }
+  45% { transform: translate(0,0); }
+  60% { transform: translate(0,0); }
+  100% { transform: translate(-105%, -105%); }
 }
-@keyframes xm-x-reveal {
-  0%, 25% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
-  50% { opacity: 1; transform: scale(1.05) rotate(0); }
-  75% { opacity: 1; transform: scale(1) rotate(0); }
-  100% { opacity: 0; transform: scale(1.6) rotate(0); }
+@keyframes xm-gate-tr-in {
+  0% { transform: translate(105%, -105%); }
+  45% { transform: translate(0,0); }
+  60% { transform: translate(0,0); }
+  100% { transform: translate(105%, -105%); }
 }
-@keyframes xm-ring-pulse {
-  0%, 25% { opacity: 0; transform: scale(0.5); }
-  55% { opacity: 0.9; transform: scale(1.6); }
-  100% { opacity: 0; transform: scale(2.4); }
+@keyframes xm-gate-bl-in {
+  0% { transform: translate(-105%, 105%); }
+  45% { transform: translate(0,0); }
+  60% { transform: translate(0,0); }
+  100% { transform: translate(-105%, 105%); }
 }
-@keyframes xm-curtain {
-  0%, 70% { opacity: 1; }
+@keyframes xm-gate-br-in {
+  0% { transform: translate(105%, 105%); }
+  45% { transform: translate(0,0); }
+  60% { transform: translate(0,0); }
+  100% { transform: translate(105%, 105%); }
+}
+@keyframes xm-gate-seam {
+  0%, 35% { opacity: 0; transform: scaleY(0); }
+  48% { opacity: 1; transform: scaleY(1); }
+  60% { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+@keyframes xm-gate-mark {
+  0%, 40% { opacity: 0; transform: scale(.4); }
+  55% { opacity: 1; transform: scale(1); }
+  62% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+@keyframes xm-gate-flash {
+  0%, 50% { opacity: 0; }
+  56% { opacity: 1; }
   100% { opacity: 0; }
 }
-@keyframes xm-slash {
-  0%, 40% { transform: scaleX(0); opacity: 0; }
-  55% { transform: scaleX(1); opacity: 1; }
-  100% { transform: scaleX(1); opacity: 0; }
-}
-.xmen-loader { background: #ffffff; animation: xm-curtain 2.6s ease-out forwards; }
-.xmen-loader .xm-sweep { animation: xm-scan-sweep 2.4s cubic-bezier(.65,0,.35,1) forwards; }
-.xmen-loader .xm-x { animation: xm-x-reveal 2.6s cubic-bezier(.22,1,.36,1) forwards; }
-.xmen-loader .xm-ring { animation: xm-ring-pulse 2.4s ease-out forwards; }
-.xmen-loader .xm-slash { animation: xm-slash 2.4s cubic-bezier(.7,0,.2,1) forwards; transform-origin: left center; }
 
-@keyframes xm-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
-.xmen-scope .xm-float { animation: xm-float 5s ease-in-out infinite; }
+.xm-gate-panel {
+  position: absolute; width: 75vmax; height: 75vmax;
+  background: #0b0d10;
+  will-change: transform;
+}
+.xm-gate-panel::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(200,32,42,0.18), transparent 55%);
+}
+.xm-gate-tl { top: -10vmax; left: -10vmax; clip-path: polygon(0 0, 100% 0, 0 100%); animation: xm-gate-tl-in 2.4s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate-tr { top: -10vmax; right: -10vmax; clip-path: polygon(0 0, 100% 0, 100% 100%); animation: xm-gate-tr-in 2.4s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate-bl { bottom: -10vmax; left: -10vmax; clip-path: polygon(0 0, 0 100%, 100% 100%); animation: xm-gate-bl-in 2.4s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate-br { bottom: -10vmax; right: -10vmax; clip-path: polygon(100% 0, 100% 100%, 0 100%); animation: xm-gate-br-in 2.4s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate-seam-1 {
+  position: absolute; top: 50%; left: 50%;
+  width: 240vmax; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--xm-red, #c8202a) 20%, #fff 50%, var(--xm-red, #c8202a) 80%, transparent);
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(45deg) scaleY(0);
+  animation: xm-gate-seam 2.4s ease-out forwards;
+  box-shadow: 0 0 18px rgba(200,32,42,0.6), 0 0 40px rgba(255,255,255,0.4);
+}
+.xm-gate-seam-2 {
+  position: absolute; top: 50%; left: 50%;
+  width: 240vmax; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--xm-red, #c8202a) 20%, #fff 50%, var(--xm-red, #c8202a) 80%, transparent);
+  transform: translate(-50%, -50%) rotate(-45deg) scaleY(0);
+  animation: xm-gate-seam 2.4s ease-out forwards;
+  box-shadow: 0 0 18px rgba(200,32,42,0.6), 0 0 40px rgba(255,255,255,0.4);
+}
+.xm-gate-mark {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: clamp(120px, 22vmax, 280px); height: clamp(120px, 22vmax, 280px);
+  animation: xm-gate-mark 2.4s cubic-bezier(.22,1,.36,1) forwards;
+}
+.xm-gate-flash {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.9), transparent 55%);
+  animation: xm-gate-flash 2.4s ease-out forwards;
+  mix-blend-mode: screen;
+}
+
+/* Hover float / spin (used decoratively) */
+@keyframes xm-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-8px);} }
+.xmen-scope .xm-float { animation: xm-float 6s ease-in-out infinite; }
 @keyframes xm-spin-slow { from { transform: rotate(0);} to { transform: rotate(360deg);} }
-.xmen-scope .xm-spin-slow { animation: xm-spin-slow 60s linear infinite; }
+.xmen-scope .xm-spin-slow { animation: xm-spin-slow 80s linear infinite; }
+@keyframes xm-scan { 0% { transform: translateY(-100%);} 100% { transform: translateY(2000%);} }
+.xmen-scope .xm-scan { animation: xm-scan 6s linear infinite; }
+
+/* Easter-egg overlays */
+@keyframes xm-egg-flash {
+  0% { opacity: 0; transform: scale(.6) rotate(-8deg); }
+  20% { opacity: 1; transform: scale(1.05) rotate(0); }
+  70% { opacity: 1; transform: scale(1) rotate(0); }
+  100% { opacity: 0; transform: scale(1.4) rotate(0); }
+}
+.xm-egg-overlay {
+  position: fixed; inset: 0; z-index: 250;
+  display: grid; place-items: center;
+  pointer-events: none;
+}
+.xm-egg-overlay > * { animation: xm-egg-flash 1.4s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes xm-bamf { 0% { opacity: 0; filter: blur(20px); transform: scale(.4);} 30% { opacity: 1; filter: none; transform: scale(1);} 70% { opacity: 1; } 100% { opacity: 0; filter: blur(20px); transform: scale(1.6);} }
+.xm-bamf { animation: xm-bamf 1.6s ease-out forwards; }
+@keyframes xm-shake { 0%,100% { transform: translate(0,0);} 20% { transform: translate(-6px, 4px);} 40% { transform: translate(5px, -3px);} 60% { transform: translate(-4px, 3px);} 80% { transform: translate(3px, -2px);} }
+.xm-shake { animation: xm-shake .6s ease-in-out 2; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -305,5 +481,7 @@
     scroll-behavior: auto !important;
   }
   .pt-curtain, .pt-ray, .pt-bat, .pt-fog { animation: none !important; opacity: 0 !important; }
-  .xmen-loader { animation: none !important; opacity: 0 !important; display: none !important; }
+  .xm-gate-panel, .xm-gate-mark, .xm-gate-seam-1, .xm-gate-seam-2, .xm-gate-flash {
+    animation: none !important; opacity: 0 !important; display: none !important;
+  }
 }
