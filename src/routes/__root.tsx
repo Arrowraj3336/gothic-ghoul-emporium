@@ -117,6 +117,7 @@ function RootComponent() {
         <XmenCartProvider>
           <div className="xmen-scope flex min-h-screen flex-col bg-white text-xmen-ink">
             <XmenTransition />
+            <XmenEasterEggs />
             <XmenNavbar />
             <main className="flex-1">
               <Outlet />
