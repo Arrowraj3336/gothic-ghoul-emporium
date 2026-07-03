@@ -9,8 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as XLabRouteImport } from './routes/x-lab'
+import { Route as XAdminRouteImport } from './routes/x-admin'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as OrderSuccessRouteImport } from './routes/order-success'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
@@ -25,6 +28,16 @@ import { Route as VaultAboutRouteImport } from './routes/vault.about'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VaultProductsSlugRouteImport } from './routes/vault.products.$slug'
 
+const XLabRoute = XLabRouteImport.update({
+  id: '/x-lab',
+  path: '/x-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const XAdminRoute = XAdminRouteImport.update({
+  id: '/x-admin',
+  path: '/x-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VaultRoute = VaultRouteImport.update({
   id: '/vault',
   path: '/vault',
@@ -33,6 +46,11 @@ const VaultRoute = VaultRouteImport.update({
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderSuccessRoute = OrderSuccessRouteImport.update({
+  id: '/order-success',
+  path: '/order-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -107,8 +125,11 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
   '/vault': typeof VaultRouteWithChildren
+  '/x-admin': typeof XAdminRoute
+  '/x-lab': typeof XLabRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
@@ -124,7 +145,10 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
+  '/x-admin': typeof XAdminRoute
+  '/x-lab': typeof XLabRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
@@ -141,8 +165,11 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
   '/vault': typeof VaultRouteWithChildren
+  '/x-admin': typeof XAdminRoute
+  '/x-lab': typeof XLabRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/vault/about': typeof VaultAboutRoute
   '/vault/cart': typeof VaultCartRoute
@@ -160,8 +187,11 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/order-success'
     | '/shop'
     | '/vault'
+    | '/x-admin'
+    | '/x-lab'
     | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
@@ -177,7 +207,10 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/order-success'
     | '/shop'
+    | '/x-admin'
+    | '/x-lab'
     | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
@@ -193,8 +226,11 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/contact'
+    | '/order-success'
     | '/shop'
     | '/vault'
+    | '/x-admin'
+    | '/x-lab'
     | '/products/$slug'
     | '/vault/about'
     | '/vault/cart'
@@ -211,13 +247,30 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
+  OrderSuccessRoute: typeof OrderSuccessRoute
   ShopRoute: typeof ShopRoute
   VaultRoute: typeof VaultRouteWithChildren
+  XAdminRoute: typeof XAdminRoute
+  XLabRoute: typeof XLabRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/x-lab': {
+      id: '/x-lab'
+      path: '/x-lab'
+      fullPath: '/x-lab'
+      preLoaderRoute: typeof XLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/x-admin': {
+      id: '/x-admin'
+      path: '/x-admin'
+      fullPath: '/x-admin'
+      preLoaderRoute: typeof XAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vault': {
       id: '/vault'
       path: '/vault'
@@ -230,6 +283,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-success': {
+      id: '/order-success'
+      path: '/order-success'
+      fullPath: '/order-success'
+      preLoaderRoute: typeof OrderSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -354,20 +414,13 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
+  OrderSuccessRoute: OrderSuccessRoute,
   ShopRoute: ShopRoute,
   VaultRoute: VaultRouteWithChildren,
+  XAdminRoute: XAdminRoute,
+  XLabRoute: XLabRoute,
   ProductsSlugRoute: ProductsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

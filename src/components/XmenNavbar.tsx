@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ShoppingBag, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { ShoppingBag, Menu, X, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useState } from "react";
 import { XmenLogo } from "./XmenLogo";
 import { useXmenCart } from "@/lib/vault-cart";
 import { cn } from "@/lib/utils";
+import { isMuted, setMuted } from "@/lib/xmen-fx";
 
 const navLinks = [
   { to: "/", label: "Institute" },
@@ -15,6 +16,13 @@ const navLinks = [
 export function XmenNavbar() {
   const { count } = useXmenCart();
   const [open, setOpen] = useState(false);
+  const [muted, setMutedState] = useState(false);
+  useEffect(() => {
+    setMutedState(isMuted());
+    const sync = () => setMutedState(isMuted());
+    window.addEventListener("xmen-mute-change", sync);
+    return () => window.removeEventListener("xmen-mute-change", sync);
+  }, []);
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   return (
@@ -49,6 +57,13 @@ export function XmenNavbar() {
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
+          <button
+            aria-label={muted ? "Unmute sound effects" : "Mute sound effects"}
+            onClick={() => { setMuted(!muted); setMutedState(!muted); }}
+            className="hidden sm:grid h-10 w-10 place-items-center rounded-full border border-xmen-line bg-white/70 text-xmen-ink transition hover:border-xmen-red hover:text-xmen-red"
+          >
+            {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+          </button>
           <Link
             to="/cart"
             aria-label="Cart"
