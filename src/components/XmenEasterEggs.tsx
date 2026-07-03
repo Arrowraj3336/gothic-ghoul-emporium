@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { XLogo, ClawsIcon, HelmetIcon, PhoenixIcon, TelepathyIcon, StormIcon, VisorIcon } from "./XmenIcons";
+import { xfx } from "@/lib/xmen-fx";
 
 /**
  * Hidden X-Men easter eggs (active on every Viral Vault page).
@@ -71,6 +72,7 @@ export function XmenEasterEggs() {
         seqRef.current.push(key);
         if (seqRef.current.length === KONAMI.length) {
           seqRef.current = [];
+          xfx.bamf();
           trigger({ kind: "bamf" }, { title: "*BAMF*", sub: "Nightcrawler dropped in. Smells like brimstone." });
           return;
         }
@@ -83,28 +85,23 @@ export function XmenEasterEggs() {
       if (e.key.length !== 1) return;
       switch (e.key.toLowerCase()) {
         case "x":
-          trigger({ kind: "x" }, { title: "X marks the spot." });
-          break;
+          xfx.x(); trigger({ kind: "x" }, { title: "X marks the spot." }); break;
         case "m":
+          xfx.magneto();
           trigger({ kind: "magneto" }, { title: "Magneto", sub: "Every fork in the room just twitched." });
           document.body.classList.add("xm-shake");
           window.setTimeout(() => document.body.classList.remove("xm-shake"), 1300);
           break;
         case "w":
-          trigger({ kind: "wolverine" }, { title: "Wolverine", sub: "*SNIKT*" });
-          break;
+          xfx.wolverine(); trigger({ kind: "wolverine" }, { title: "Wolverine", sub: "*SNIKT*" }); break;
         case "j":
-          trigger({ kind: "phoenix" }, { title: "Phoenix", sub: "Fire and life incarnate." });
-          break;
+          xfx.phoenix(); trigger({ kind: "phoenix" }, { title: "Phoenix", sub: "Fire and life incarnate." }); break;
         case "p":
-          trigger({ kind: "professor" }, { title: "Professor X", sub: "I have been expecting you." });
-          break;
+          xfx.professor(); trigger({ kind: "professor" }, { title: "Professor X", sub: "I have been expecting you." }); break;
         case "s":
-          trigger({ kind: "storm" }, { title: "Storm", sub: "The skies obey." });
-          break;
+          xfx.storm(); trigger({ kind: "storm" }, { title: "Storm", sub: "The skies obey." }); break;
         case "c":
-          trigger({ kind: "cyclops" }, { title: "Cyclops", sub: "Optic beams: armed." });
-          break;
+          xfx.cyclops(); trigger({ kind: "cyclops" }, { title: "Cyclops", sub: "Optic beams: armed." }); break;
       }
     }
 
@@ -119,6 +116,7 @@ export function XmenEasterEggs() {
       resetT = window.setTimeout(() => (count = 0), 1500);
       if (count >= 5) {
         count = 0;
+        xfx.cerebro();
         trigger({ kind: "cerebro" }, { title: "CEREBRO ONLINE", sub: "Scanning for mutant signatures…" });
       }
     }

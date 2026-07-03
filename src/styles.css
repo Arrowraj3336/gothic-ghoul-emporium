@@ -485,3 +485,144 @@
     animation: none !important; opacity: 0 !important; display: none !important;
   }
 }
+
+/* ===========================================================
+   v3 additions: animated bg, product-img transparency,
+   fast gate loader, order-success cinematic
+   =========================================================== */
+
+/* Product images — treat white JPG bg as transparent via mix-blend + soft shadow */
+.xmen-scope .xm-product-img {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 20px 24px rgba(11,13,16,0.12));
+}
+
+/* Site-wide animated background */
+.xmen-scope .xm-bg {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.xmen-scope .xm-bg-grid {
+  position: absolute; inset: -20% -20% -20% -20%;
+  background-image:
+    linear-gradient(rgba(11,13,16,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11,13,16,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  transform: translate3d(0, var(--xm-bg-y, 0), 0);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+}
+.xmen-scope .xm-bg-orb {
+  position: absolute; border-radius: 999px; filter: blur(80px);
+  opacity: .55; will-change: transform;
+  animation: xm-orb-drift 22s ease-in-out infinite alternate;
+}
+.xmen-scope .xm-bg-orb-a { top: -10%; left: -10%; width: 60vmin; height: 60vmin; background: rgba(200,32,42,0.14); }
+.xmen-scope .xm-bg-orb-b { bottom: -15%; right: -10%; width: 55vmin; height: 55vmin; background: rgba(31,58,147,0.12); animation-delay: -8s; }
+.xmen-scope .xm-bg-orb-c { top: 40%; left: 40%; width: 40vmin; height: 40vmin; background: rgba(212,160,23,0.10); animation-delay: -15s; }
+@keyframes xm-orb-drift {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(6vmin,-4vmin,0) scale(1.15); }
+}
+.xmen-scope .xm-bg-x {
+  position: absolute; opacity: 0.055; color: #0b0d10;
+  will-change: transform;
+}
+.xmen-scope .xm-bg-x-a { top: 12%; right: -6%; width: 34vmin; height: 34vmin;
+  transform: translate3d(0, calc(var(--xm-bg-y2, 0) * -1), 0) rotate(var(--xm-bg-rot, 0)); color: rgba(200,32,42,0.9); }
+.xmen-scope .xm-bg-x-b { bottom: 8%; left: -4%; width: 26vmin; height: 26vmin;
+  transform: translate3d(0, var(--xm-bg-y2, 0), 0) rotate(calc(var(--xm-bg-rot, 0) * -1)); }
+.xmen-scope .xm-bg-x-c { top: 55%; right: 30%; width: 18vmin; height: 18vmin;
+  transform: translate3d(0, calc(var(--xm-bg-y, 0) * -0.6), 0); }
+.xmen-scope > * { position: relative; z-index: 1; }
+.xmen-scope main, .xmen-scope header, .xmen-scope footer { position: relative; z-index: 2; }
+
+/* Rounded corner utilities used by cards */
+.xmen-scope .rounded-3xl, .xmen-scope .rounded-2xl, .xmen-scope .rounded-\[2rem\], .xmen-scope .rounded-\[2\.5rem\] { border-radius: var(--tw-radius, 1.5rem); }
+
+/* Fast X-Mansion gate loader v3 (~900ms) */
+.xm-gate2 {
+  position: fixed; inset: 0; z-index: 210;
+  overflow: hidden; pointer-events: none;
+}
+@keyframes xm-g2-nw { 0%{transform:translate(-105%,-105%)} 45%{transform:translate(0,0)} 60%{transform:translate(0,0)} 100%{transform:translate(-105%,-105%)} }
+@keyframes xm-g2-ne { 0%{transform:translate(105%,-105%)} 45%{transform:translate(0,0)} 60%{transform:translate(0,0)} 100%{transform:translate(105%,-105%)} }
+@keyframes xm-g2-sw { 0%{transform:translate(-105%,105%)} 45%{transform:translate(0,0)} 60%{transform:translate(0,0)} 100%{transform:translate(-105%,105%)} }
+@keyframes xm-g2-se { 0%{transform:translate(105%,105%)} 45%{transform:translate(0,0)} 60%{transform:translate(0,0)} 100%{transform:translate(105%,105%)} }
+.xm-gate2-panel {
+  position: absolute; width: 75vmax; height: 75vmax; background: #0b0d10;
+  will-change: transform;
+}
+.xm-gate2-nw { top:-10vmax; left:-10vmax; clip-path: polygon(0 0,100% 0,0 100%); animation: xm-g2-nw .9s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate2-ne { top:-10vmax; right:-10vmax; clip-path: polygon(0 0,100% 0,100% 100%); animation: xm-g2-ne .9s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate2-sw { bottom:-10vmax; left:-10vmax; clip-path: polygon(0 0,0 100%,100% 100%); animation: xm-g2-sw .9s cubic-bezier(.7,0,.2,1) forwards; }
+.xm-gate2-se { bottom:-10vmax; right:-10vmax; clip-path: polygon(100% 0,100% 100%,0 100%); animation: xm-g2-se .9s cubic-bezier(.7,0,.2,1) forwards; }
+@keyframes xm-g2-seam { 0%,40%{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scaleY(0)} 50%{opacity:1;transform:translate(-50%,-50%) rotate(var(--r)) scaleY(1)} 62%{opacity:1} 100%{opacity:0} }
+.xm-gate2-seam {
+  position: absolute; top: 50%; left: 50%;
+  width: 240vmax; height: 2px;
+  background: linear-gradient(90deg, transparent, #c8202a 30%, #fff 50%, #c8202a 70%, transparent);
+  box-shadow: 0 0 18px rgba(200,32,42,0.7), 0 0 40px rgba(255,255,255,0.5);
+  animation: xm-g2-seam .9s ease-out forwards;
+}
+.xm-gate2-seam-a { --r: 45deg; }
+.xm-gate2-seam-b { --r: -45deg; }
+@keyframes xm-g2-mark {
+  0%,42%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  62%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+}
+.xm-gate2-mark {
+  position: absolute; top: 50%; left: 50%;
+  width: clamp(120px, 20vmax, 240px); height: clamp(120px, 20vmax, 240px);
+  animation: xm-g2-mark .9s cubic-bezier(.22,1,.36,1) forwards;
+  filter: drop-shadow(0 0 20px rgba(200,32,42,0.6));
+}
+@keyframes xm-g2-flash { 0%,52%{opacity:0} 58%{opacity:1} 100%{opacity:0} }
+.xm-gate2-flash {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.95), transparent 55%);
+  animation: xm-g2-flash .9s ease-out forwards;
+  mix-blend-mode: screen;
+}
+
+/* Order-success cinematic */
+@keyframes xm-jet { 0%{transform:translateX(-40vw)} 55%{transform:translateX(45vw)} 100%{transform:translateX(45vw); opacity:0} }
+.xm-success-jet {
+  position: absolute; top: 30%; left: 50%;
+  width: 320px; height: 90px;
+  transform: translateX(-40vw);
+  animation: xm-jet 1.6s cubic-bezier(.5,0,.2,1) forwards;
+  filter: drop-shadow(0 8px 12px rgba(11,13,16,0.2));
+}
+@keyframes xm-success-x-in { 0%{opacity:0; transform:scale(.4) rotate(-20deg)} 55%{opacity:1; transform:scale(1) rotate(0)} 100%{opacity:1; transform:scale(1) rotate(0)} }
+.xm-success-x-wrap { position: relative; }
+.xm-success-x {
+  width: clamp(120px, 22vmax, 260px); height: clamp(120px, 22vmax, 260px);
+  animation: xm-success-x-in 1.4s .8s cubic-bezier(.22,1,.36,1) both;
+  filter: drop-shadow(0 20px 30px rgba(200,32,42,0.4));
+}
+@keyframes xm-success-ring { 0%{opacity:.9; transform: translate(-50%,-50%) scale(.4)} 100%{opacity:0; transform: translate(-50%,-50%) scale(2.5)} }
+.xm-success-ring {
+  position: absolute; top: 50%; left: 50%;
+  width: clamp(120px,22vmax,260px); height: clamp(120px,22vmax,260px);
+  border: 2px solid #c8202a; border-radius: 999px;
+  animation: xm-success-ring 1.6s 1.1s ease-out forwards;
+}
+.xm-success-ring-2 { animation-delay: 1.4s; }
+@keyframes xm-success-text { 0%{opacity:0; transform: translateY(20px)} 100%{opacity:1; transform: translateY(0)} }
+.xm-success-text { animation: xm-success-text .6s 1.8s ease-out both; }
+@keyframes xm-sky-fade { 0%{opacity:1} 100%{opacity:1} }
+.xm-success-sky {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, #fff, #f6f7f9 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xm-gate2-panel, .xm-gate2-seam, .xm-gate2-mark, .xm-gate2-flash,
+  .xm-success-jet, .xm-success-x, .xm-success-ring, .xm-success-text {
+    animation: none !important; opacity: 0 !important;
+  }
+  .xmen-scope .xm-bg-orb, .xmen-scope .xm-bg-x { animation: none !important; }
+}

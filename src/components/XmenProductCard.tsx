@@ -4,40 +4,34 @@ import { useXmenCart } from "@/lib/vault-cart";
 import { ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { getCharacter } from "@/lib/xmen-characters";
+import { formatINR } from "@/lib/utils";
 
 export function XmenProductCard({ product, index = 0 }: { product: VaultProduct; index?: number }) {
   const { add } = useXmenCart();
   const ch = getCharacter(product.slug);
   return (
-    <div
-      className="group relative animate-fade-in"
-      style={{ animationDelay: `${index * 70}ms` }}
-    >
+    <div className="group relative animate-fade-in" style={{ animationDelay: `${index * 70}ms` }}>
       <Link to="/products/$slug" params={{ slug: product.slug }} className="block">
         <div
-          className="relative aspect-[4/5] overflow-hidden rounded-sm border border-xmen-line bg-white transition-all duration-500 group-hover:-translate-y-1"
-          style={{
-            // subtle character-tinted soft glow on hover
-            boxShadow: `0 1px 0 rgba(11,13,16,0.04), 0 14px 30px -16px ${ch.ring}`,
-          }}
+          className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-xmen-line bg-white transition-all duration-500 group-hover:-translate-y-1.5"
+          style={{ boxShadow: `0 1px 0 rgba(11,13,16,0.04), 0 20px 44px -22px ${ch.ring}, 0 40px 80px -60px ${ch.ring}` }}
         >
-          {/* corner brackets */}
-          <span className="pointer-events-none absolute left-2 top-2 z-10 h-3 w-3 border-l border-t border-xmen-ink/60" />
-          <span className="pointer-events-none absolute right-2 top-2 z-10 h-3 w-3 border-r border-t border-xmen-ink/60" />
-          <span className="pointer-events-none absolute left-2 bottom-2 z-10 h-3 w-3 border-l border-b border-xmen-ink/60" />
-          <span className="pointer-events-none absolute right-2 bottom-2 z-10 h-3 w-3 border-r border-b border-xmen-ink/60" />
-
+          {/* soft radial character tint */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{ background: `radial-gradient(ellipse at 50% 100%, ${ch.colorSoft}, transparent 65%)` }}
+          />
           <img
             src={product.image}
             alt={product.name}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+            className="xm-product-img h-full w-full object-contain p-6 transition-transform duration-700 group-hover:scale-[1.05]"
           />
 
           {/* character chip */}
           <div
             className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-xmen-mono text-[9px] uppercase tracking-[0.22em] backdrop-blur"
-            style={{ background: "rgba(255,255,255,0.78)", borderColor: ch.ring, color: ch.color }}
+            style={{ background: "rgba(255,255,255,0.85)", borderColor: ch.ring, color: ch.color }}
           >
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: ch.color }} />
             {ch.codename}
@@ -57,7 +51,7 @@ export function XmenProductCard({ product, index = 0 }: { product: VaultProduct;
                 add(product.slug);
                 toast.success(`${product.name} acquired`, { description: `${ch.codename} approves.` });
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-sm bg-xmen-ink px-3 py-2.5 font-xmen-display text-[10px] uppercase tracking-[0.28em] text-white transition hover:bg-xmen-red"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-xmen-ink px-3 py-2.5 font-xmen-display text-[10px] uppercase tracking-[0.28em] text-white transition hover:bg-xmen-red"
             >
               <ShoppingBag className="h-3 w-3" /> Acquire
             </button>
@@ -65,7 +59,7 @@ export function XmenProductCard({ product, index = 0 }: { product: VaultProduct;
         </div>
       </Link>
 
-      <div className="mt-3.5 flex items-start justify-between gap-3">
+      <div className="mt-4 flex items-start justify-between gap-3 px-1">
         <div className="min-w-0">
           <div className="font-xmen-mono text-[9px] uppercase tracking-[0.24em]" style={{ color: ch.color }}>
             {product.category}
@@ -77,8 +71,8 @@ export function XmenProductCard({ product, index = 0 }: { product: VaultProduct;
           </h3>
           <p className="mt-0.5 text-[11px] text-xmen-ink-soft truncate">{product.tagline}</p>
         </div>
-        <span className="font-xmen-display text-base text-xmen-ink whitespace-nowrap">
-          ${product.price}
+        <span className="font-xmen-display text-sm text-xmen-ink whitespace-nowrap">
+          {formatINR(product.price)}
         </span>
       </div>
     </div>

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { XLogo } from "./XmenIcons";
+import { xfx } from "@/lib/xmen-fx";
 
 /**
- * X-Mansion Gate transition.
- * Four black triangular panels rush in from the corners, sealing the screen
- * into an X shape. A thin red+white seam ignites along the diagonals, the
- * X-Men insignia blooms at center, then the panels retract to reveal the page.
- *
- * Plays once per session on home, and on every product page.
+ * X-Mansion gate loader — v3 (fast, GPU-only).
+ * Two black diagonal panels slice in as an X, a red seam ignites,
+ * an X insignia strokes on, then a radial flash reveals the page.
+ * Total runtime ≈ 900ms. Runs once per session on home, on every product page.
  */
 export function XmenTransition() {
   const [active, setActive] = useState(false);
@@ -23,39 +21,34 @@ export function XmenTransition() {
     if (!isHome && !isProduct) return;
 
     if (isHome) {
-      if (sessionStorage.getItem("xmen-home-loaded-v2")) return;
-      sessionStorage.setItem("xmen-home-loaded-v2", "1");
+      if (sessionStorage.getItem("xmen-home-loaded-v3")) return;
+      sessionStorage.setItem("xmen-home-loaded-v3", "1");
     }
 
     setActive(true);
-    const t = setTimeout(() => setActive(false), 2500);
+    xfx.loader();
+    const t = setTimeout(() => setActive(false), 950);
     return () => clearTimeout(t);
   }, [path]);
 
   if (!active) return null;
 
   return (
-    <div
-      className="pointer-events-none fixed inset-0 z-[200] overflow-hidden"
-      aria-hidden="true"
-    >
-      {/* Gate panels — close into an X, then retract */}
-      <div className="xm-gate-panel xm-gate-tl" />
-      <div className="xm-gate-panel xm-gate-tr" />
-      <div className="xm-gate-panel xm-gate-bl" />
-      <div className="xm-gate-panel xm-gate-br" />
-
-      {/* Diagonal seams that light up as the panels meet */}
-      <div className="xm-gate-seam-1" />
-      <div className="xm-gate-seam-2" />
-
-      {/* Center X insignia */}
-      <div className="xm-gate-mark">
-        <XLogo className="h-full w-full text-[#c8202a] drop-shadow-[0_0_24px_rgba(200,32,42,0.7)]" />
-      </div>
-
-      {/* Final flash */}
-      <div className="xm-gate-flash" />
+    <div className="xm-gate2" aria-hidden="true">
+      <div className="xm-gate2-panel xm-gate2-nw" />
+      <div className="xm-gate2-panel xm-gate2-ne" />
+      <div className="xm-gate2-panel xm-gate2-sw" />
+      <div className="xm-gate2-panel xm-gate2-se" />
+      <div className="xm-gate2-seam xm-gate2-seam-a" />
+      <div className="xm-gate2-seam xm-gate2-seam-b" />
+      <svg className="xm-gate2-mark" viewBox="0 0 120 120" aria-hidden="true">
+        <path
+          d="M18 18 L52 52 L18 86 L34 102 L60 76 L86 102 L102 86 L68 52 L102 18 L86 2 L60 28 L34 2 Z"
+          fill="none" stroke="#c8202a" strokeWidth="3" strokeLinejoin="round"
+          pathLength={1}
+        />
+      </svg>
+      <div className="xm-gate2-flash" />
     </div>
   );
 }

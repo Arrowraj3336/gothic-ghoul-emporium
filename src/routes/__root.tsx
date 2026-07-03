@@ -11,10 +11,12 @@ import {
 
 import appCss from "../styles.css?url";
 import { XmenCartProvider } from "@/lib/vault-cart";
+import { XmenProductsProvider } from "@/lib/xmen-products-store";
 import { XmenNavbar } from "@/components/XmenNavbar";
 import { XmenFooter } from "@/components/XmenFooter";
 import { XmenTransition } from "@/components/XmenTransition";
 import { XmenEasterEggs } from "@/components/XmenEasterEggs";
+import { XmenBackground } from "@/components/XmenBackground";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -114,18 +116,21 @@ function RootComponent() {
       {isDecor ? (
         <Outlet />
       ) : (
-        <XmenCartProvider>
-          <div className="xmen-scope flex min-h-screen flex-col bg-white text-xmen-ink">
-            <XmenTransition />
-            <XmenEasterEggs />
-            <XmenNavbar />
-            <main className="flex-1">
-              <Outlet />
-            </main>
-            <XmenFooter />
-          </div>
-          <Toaster />
-        </XmenCartProvider>
+        <XmenProductsProvider>
+          <XmenCartProvider>
+            <div className="xmen-scope relative flex min-h-screen flex-col bg-white text-xmen-ink">
+              <XmenBackground />
+              <XmenTransition />
+              <XmenEasterEggs />
+              <XmenNavbar />
+              <main className="flex-1">
+                <Outlet />
+              </main>
+              <XmenFooter />
+            </div>
+            <Toaster />
+          </XmenCartProvider>
+        </XmenProductsProvider>
       )}
     </QueryClientProvider>
   );

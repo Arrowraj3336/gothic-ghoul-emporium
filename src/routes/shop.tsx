@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { vaultProducts, vaultCategories, type VaultProduct } from "@/lib/vault-products";
+import { vaultCategories, type VaultProduct } from "@/lib/vault-products";
+import { useProducts } from "@/lib/xmen-products-store";
 import { XmenProductCard } from "@/components/XmenProductCard";
 import { XLogo } from "@/components/XmenIcons";
 
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/shop")({
 });
 
 function Shop() {
+  const vaultProducts = useProducts();
   const [cat, setCat] = useState<VaultProduct["category"] | "All">("All");
   const [sort, setSort] = useState<"featured" | "price-asc" | "price-desc">("featured");
 
@@ -25,7 +27,7 @@ function Shop() {
     if (sort === "price-asc") l = [...l].sort((a, b) => a.price - b.price);
     if (sort === "price-desc") l = [...l].sort((a, b) => b.price - a.price);
     return l;
-  }, [cat, sort]);
+  }, [cat, sort, vaultProducts]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
