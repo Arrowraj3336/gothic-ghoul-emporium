@@ -116,18 +116,21 @@ function RootComponent() {
       {isDecor ? (
         <Outlet />
       ) : (
-        <XmenCartProvider>
-          <div className="xmen-scope flex min-h-screen flex-col bg-white text-xmen-ink">
-            <XmenTransition />
-            <XmenEasterEggs />
-            <XmenNavbar />
-            <main className="flex-1">
-              <Outlet />
-            </main>
-            <XmenFooter />
-          </div>
-          <Toaster />
-        </XmenCartProvider>
+        <XmenProductsProvider>
+          <XmenCartProvider>
+            <div className="xmen-scope relative flex min-h-screen flex-col bg-white text-xmen-ink">
+              <XmenBackground />
+              <XmenTransition />
+              <XmenEasterEggs />
+              <XmenNavbar />
+              <main className="flex-1">
+                <Outlet />
+              </main>
+              <XmenFooter />
+            </div>
+            <Toaster />
+          </XmenCartProvider>
+        </XmenProductsProvider>
       )}
     </QueryClientProvider>
   );
