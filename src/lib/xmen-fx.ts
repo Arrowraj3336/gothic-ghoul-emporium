@@ -14,8 +14,16 @@ function ac(): AudioContext | null {
   return ctx;
 }
 
+export function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+  catch { return false; }
+}
+
 export function isMuted(): boolean {
   if (typeof window === "undefined") return false;
+  // Force-mute when the user prefers reduced motion.
+  if (prefersReducedMotion()) return true;
   return window.localStorage.getItem("xmen-muted") === "1";
 }
 export function setMuted(m: boolean) {
@@ -81,6 +89,7 @@ function noise(dur: number, gain = 0.3) {
 
 function haptic(pattern: number | number[]) {
   if (isMuted()) return;
+  if (prefersReducedMotion()) return;
   if (typeof navigator !== "undefined" && "vibrate" in navigator) {
     try { navigator.vibrate(pattern); } catch {}
   }
