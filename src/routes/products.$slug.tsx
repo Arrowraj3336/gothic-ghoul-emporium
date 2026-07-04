@@ -61,7 +61,18 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const [tab, setTab] = useState<"description" | "specs" | "shipping">("description");
   const [view, setView] = useState(0);
-  const ch = getCharacter(product.slug);
+  const chBase = getCharacter(product.slug);
+  // Unified dark-violet theme for every product page (per design brief).
+  const ch = {
+    ...chBase,
+    color: "#4b1e78",
+    colorSoft: "#efe6fb",
+    ring: "rgba(75,30,120,0.35)",
+  };
+  const gallery = [product.image, ...(product.gallery ?? [])].slice(0, 4);
+  while (gallery.length < 4) gallery.push(product.image);
+  const outOfStock = product.stock <= 0;
+  const overQty = qty > product.stock;
   const related = (all.length ? all : vaultProducts).filter((p) => p.slug !== product.slug).slice(0, 4);
 
   const themeStyle: React.CSSProperties = {
