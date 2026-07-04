@@ -103,9 +103,20 @@ function CartPage() {
               Add {formatINR(150 - subtotal)} for free Blackbird shipping
             </p>
           )}
-          <Link to="/checkout" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink">
-            <ShoppingBag className="h-3.5 w-3.5" /> Deploy Squad
-          </Link>
+          {!canCheckout && (
+            <p role="alert" className="mt-4 rounded-xl border border-xmen-red bg-xmen-red/5 p-3 font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-red">
+              Some items exceed available stock. Adjust quantities to deploy.
+            </p>
+          )}
+          {canCheckout ? (
+            <Link to="/checkout" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
+              <ShoppingBag className="h-3.5 w-3.5" /> Deploy Squad
+            </Link>
+          ) : (
+            <button disabled aria-disabled="true" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-ink/40 px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white cursor-not-allowed">
+              <ShoppingBag className="h-3.5 w-3.5" /> Resolve Stock Issues
+            </button>
+          )}
           <Link to="/shop" className="mt-3 block text-center font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-ink-soft hover:text-xmen-red">
             ← Keep browsing
           </Link>

@@ -16,6 +16,8 @@ function Checkout() {
   const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 14;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+  const stockIssues = detailed.filter(({ product, qty }) => qty > product.stock || product.stock <= 0);
+  const canCheckout = stockIssues.length === 0;
 
   if (count === 0) {
     return (
@@ -38,6 +40,12 @@ function Checkout() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (!canCheckout) {
+            const names = stockIssues.map((s) => s.product.name).join(", ");
+            toast.error("Order blocked — stock issue", { description: `${names} exceeds Vault inventory. Adjust your cart.` });
+            navigate({ to: "/cart" });
+            return;
+          }
           const id = `XM-${Math.floor(Math.random() * 99999).toString().padStart(5, "0")}`;
           toast.success("Cerebro received your transmission");
           const t = total;
