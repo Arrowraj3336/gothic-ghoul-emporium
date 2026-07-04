@@ -123,7 +123,7 @@ function ProductPage() {
               />
               <img
                 key={view}
-                src={product.image}
+                src={gallery[view]}
                 alt={product.name}
                 className="xm-product-img absolute inset-0 h-full w-full object-contain p-10 animate-fade-in"
                 width={1000}
@@ -145,15 +145,17 @@ function ProductPage() {
             </div>
 
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {[0, 1, 2, 3].map((i) => (
+              {gallery.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setView(i)}
+                  aria-label={`View image ${i + 1} of ${product.name}`}
+                  aria-pressed={i === view}
                   className="relative aspect-square overflow-hidden rounded-2xl border bg-white transition"
                   style={{ borderColor: i === view ? ch.color : "rgba(11,13,16,0.10)" }}
                 >
                   <div className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 85%, ${ch.colorSoft}, transparent 70%)` }} />
-                  <img src={product.image} alt="" className="xm-product-img h-full w-full object-contain p-2" />
+                  <img src={src} alt="" className="xm-product-img h-full w-full object-contain p-2" />
                 </button>
               ))}
             </div>
@@ -208,21 +210,27 @@ function ProductPage() {
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex items-center self-start rounded-full border border-xmen-line bg-white">
-                <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-12 w-12 place-items-center rounded-l-full hover:bg-xmen-paper-soft">
+              <div className="flex items-center self-start rounded-full border border-xmen-line bg-white" role="group" aria-label="Quantity">
+                <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-12 w-12 place-items-center rounded-l-full hover:bg-xmen-paper-soft">
                   <Minus className="h-3.5 w-3.5" />
                 </button>
-                <div className="grid h-12 w-12 place-items-center border-x border-xmen-line font-xmen-mono text-sm">{qty}</div>
-                <button onClick={() => setQty((q) => q + 1)} className="grid h-12 w-12 place-items-center rounded-r-full hover:bg-xmen-paper-soft">
+                <div aria-live="polite" className="grid h-12 w-12 place-items-center border-x border-xmen-line font-xmen-mono text-sm">{qty}</div>
+                <button aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(product.stock || 99, q + 1))} className="grid h-12 w-12 place-items-center rounded-r-full hover:bg-xmen-paper-soft">
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
               <button
-                onClick={() => { add(product.slug, qty); toast.success(`${product.name} × ${qty} acquired`, { description: `${ch.codename} approves.` }); }}
-                className="flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:opacity-90"
+                disabled={outOfStock || overQty}
+                onClick={() => {
+                  if (outOfStock) { toast.error("This unit is depleted in the Vault."); return; }
+                  if (overQty) { toast.error(`Only ${product.stock} left in the Vault.`); return; }
+                  add(product.slug, qty);
+                  toast.success(`${product.name} × ${qty} acquired`, { description: `${chBase.codename} approves.` });
+                }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ background: ch.color, boxShadow: `0 14px 30px -12px ${ch.ring}` }}
               >
-                <ShoppingBag className="h-3.5 w-3.5" /> Recruit Now
+                <ShoppingBag className="h-3.5 w-3.5" /> {outOfStock ? "Depleted" : overQty ? `Only ${product.stock} left` : "Recruit Now"}
               </button>
             </div>
 
