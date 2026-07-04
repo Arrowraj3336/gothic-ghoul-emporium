@@ -25,22 +25,31 @@ export const Route = createFileRoute("/products/$slug")({
     const { product } = loaderData;
     const ch = getCharacter(product.slug);
     const url = `${SITE_URL}/products/${params.slug}`;
-    const image = `${SITE_URL}${product.image}`;
+    // Build absolute og:image only for bundled asset URLs. Skip data: URLs from admin uploads.
+    const rawImg = product.image;
+    const image = rawImg.startsWith("http")
+      ? rawImg
+      : rawImg.startsWith("/")
+        ? `${SITE_URL}${rawImg}`
+        : null;
     const title = `${product.name} — Viral Vault · ${ch.codename}`;
     const description = `${product.tagline} Headlined by ${ch.codename}.`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: description },
-        { property: "og:type", content: "product" },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { property: "og:url", content: url },
-        { property: "og:image", content: image },
-        { name: "twitter:card", content: "summary_large_image" },
-      ],
-      links: [{ rel: "canonical", href: url }],
-    };
+    const meta = [
+      { title },
+      { name: "description", content: description },
+      { property: "og:type", content: "product" },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: url },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+    ];
+    if (image) {
+      meta.push({ property: "og:image", content: image });
+      meta.push({ name: "twitter:image", content: image });
+    }
+    return { meta, links: [{ rel: "canonical", href: url }] };
   },
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-4 py-32 text-center">
