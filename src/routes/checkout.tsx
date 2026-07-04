@@ -16,6 +16,8 @@ function Checkout() {
   const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 14;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+  const stockIssues = detailed.filter(({ product, qty }) => qty > product.stock || product.stock <= 0);
+  const canCheckout = stockIssues.length === 0;
 
   if (count === 0) {
     return (
@@ -38,6 +40,12 @@ function Checkout() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (!canCheckout) {
+            const names = stockIssues.map((s) => s.product.name).join(", ");
+            toast.error("Order blocked — stock issue", { description: `${names} exceeds Vault inventory. Adjust your cart.` });
+            navigate({ to: "/cart" });
+            return;
+          }
           const id = `XM-${Math.floor(Math.random() * 99999).toString().padStart(5, "0")}`;
           toast.success("Cerebro received your transmission");
           const t = total;
@@ -106,8 +114,13 @@ function Checkout() {
             <span className="font-xmen-display text-sm uppercase tracking-[0.3em]">Total</span>
             <span className="font-xmen-display text-3xl text-xmen-red">{formatINR(total)}</span>
           </div>
-          <button type="submit" className="mt-6 w-full rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink">
-            Deploy the Blackbird
+          {!canCheckout && (
+            <p role="alert" className="mt-4 rounded-xl border border-xmen-red bg-xmen-red/5 p-3 font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-red">
+              Stock issue detected. Return to cart to adjust.
+            </p>
+          )}
+          <button type="submit" disabled={!canCheckout} className="mt-6 w-full rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
+            {canCheckout ? "Deploy the Blackbird" : "Resolve stock to deploy"}
           </button>
         </aside>
       </form>

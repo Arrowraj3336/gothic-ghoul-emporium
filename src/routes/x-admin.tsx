@@ -108,6 +108,24 @@ function XAdmin() {
   );
 }
 
+function readFileAsDataURL(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result));
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+const MAX_IMAGE_BYTES = 2_000_000; // ~2MB safety cap for localStorage
+function guardSize(file: File): boolean {
+  if (file.size > MAX_IMAGE_BYTES) {
+    toast.error("Image too large — max 2 MB.");
+    return false;
+  }
+  return true;
+}
+
 function Row({ product }: { product: VaultProduct }) {
   const [form, setForm] = useState<VaultProduct>(product);
   const [dirty, setDirty] = useState(false);
@@ -117,6 +135,25 @@ function Row({ product }: { product: VaultProduct }) {
     setForm((f) => ({ ...f, [k]: v }));
     setDirty(true);
   }
+  async function onMainImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]; e.target.value = "";
+    if (!file) return;
+    if (!guardSize(file)) return;
+    const url = await readFileAsDataURL(file);
+    patch("image", url);
+    toast.success("Main image updated (save to persist).");
+  }
+  async function onAddGallery(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []); e.target.value = "";
+    if (!files.length) return;
+    const valid = files.filter(guardSize);
+    const urls = await Promise.all(valid.map(readFileAsDataURL));
+    patch("gallery", [...(form.gallery ?? []), ...urls]);
+  }
+  function removeGallery(i: number) {
+    const next = (form.gallery ?? []).filter((_, idx) => idx !== i);
+    patch("gallery", next);
+  }
   function save() {
     const s = readStore();
     const inAdded = s.added.some((p: VaultProduct) => p.slug === form.slug);
@@ -125,13 +162,18 @@ function Row({ product }: { product: VaultProduct }) {
     } else {
       s.overrides[form.slug] = {
         name: form.name, tagline: form.tagline, price: form.price,
-        image: form.image, category: form.category, badge: form.badge,
+        image: form.image, gallery: form.gallery, category: form.category, badge: form.badge,
         description: form.description, stock: form.stock,
       };
     }
-    writeStore(s);
-    setDirty(false);
-    toast.success(`${form.name} saved`);
+    try {
+      writeStore(s);
+      setDirty(false);
+      toast.success(`${form.name} saved`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Save failed — storage may be full. Try smaller images.");
+    }
   }
   function remove() {
     if (!confirm(`Delete ${form.name}?`)) return;
@@ -145,9 +187,15 @@ function Row({ product }: { product: VaultProduct }) {
 
   return (
     <div className="rounded-2xl border border-xmen-line bg-white p-4 sm:p-5">
-      <div className="grid gap-4 sm:grid-cols-[120px_1fr] items-start">
-        <div className="aspect-square w-full sm:w-[120px] overflow-hidden rounded-xl border border-xmen-line bg-white">
-          <img src={form.image} alt="" className="h-full w-full object-contain xm-product-img p-2" />
+      <div className="grid gap-4 sm:grid-cols-[140px_1fr] items-start">
+        <div className="space-y-2">
+          <div className="aspect-square w-full sm:w-[140px] overflow-hidden rounded-xl border border-xmen-line bg-white">
+            <img src={form.image} alt={form.name} className="h-full w-full object-contain xm-product-img p-2" />
+          </div>
+          <label className="block cursor-pointer rounded-full border border-xmen-line px-3 py-1.5 text-center font-xmen-mono text-[10px] uppercase tracking-widest hover:border-xmen-red hover:text-xmen-red">
+            Replace main
+            <input type="file" accept="image/*" className="hidden" onChange={onMainImage} />
+          </label>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
           <label className="text-xs">
@@ -177,25 +225,53 @@ function Row({ product }: { product: VaultProduct }) {
             <input value={form.badge ?? ""} onChange={(e) => patch("badge", e.target.value || undefined)} className="mt-1 w-full rounded-md px-3 py-2 text-sm" />
           </label>
           <label className="text-xs sm:col-span-2">
-            <span className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">Image URL</span>
+            <span className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">Main image URL (or use Replace)</span>
             <input value={form.image} onChange={(e) => patch("image", e.target.value)} className="mt-1 w-full rounded-md px-3 py-2 text-sm" />
           </label>
           <label className="text-xs sm:col-span-2">
             <span className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">Description</span>
             <textarea value={form.description} onChange={(e) => patch("description", e.target.value)} rows={2} className="mt-1 w-full rounded-md px-3 py-2 text-sm" />
           </label>
+
+          {/* Gallery uploader */}
+          <div className="sm:col-span-2">
+            <div className="flex items-center justify-between">
+              <span className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">Gallery ({(form.gallery ?? []).length})</span>
+              <label className="cursor-pointer rounded-full border border-xmen-line px-3 py-1 text-[10px] font-xmen-mono uppercase tracking-widest hover:border-xmen-red hover:text-xmen-red">
+                + Add images
+                <input type="file" accept="image/*" multiple className="hidden" onChange={onAddGallery} />
+              </label>
+            </div>
+            {(form.gallery ?? []).length > 0 && (
+              <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-6">
+                {(form.gallery ?? []).map((src, i) => (
+                  <div key={i} className="relative aspect-square overflow-hidden rounded-lg border border-xmen-line bg-white">
+                    <img src={src} alt="" className="h-full w-full object-contain xm-product-img p-1" />
+                    <button
+                      type="button"
+                      aria-label="Remove image"
+                      onClick={() => removeGallery(i)}
+                      className="absolute right-1 top-1 grid h-6 w-6 place-items-center rounded-full bg-white/90 text-xmen-ink shadow hover:text-xmen-red"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-xmen-line pt-3">
         <div className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">{form.slug}</div>
         <div className="flex gap-2">
-          <button onClick={remove} className="inline-flex items-center gap-1.5 rounded-full border border-xmen-line px-3 py-1.5 text-xs text-xmen-ink-soft hover:border-xmen-red hover:text-xmen-red">
+          <button onClick={remove} className="inline-flex items-center gap-1.5 rounded-full border border-xmen-line px-3 py-1.5 text-xs text-xmen-ink-soft hover:border-xmen-red hover:text-xmen-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
             <Trash2 className="h-3 w-3" /> Delete
           </button>
           <button
             onClick={save}
             disabled={!dirty}
-            className="inline-flex items-center gap-1.5 rounded-full bg-xmen-ink px-4 py-1.5 text-xs text-white disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full bg-xmen-ink px-4 py-1.5 text-xs text-white disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2"
           >
             <Save className="h-3 w-3" /> {dirty ? "Save" : "Saved"}
           </button>

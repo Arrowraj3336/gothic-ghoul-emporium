@@ -14,6 +14,8 @@ export type VaultProduct = {
   price: number;
   compareAt?: number;
   image: string;
+  /** Optional extra images shown as thumbnails on the product page. */
+  gallery?: string[];
   category: "Coffee" | "Cooking" | "Prep" | "Breakfast";
   badge?: string;
   description: string;

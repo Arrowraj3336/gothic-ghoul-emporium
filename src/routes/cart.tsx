@@ -14,6 +14,8 @@ function CartPage() {
   const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 14;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+  const stockIssues = detailed.filter(({ product, qty }) => qty > product.stock || product.stock <= 0);
+  const canCheckout = stockIssues.length === 0;
 
   if (count === 0) {
     return (
@@ -44,7 +46,10 @@ function CartPage() {
 
       <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
         <ul className="rounded-2xl border border-xmen-line bg-white divide-y divide-xmen-line">
-          {detailed.map(({ product, qty, lineTotal }) => (
+          {detailed.map(({ product, qty, lineTotal }) => {
+            const outOfStock = product.stock <= 0;
+            const overStock = qty > product.stock;
+            return (
             <li key={product.slug} className="flex gap-4 p-5">
               <Link to="/products/$slug" params={{ slug: product.slug }} className="block w-24 shrink-0 sm:w-28">
                 <div className="aspect-square overflow-hidden rounded-xl border border-xmen-line bg-white">
@@ -58,22 +63,27 @@ function CartPage() {
                     <Link to="/products/$slug" params={{ slug: product.slug }}>
                       <h3 className="mt-1 font-xmen-display text-lg hover:text-xmen-red">{product.name}</h3>
                     </Link>
+                    {(outOfStock || overStock) && (
+                      <div role="alert" className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-xmen-red bg-xmen-red/5 px-2.5 py-0.5 font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-red">
+                        {outOfStock ? "Depleted — remove to checkout" : `Only ${product.stock} left`}
+                      </div>
+                    )}
                   </div>
                   <div className="font-xmen-display text-lg text-xmen-red whitespace-nowrap">{formatINR(lineTotal)}</div>
                 </div>
                 <div className="mt-auto flex items-center justify-between pt-4">
-                  <div className="flex items-center rounded-full border border-xmen-line bg-white">
-                    <button onClick={() => setQty(product.slug, qty - 1)} className="grid h-9 w-9 place-items-center rounded-l-full hover:bg-xmen-paper-soft"><Minus className="h-3 w-3" /></button>
-                    <div className="grid h-9 w-9 place-items-center border-x border-xmen-line font-xmen-mono text-xs">{qty}</div>
-                    <button onClick={() => setQty(product.slug, qty + 1)} className="grid h-9 w-9 place-items-center rounded-r-full hover:bg-xmen-paper-soft"><Plus className="h-3 w-3" /></button>
+                  <div className="flex items-center rounded-full border border-xmen-line bg-white" role="group" aria-label={`Quantity for ${product.name}`}>
+                    <button aria-label="Decrease quantity" onClick={() => setQty(product.slug, qty - 1)} className="grid h-9 w-9 place-items-center rounded-l-full hover:bg-xmen-paper-soft"><Minus className="h-3 w-3" /></button>
+                    <div aria-live="polite" className="grid h-9 w-9 place-items-center border-x border-xmen-line font-xmen-mono text-xs">{qty}</div>
+                    <button aria-label="Increase quantity" disabled={qty >= product.stock} onClick={() => setQty(product.slug, qty + 1)} className="grid h-9 w-9 place-items-center rounded-r-full hover:bg-xmen-paper-soft disabled:opacity-40 disabled:cursor-not-allowed"><Plus className="h-3 w-3" /></button>
                   </div>
-                  <button onClick={() => remove(product.slug)} className="grid h-9 w-9 place-items-center rounded-full text-xmen-ink-soft hover:bg-xmen-paper-soft hover:text-xmen-red">
+                  <button aria-label={`Remove ${product.name}`} onClick={() => remove(product.slug)} className="grid h-9 w-9 place-items-center rounded-full text-xmen-ink-soft hover:bg-xmen-paper-soft hover:text-xmen-red">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               </div>
             </li>
-          ))}
+          );})}
         </ul>
 
         <aside className="h-fit rounded-2xl border border-xmen-line bg-white p-6" style={{ boxShadow: "0 30px 60px -30px rgba(200,32,42,0.25)" }}>
@@ -93,9 +103,20 @@ function CartPage() {
               Add {formatINR(150 - subtotal)} for free Blackbird shipping
             </p>
           )}
-          <Link to="/checkout" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink">
-            <ShoppingBag className="h-3.5 w-3.5" /> Deploy Squad
-          </Link>
+          {!canCheckout && (
+            <p role="alert" className="mt-4 rounded-xl border border-xmen-red bg-xmen-red/5 p-3 font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-red">
+              Some items exceed available stock. Adjust quantities to deploy.
+            </p>
+          )}
+          {canCheckout ? (
+            <Link to="/checkout" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-red px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white hover:bg-xmen-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
+              <ShoppingBag className="h-3.5 w-3.5" /> Deploy Squad
+            </Link>
+          ) : (
+            <button disabled aria-disabled="true" className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-xmen-ink/40 px-6 py-4 font-xmen-display text-xs uppercase tracking-[0.3em] text-white cursor-not-allowed">
+              <ShoppingBag className="h-3.5 w-3.5" /> Resolve Stock Issues
+            </button>
+          )}
           <Link to="/shop" className="mt-3 block text-center font-xmen-mono text-[11px] uppercase tracking-widest text-xmen-ink-soft hover:text-xmen-red">
             ← Keep browsing
           </Link>

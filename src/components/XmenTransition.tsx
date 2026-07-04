@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { xfx } from "@/lib/xmen-fx";
+
 
 /**
  * X-Mansion gate loader — v3 (fast, GPU-only).
@@ -26,7 +26,6 @@ export function XmenTransition() {
     }
 
     setActive(true);
-    xfx.loader();
     const t = setTimeout(() => setActive(false), 950);
     return () => clearTimeout(t);
   }, [path]);

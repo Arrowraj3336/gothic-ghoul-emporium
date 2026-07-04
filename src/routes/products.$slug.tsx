@@ -25,22 +25,31 @@ export const Route = createFileRoute("/products/$slug")({
     const { product } = loaderData;
     const ch = getCharacter(product.slug);
     const url = `${SITE_URL}/products/${params.slug}`;
-    const image = `${SITE_URL}${product.image}`;
+    // Build absolute og:image only for bundled asset URLs. Skip data: URLs from admin uploads.
+    const rawImg = product.image;
+    const image = rawImg.startsWith("http")
+      ? rawImg
+      : rawImg.startsWith("/")
+        ? `${SITE_URL}${rawImg}`
+        : null;
     const title = `${product.name} — Viral Vault · ${ch.codename}`;
     const description = `${product.tagline} Headlined by ${ch.codename}.`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: description },
-        { property: "og:type", content: "product" },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { property: "og:url", content: url },
-        { property: "og:image", content: image },
-        { name: "twitter:card", content: "summary_large_image" },
-      ],
-      links: [{ rel: "canonical", href: url }],
-    };
+    const meta = [
+      { title },
+      { name: "description", content: description },
+      { property: "og:type", content: "product" },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: url },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+    ];
+    if (image) {
+      meta.push({ property: "og:image", content: image });
+      meta.push({ name: "twitter:image", content: image });
+    }
+    return { meta, links: [{ rel: "canonical", href: url }] };
   },
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-4 py-32 text-center">
@@ -61,7 +70,18 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const [tab, setTab] = useState<"description" | "specs" | "shipping">("description");
   const [view, setView] = useState(0);
-  const ch = getCharacter(product.slug);
+  const chBase = getCharacter(product.slug);
+  // Unified dark-violet theme for every product page (per design brief).
+  const ch = {
+    ...chBase,
+    color: "#4b1e78",
+    colorSoft: "#efe6fb",
+    ring: "rgba(75,30,120,0.35)",
+  };
+  const gallery = [product.image, ...(product.gallery ?? [])].slice(0, 4);
+  while (gallery.length < 4) gallery.push(product.image);
+  const outOfStock = product.stock <= 0;
+  const overQty = qty > product.stock;
   const related = (all.length ? all : vaultProducts).filter((p) => p.slug !== product.slug).slice(0, 4);
 
   const themeStyle: React.CSSProperties = {
@@ -112,7 +132,7 @@ function ProductPage() {
               />
               <img
                 key={view}
-                src={product.image}
+                src={gallery[view]}
                 alt={product.name}
                 className="xm-product-img absolute inset-0 h-full w-full object-contain p-10 animate-fade-in"
                 width={1000}
@@ -134,15 +154,17 @@ function ProductPage() {
             </div>
 
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {[0, 1, 2, 3].map((i) => (
+              {gallery.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setView(i)}
+                  aria-label={`View image ${i + 1} of ${product.name}`}
+                  aria-pressed={i === view}
                   className="relative aspect-square overflow-hidden rounded-2xl border bg-white transition"
                   style={{ borderColor: i === view ? ch.color : "rgba(11,13,16,0.10)" }}
                 >
                   <div className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 85%, ${ch.colorSoft}, transparent 70%)` }} />
-                  <img src={product.image} alt="" className="xm-product-img h-full w-full object-contain p-2" />
+                  <img src={src} alt="" className="xm-product-img h-full w-full object-contain p-2" />
                 </button>
               ))}
             </div>
@@ -197,21 +219,27 @@ function ProductPage() {
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex items-center self-start rounded-full border border-xmen-line bg-white">
-                <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-12 w-12 place-items-center rounded-l-full hover:bg-xmen-paper-soft">
+              <div className="flex items-center self-start rounded-full border border-xmen-line bg-white" role="group" aria-label="Quantity">
+                <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-12 w-12 place-items-center rounded-l-full hover:bg-xmen-paper-soft">
                   <Minus className="h-3.5 w-3.5" />
                 </button>
-                <div className="grid h-12 w-12 place-items-center border-x border-xmen-line font-xmen-mono text-sm">{qty}</div>
-                <button onClick={() => setQty((q) => q + 1)} className="grid h-12 w-12 place-items-center rounded-r-full hover:bg-xmen-paper-soft">
+                <div aria-live="polite" className="grid h-12 w-12 place-items-center border-x border-xmen-line font-xmen-mono text-sm">{qty}</div>
+                <button aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(product.stock || 99, q + 1))} className="grid h-12 w-12 place-items-center rounded-r-full hover:bg-xmen-paper-soft">
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
               <button
-                onClick={() => { add(product.slug, qty); toast.success(`${product.name} × ${qty} acquired`, { description: `${ch.codename} approves.` }); }}
-                className="flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:opacity-90"
+                disabled={outOfStock || overQty}
+                onClick={() => {
+                  if (outOfStock) { toast.error("This unit is depleted in the Vault."); return; }
+                  if (overQty) { toast.error(`Only ${product.stock} left in the Vault.`); return; }
+                  add(product.slug, qty);
+                  toast.success(`${product.name} × ${qty} acquired`, { description: `${chBase.codename} approves.` });
+                }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ background: ch.color, boxShadow: `0 14px 30px -12px ${ch.ring}` }}
               >
-                <ShoppingBag className="h-3.5 w-3.5" /> Recruit Now
+                <ShoppingBag className="h-3.5 w-3.5" /> {outOfStock ? "Depleted" : overQty ? `Only ${product.stock} left` : "Recruit Now"}
               </button>
             </div>
 

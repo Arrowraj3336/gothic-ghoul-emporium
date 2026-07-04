@@ -21,26 +21,16 @@ function OrderSuccess() {
   useEffect(() => {
     if (!id) { navigate({ to: "/" }); return; }
     xfx.success();
-    const t = setTimeout(() => setReveal(true), 2600);
+    const t = setTimeout(() => setReveal(true), 2200);
     return () => clearTimeout(t);
   }, [id, navigate]);
 
   return (
     <div className="relative min-h-[80vh] overflow-hidden">
-      {/* Cinematic sequence overlay */}
+      {/* Cinematic sequence overlay — X-insignia burst + rings + Mission Complete */}
       {!reveal && (
-        <div className="fixed inset-0 z-[210] grid place-items-center overflow-hidden bg-white">
+        <div className="fixed inset-0 z-[210] grid place-items-center overflow-hidden bg-white" role="status" aria-live="polite" aria-label="Order confirmed, mission complete">
           <div className="xm-success-sky" />
-          <svg className="xm-success-jet" viewBox="0 0 200 60" aria-hidden="true">
-            <defs>
-              <linearGradient id="jetTrail" x1="0" x2="1">
-                <stop offset="0" stopColor="rgba(200,32,42,0)" />
-                <stop offset="1" stopColor="rgba(200,32,42,0.8)" />
-              </linearGradient>
-            </defs>
-            <rect x="0" y="28" width="140" height="4" fill="url(#jetTrail)" />
-            <path d="M140 30 L165 22 L195 30 L165 38 Z M158 30 L172 12 L180 12 L172 30 M158 30 L172 48 L180 48 L172 30" fill="#0b0d10" />
-          </svg>
 
           <div className="xm-success-x-wrap">
             <svg className="xm-success-x" viewBox="0 0 120 120" aria-hidden="true">
@@ -51,6 +41,7 @@ function OrderSuccess() {
             </svg>
             <div className="xm-success-ring" />
             <div className="xm-success-ring xm-success-ring-2" />
+            <div className="xm-success-ring xm-success-ring-3" />
           </div>
 
           <div className="xm-success-text absolute inset-x-0 bottom-[18%] text-center">
@@ -79,10 +70,10 @@ function OrderSuccess() {
           )}
         </div>
         <div className="mt-10 flex justify-center gap-3">
-          <Link to="/shop" className="rounded-full border border-xmen-line px-6 py-3 font-xmen-display text-[11px] uppercase tracking-[0.3em] hover:border-xmen-ink">
+          <Link to="/shop" className="rounded-full border border-xmen-line px-6 py-3 font-xmen-display text-[11px] uppercase tracking-[0.3em] hover:border-xmen-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
             Continue browsing
           </Link>
-          <Link to="/" className="rounded-full bg-xmen-red px-6 py-3 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white hover:bg-xmen-ink">
+          <Link to="/" className="rounded-full bg-xmen-red px-6 py-3 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white hover:bg-xmen-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2">
             To the Institute
           </Link>
         </div>
