@@ -69,10 +69,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Viral Vault — Gear for the Gifted" },
       { name: "description", content: "Viral Vault — futuristic kitchen and home gear engineered for the gifted. An X-Men-inspired storefront for tomorrow's home." },
-      { property: "og:title", content: "Viral Vault — Gear for the Gifted" },
-      { property: "og:description", content: "X-Men-inspired storefront. Powered kitchen & home gear, engineered like Cerebro." },
+      { property: "og:site_name", content: "Viral Vault" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#c8202a" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
