@@ -17,6 +17,7 @@ import { XmenFooter } from "@/components/XmenFooter";
 import { XmenTransition } from "@/components/XmenTransition";
 import { XmenEasterEggs } from "@/components/XmenEasterEggs";
 import { XmenBackground } from "@/components/XmenBackground";
+import { XmenSquadBackdrop } from "@/components/XmenSquadBackdrop";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
