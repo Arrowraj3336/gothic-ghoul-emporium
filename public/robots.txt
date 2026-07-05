@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /x-admin
+Disallow: /x-lab
+Disallow: /order-success
+Disallow: /vault
+
+Sitemap: https://viral-vault-new.lovable.app/sitemap.xml
