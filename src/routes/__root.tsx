@@ -149,6 +149,7 @@ function RootComponent() {
           <XmenCartProvider>
             <div className="xmen-scope relative flex min-h-screen flex-col bg-white text-xmen-ink">
               <XmenBackground />
+              <SquadBackdropForRoute />
               <XmenTransition />
               <XmenEasterEggs />
               <XmenNavbar />
