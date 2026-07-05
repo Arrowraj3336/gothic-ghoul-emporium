@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as XLabRouteImport } from './routes/x-lab'
 import { Route as XAdminRouteImport } from './routes/x-admin'
 import { Route as VaultRouteImport } from './routes/vault'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as OrderSuccessRouteImport } from './routes/order-success'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -41,6 +42,11 @@ const XAdminRoute = XAdminRouteImport.update({
 const VaultRoute = VaultRouteImport.update({
   id: '/vault',
   path: '/vault',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/vault': typeof VaultRouteWithChildren
   '/x-admin': typeof XAdminRoute
   '/x-lab': typeof XLabRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/x-admin': typeof XAdminRoute
   '/x-lab': typeof XLabRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/order-success': typeof OrderSuccessRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/vault': typeof VaultRouteWithChildren
   '/x-admin': typeof XAdminRoute
   '/x-lab': typeof XLabRoute
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/order-success'
     | '/shop'
+    | '/sitemap.xml'
     | '/vault'
     | '/x-admin'
     | '/x-lab'
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/order-success'
     | '/shop'
+    | '/sitemap.xml'
     | '/x-admin'
     | '/x-lab'
     | '/products/$slug'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/order-success'
     | '/shop'
+    | '/sitemap.xml'
     | '/vault'
     | '/x-admin'
     | '/x-lab'
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   OrderSuccessRoute: typeof OrderSuccessRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VaultRoute: typeof VaultRouteWithChildren
   XAdminRoute: typeof XAdminRoute
   XLabRoute: typeof XLabRoute
@@ -276,6 +289,13 @@ declare module '@tanstack/react-router' {
       path: '/vault'
       fullPath: '/vault'
       preLoaderRoute: typeof VaultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -416,6 +436,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   OrderSuccessRoute: OrderSuccessRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VaultRoute: VaultRouteWithChildren,
   XAdminRoute: XAdminRoute,
   XLabRoute: XLabRoute,
@@ -424,13 +445,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

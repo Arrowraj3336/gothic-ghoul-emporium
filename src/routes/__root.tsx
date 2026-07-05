@@ -17,6 +17,7 @@ import { XmenFooter } from "@/components/XmenFooter";
 import { XmenTransition } from "@/components/XmenTransition";
 import { XmenEasterEggs } from "@/components/XmenEasterEggs";
 import { XmenBackground } from "@/components/XmenBackground";
+import { XmenSquadBackdrop } from "@/components/XmenSquadBackdrop";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -83,6 +84,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Bebas+Neue&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Viral Vault",
+          url: "https://viral-vault-new.lovable.app",
+          description:
+            "Viral Vault — futuristic kitchen and home gear engineered for the gifted. An X-Men-inspired storefront.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://viral-vault-new.lovable.app/shop?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Viral Vault",
+          url: "https://viral-vault-new.lovable.app",
+          logo: "https://viral-vault-new.lovable.app/favicon.ico",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -120,6 +149,7 @@ function RootComponent() {
           <XmenCartProvider>
             <div className="xmen-scope relative flex min-h-screen flex-col bg-white text-xmen-ink">
               <XmenBackground />
+              <SquadBackdropForRoute />
               <XmenTransition />
               <XmenEasterEggs />
               <XmenNavbar />
@@ -134,4 +164,13 @@ function RootComponent() {
       )}
     </QueryClientProvider>
   );
+}
+
+function SquadBackdropForRoute() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  if (path.startsWith("/x-admin") || path.startsWith("/x-lab") || path.startsWith("/order-success")) return null;
+  const variant: "home" | "pdp" | "cart" = path.startsWith("/products/") ? "pdp"
+    : (path.startsWith("/cart") || path.startsWith("/checkout")) ? "cart"
+    : "home";
+  return <XmenSquadBackdrop variant={variant} />;
 }
