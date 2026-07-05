@@ -165,3 +165,12 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
+function SquadBackdropForRoute() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  if (path.startsWith("/x-admin") || path.startsWith("/x-lab") || path.startsWith("/order-success")) return null;
+  const variant: "home" | "pdp" | "cart" = path.startsWith("/products/") ? "pdp"
+    : (path.startsWith("/cart") || path.startsWith("/checkout")) ? "cart"
+    : "home";
+  return <XmenSquadBackdrop variant={variant} />;
+}
