@@ -587,36 +587,64 @@
   mix-blend-mode: screen;
 }
 
-/* Order-success cinematic */
-@keyframes xm-jet { 0%{transform:translateX(-40vw)} 55%{transform:translateX(45vw)} 100%{transform:translateX(45vw); opacity:0} }
-.xm-success-jet {
-  position: absolute; top: 30%; left: 50%;
-  width: 320px; height: 90px;
-  transform: translateX(-40vw);
-  animation: xm-jet 1.6s cubic-bezier(.5,0,.2,1) forwards;
-  filter: drop-shadow(0 8px 12px rgba(11,13,16,0.2));
-}
-@keyframes xm-success-x-in { 0%{opacity:0; transform:scale(.4) rotate(-20deg)} 55%{opacity:1; transform:scale(1) rotate(0)} 100%{opacity:1; transform:scale(1) rotate(0)} }
+/* Order-success cinematic — X-insignia bursts + tricolor rings only. */
+@keyframes xm-success-x-in { 0%{opacity:0; transform:scale(.35) rotate(-18deg)} 60%{opacity:1; transform:scale(1.05) rotate(2deg)} 80%{transform:scale(.98) rotate(-1deg)} 100%{opacity:1; transform:scale(1) rotate(0)} }
 .xm-success-x-wrap { position: relative; }
 .xm-success-x {
   width: clamp(120px, 22vmax, 260px); height: clamp(120px, 22vmax, 260px);
-  animation: xm-success-x-in 1.4s .8s cubic-bezier(.22,1,.36,1) both;
+  animation: xm-success-x-in 1s .30s cubic-bezier(.22,1,.36,1) both;
   filter: drop-shadow(0 20px 30px rgba(200,32,42,0.4));
 }
-@keyframes xm-success-ring { 0%{opacity:.9; transform: translate(-50%,-50%) scale(.4)} 100%{opacity:0; transform: translate(-50%,-50%) scale(2.5)} }
+@keyframes xm-success-ring { 0%{opacity:.9; transform: translate(-50%,-50%) scale(.35)} 100%{opacity:0; transform: translate(-50%,-50%) scale(2.4)} }
 .xm-success-ring {
   position: absolute; top: 50%; left: 50%;
   width: clamp(120px,22vmax,260px); height: clamp(120px,22vmax,260px);
   border: 2px solid #c8202a; border-radius: 999px;
-  animation: xm-success-ring 1.6s .5s ease-out forwards;
+  animation: xm-success-ring 1.5s .4s ease-out forwards;
 }
-.xm-success-ring-2 { animation-delay: .9s; border-color: #4b1e78; }
-.xm-success-ring-3 { animation-delay: 1.3s; border-color: #d4a017; }
+.xm-success-ring-2 { animation-delay: .8s; border-color: #4b1e78; }
+.xm-success-ring-3 { animation-delay: 1.2s; border-color: #d4a017; }
 @keyframes xm-success-text { 0%{opacity:0; transform: translateY(20px)} 100%{opacity:1; transform: translateY(0)} }
-.xm-success-text { animation: xm-success-text .6s 1.4s ease-out both; }
+.xm-success-text { animation: xm-success-text .55s 1.4s ease-out both; }
 .xm-success-sky {
   position: absolute; inset: 0;
   background: radial-gradient(ellipse at center, #fff, #f6f7f9 70%);
+  animation: xm-fade-in .3s ease-out both;
+}
+@keyframes xm-fade-in { from { opacity: 0 } to { opacity: 1 } }
+
+/* Homepage headliner — animated comic panel loop */
+@keyframes xm-headliner-pan  { 0%,100% { transform: scale(1) translate(0,0) } 50% { transform: scale(1.03) translate(-1%, -0.5%) } }
+@keyframes xm-headliner-spin { from { transform: rotate(0) } to { transform: rotate(360deg) } }
+@keyframes xm-headliner-pop  { 0%,100% { transform: rotate(-14deg) scale(1) } 30% { transform: rotate(-14deg) scale(1.15) } 60% { transform: rotate(-14deg) scale(.95) } }
+@keyframes xm-headliner-tag  { 0% { transform: translateX(-140%) rotate(-8deg); opacity: 0 } 15% { transform: translateX(0) rotate(-4deg); opacity: 1 } 85% { transform: translateX(0) rotate(-4deg); opacity: 1 } 100% { transform: translateX(160%) rotate(6deg); opacity: 0 } }
+@keyframes xm-headliner-pow  { 0%,100% { transform: scale(.9) rotate(-6deg); opacity: 0 } 20% { transform: scale(1.1) rotate(2deg); opacity: 1 } 60% { transform: scale(1) rotate(-2deg); opacity: 1 } 90% { transform: scale(.95) rotate(4deg); opacity: 0 } }
+@keyframes xm-headliner-bubble { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+.xm-headliner-pan    { animation: xm-headliner-pan 12s ease-in-out infinite; will-change: transform; }
+.xm-headliner-x      { animation: xm-headliner-spin 14s linear infinite; transform-origin: 50% 50%; }
+.xm-headliner-stamp  { animation: xm-headliner-pop 2.2s ease-in-out infinite; }
+.xm-headliner-tag    { animation: xm-headliner-tag 6s ease-in-out infinite; will-change: transform, opacity; }
+.xm-headliner-pow    { animation: xm-headliner-pow 3.5s ease-in-out infinite; animation-delay: 1.2s; }
+.xm-headliner-bubble { animation: xm-headliner-bubble 2.4s ease-in-out infinite; will-change: transform; }
+
+/* Site-wide comic squad backdrop — fixed decorative silhouettes */
+.xm-squad-back { position: fixed; inset: 0; z-index: 0; pointer-events: none; color: #0b0d10; overflow: hidden; }
+.xm-squad-piece { position: absolute; opacity: .05; }
+@media (min-width: 768px) { .xm-squad-piece { opacity: .06; } }
+.xm-squad-claw  { top: 4%;  left: -3%;  width: 220px; color: #c8202a; transform: rotate(-6deg); }
+.xm-squad-x     { top: 8%;  right: 4%;  width: 130px; color: #4b1e78; animation: xm-headliner-spin 40s linear infinite; }
+.xm-squad-bolt  { top: 38%; right: -1%; width: 60px;  color: #d4a017; }
+.xm-squad-visor { top: 62%; left: -4%;  width: 240px; color: #c8202a; transform: rotate(-4deg); }
+.xm-squad-cape  { bottom: 4%; right: 3%; width: 150px; color: #4b1e78; }
+.xm-squad-dots  { bottom: 20%; left: 40%; width: 180px; height: 180px; color: #0b0d10; opacity: .035; }
+.xm-squad-pdp  .xm-squad-claw  { color: #4b1e78; }
+.xm-squad-pdp  .xm-squad-visor { color: #4b1e78; }
+.xm-squad-cart .xm-squad-x     { color: #c8202a; }
+.xm-squad-cart .xm-squad-cape  { color: #0b0d10; }
+@media (max-width: 640px) {
+  .xm-squad-visor, .xm-squad-cape, .xm-squad-dots { display: none; }
+  .xm-squad-claw { width: 160px; }
+  .xm-squad-x    { width: 90px; }
 }
 
 /* Global focus-visible ring inside the xmen scope (accessibility). */
@@ -627,13 +655,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .xm-gate2-panel, .xm-gate2-seam, .xm-gate2-mark, .xm-gate2-flash,
-  .xm-success-x, .xm-success-ring, .xm-success-text {
-    animation: none !important;
-  }
-  /* Hide the gate entirely when the user opts out of motion */
+  .xm-gate2-panel, .xm-gate2-seam, .xm-gate2-mark, .xm-gate2-flash { animation: none !important; }
   .xm-gate2 { display: none !important; }
   .xmen-scope .xm-bg-orb, .xmen-scope .xm-bg-x, .xmen-scope .xm-float,
   .xmen-scope .xm-spin-slow, .xmen-scope .xm-scan { animation: none !important; }
+  .xm-success-x { animation: none !important; opacity: 1; transform: none; }
+  .xm-success-ring { animation: none !important; opacity: .5; transform: translate(-50%,-50%) scale(1); }
+  .xm-success-ring-2 { transform: translate(-50%,-50%) scale(1.4); }
+  .xm-success-ring-3 { transform: translate(-50%,-50%) scale(1.8); }
+  .xm-success-text { animation: none !important; opacity: 1; transform: none; }
+  .xm-headliner-pan, .xm-headliner-x, .xm-headliner-stamp,
+  .xm-headliner-tag, .xm-headliner-pow, .xm-headliner-bubble,
+  .xm-squad-x { animation: none !important; }
   .xmen-scope * { scroll-behavior: auto !important; }
 }
