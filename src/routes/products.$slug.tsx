@@ -49,7 +49,37 @@ export const Route = createFileRoute("/products/$slug")({
       meta.push({ property: "og:image", content: image });
       meta.push({ name: "twitter:image", content: image });
     }
-    return { meta, links: [{ rel: "canonical", href: url }] };
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      sku: product.slug,
+      category: product.category,
+      ...(image ? { image: [image] } : {}),
+      brand: { "@type": "Brand", name: "Viral Vault" },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: product.rating,
+        reviewCount: product.reviews,
+      },
+      offers: {
+        "@type": "Offer",
+        url,
+        priceCurrency: "INR",
+        price: Math.round(product.price * 83),
+        availability: product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      },
+    };
+    return {
+      meta,
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(jsonLd) },
+      ],
+    };
   },
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-4 py-32 text-center">
