@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { XLogo, ClawsIcon, CerebroIcon, VisorIcon, LightningBolt } from "@/components/XmenIcons";
+import { useTextZone } from "@/lib/xmen-text-zone";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
+  const t = useTextZone("about");
   return (
     <div>
       <section className="relative overflow-hidden border-b-2 border-xmen-ink">
@@ -22,11 +24,9 @@ function About() {
         <div className="relative mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28 text-center">
           <XLogo className="mx-auto h-14 w-14 text-xmen-red xm-float" />
           <div className="mt-6 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// CHAPTER ZERO</div>
-          <h1 className="mt-3 font-xmen-display text-5xl leading-[0.95] sm:text-7xl">A SCHOOL FOR THE GIFTED.</h1>
+          <h1 className="mt-3 font-xmen-display text-5xl leading-[0.95] sm:text-7xl">{t("heroTitle", "A SCHOOL FOR THE GIFTED.")}</h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-xmen-ink-soft sm:text-lg">
-            Viral Vault was founded by three cooks, a metallurgist and a former barista
-            who could pour a perfect rosetta with her eyes closed. We build appliances for
-            the people the world isn't quite ready for.
+            {t("heroSubtitle", "Viral Vault was founded by three cooks, a metallurgist and a former barista who could pour a perfect rosetta with her eyes closed. We build appliances for the people the world isn't quite ready for.")}
           </p>
         </div>
       </section>
