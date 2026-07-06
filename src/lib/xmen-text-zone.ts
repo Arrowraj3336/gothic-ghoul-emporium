@@ -74,14 +74,6 @@ export const TEXT_ZONE_PAGES: { slug: string; label: string; fields: { key: stri
       { key: "heroTitle", label: "Hero title" },
       { key: "heroSubtitle", label: "Hero subtitle", multiline: true },
   ]},
-  { slug: "contact", label: "Contact page", fields: [
-      { key: "heroTitle", label: "Hero title" },
-      { key: "heroSubtitle", label: "Hero subtitle", multiline: true },
-  ]},
-  { slug: "shop", label: "Shop page", fields: [
-      { key: "heroTitle", label: "Hero title" },
-      { key: "heroSubtitle", label: "Hero subtitle", multiline: true },
-  ]},
 ];
 
 export function readTextZone(): TextZone {
