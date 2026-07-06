@@ -223,9 +223,9 @@ function Home() {
       <section className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mb-10">
           <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// meet the squad</div>
-          <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">Every product, a hero.</h2>
+          <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">{t("squadTitle", "Every product, a hero.")}</h2>
           <p className="mt-3 max-w-xl text-sm text-xmen-ink-soft">
-            Each item in the Vault is paired with an X-Men member. Tap in to see who's yours.
+            {t("squadSubtitle", "")}
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
