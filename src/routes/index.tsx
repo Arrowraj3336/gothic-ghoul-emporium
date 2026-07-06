@@ -3,8 +3,10 @@ import { XmenProductCard } from "@/components/XmenProductCard";
 import { ArrowRight, Shield, Truck, Zap, Sparkles, Radar, Package, Rocket, Star } from "lucide-react";
 import { XLogo, CerebroIcon } from "@/components/XmenIcons";
 import { useProducts } from "@/lib/xmen-products-store";
-import { xmenCharacters } from "@/lib/xmen-characters";
 import { XmenHeroHeadliner } from "@/components/XmenHeroHeadliner";
+import { XmenCastBackdrop } from "@/components/XmenCastBackdrop";
+import { xmenCast } from "@/lib/xmen-cast";
+import { useTextZone } from "@/lib/xmen-text-zone";
 import ogImage from "@/assets/xmen-og.jpg";
 
 const SITE_URL = "https://viral-vault-new.lovable.app";
@@ -35,12 +37,15 @@ function Home() {
   const featured = products.slice(0, 4);
   const bestSellers = products.slice(0, 4);
   const drops = products.slice(4, 8);
+  const t = useTextZone("home");
 
-  // Roster preview (shown at the end of the page now).
-  const roster = Object.entries(xmenCharacters).slice(0, 6).map(([slug, ch]) => ({ slug, ...ch }));
+  // Real X-Men cast for the squad grid.
+  const roster = xmenCast.slice(0, 6);
 
   return (
     <div className="relative z-[1]">
+      <XmenCastBackdrop variant="home" />
+
       {/* HERO ============================================================ */}
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,32,42,0.08),transparent_55%)]" />
@@ -50,33 +55,31 @@ function Home() {
           <div>
             <div className="xm-chip xm-chip-red">
               <span className="h-1.5 w-1.5 rounded-full bg-xmen-red animate-pulse" />
-              New drop live · Free shipping ₹12,500+
+              {t("heroEyebrow", "New drop live · Free shipping ₹12,500+")}
             </div>
             <h1 className="mt-6 font-xmen-display text-5xl leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-[6.25rem]">
-              Kitchen gear <br />
+              {t("heroTitle", "Kitchen gear")} <br />
               <span className="relative inline-block">
-                <span className="relative z-10 text-xmen-red">worth the hype.</span>
+                <span className="relative z-10 text-xmen-red">{t("heroTitleAccent", "worth the hype.")}</span>
                 <span className="absolute inset-x-0 bottom-2 h-3 rounded-full bg-xmen-red/10 blur-sm" />
               </span>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-xmen-ink-soft sm:text-lg">
-              Viral Vault brings you smart, simple kitchen and home appliances —
-              styled after your favourite X-Men. Easy to use, built to last, and
-              ready to ship the same day.
+              {t("heroSubtitle", "")}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/shop"
                 className="group inline-flex items-center gap-2 rounded-full bg-xmen-ink px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] text-white transition hover:bg-xmen-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2"
               >
-                Shop the collection
+                {t("heroPrimaryCta", "Shop the collection")}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 to="/about"
                 className="inline-flex items-center gap-2 rounded-full border border-xmen-line px-6 py-3.5 font-xmen-display text-[11px] uppercase tracking-[0.3em] hover:border-xmen-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2"
               >
-                Our story
+                {t("heroSecondaryCta", "Our story")}
               </Link>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-6 font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">
@@ -86,9 +89,26 @@ function Home() {
             </div>
           </div>
 
-          {/* Animated comic-book headliner (falls back to /xmen-headliner.mp4 if present). */}
-          <div className="relative">
-            <XmenHeroHeadliner />
+          {/* Hero showcase: real X-Men portrait stack + comic headliner behind */}
+          <div className="relative min-h-[420px] lg:min-h-[520px]">
+            <div className="absolute inset-0 opacity-70">
+              <XmenHeroHeadliner />
+            </div>
+            <img
+              src={roster[0].img}
+              alt={roster[0].codename}
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[100%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_30px_60px_rgba(200,32,42,0.35)] animate-fade-in"
+            />
+            <img
+              src={roster[1].img}
+              alt={roster[1].codename}
+              className="pointer-events-none absolute bottom-2 right-0 hidden h-[55%] w-auto drop-shadow-[0_20px_40px_rgba(212,160,23,0.35)] sm:block"
+            />
+            <img
+              src={roster[4].img}
+              alt={roster[4].codename}
+              className="pointer-events-none absolute bottom-4 left-0 hidden h-[45%] w-auto opacity-90 drop-shadow-[0_20px_40px_rgba(26,63,139,0.35)] sm:block"
+            />
           </div>
         </div>
       </section>
@@ -210,28 +230,33 @@ function Home() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {roster.map((r) => (
-            <Link
+            <div
               key={r.slug}
-              to="/products/$slug"
-              params={{ slug: r.slug }}
-              className="group relative overflow-hidden rounded-3xl border border-xmen-line bg-white p-5 transition hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xmen-red focus-visible:ring-offset-2"
+              className="group relative overflow-hidden rounded-3xl border border-xmen-line bg-white p-5 transition hover:-translate-y-1"
               style={{ boxShadow: `0 20px 40px -30px ${r.ring}` }}
             >
-              <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-70 blur-xl transition group-hover:opacity-90"
+              <div className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full opacity-70 blur-2xl transition group-hover:opacity-90"
                 style={{ background: r.colorSoft }} />
-              <div className="relative flex items-center gap-4">
-                <div className="grid h-14 w-14 place-items-center rounded-2xl border-2 text-lg font-xmen-display"
-                  style={{ borderColor: r.color, color: r.color, background: r.colorSoft }}>
-                  {r.codename.slice(0, 1)}
+              <div className="relative flex items-start gap-4">
+                <div
+                  className="relative h-28 w-24 shrink-0 overflow-hidden rounded-2xl"
+                  style={{ background: r.colorSoft }}
+                >
+                  <img
+                    src={r.img}
+                    alt={r.codename}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="font-xmen-mono text-[10px] uppercase tracking-widest" style={{ color: r.color }}>{r.codename}</div>
-                  <div className="font-xmen-display text-lg">{r.name}</div>
-                  <p className="mt-0.5 text-[11px] text-xmen-ink-soft line-clamp-1">{r.power}</p>
+                  <div className="font-xmen-display text-lg leading-tight">{r.name}</div>
+                  <p className="mt-1 text-[11px] text-xmen-ink-soft line-clamp-2">{r.power}</p>
+                  <p className="mt-2 font-xmen-serif italic text-xs text-xmen-ink-soft line-clamp-2">"{r.quote}"</p>
                 </div>
               </div>
-              <p className="mt-4 font-xmen-serif italic text-sm text-xmen-ink-soft line-clamp-2">"{r.quote}"</p>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
@@ -239,9 +264,9 @@ function Home() {
       {/* NEWSLETTER ====================================================== */}
       <section className="relative mx-auto max-w-4xl px-4 py-24 text-center sm:px-6">
         <XLogo className="mx-auto h-10 w-10 text-xmen-red" />
-        <h3 className="mt-6 font-xmen-display text-3xl sm:text-5xl tracking-tight">Join the club.</h3>
+        <h3 className="mt-6 font-xmen-display text-3xl sm:text-5xl tracking-tight">{t("newsletterTitle", "Join the club.")}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm text-xmen-ink-soft">
-          A short monthly email — new arrivals, member-only offers, and the odd easter egg.
+          {t("newsletterSubtitle", "")}
         </p>
         <form onSubmit={(e) => e.preventDefault()} className="mx-auto mt-8 flex max-w-md gap-2">
           <label className="sr-only" htmlFor="nl-email">Email address</label>
