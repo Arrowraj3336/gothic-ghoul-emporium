@@ -5,13 +5,16 @@ import { vaultProducts as defaults, type VaultProduct } from "@/lib/vault-produc
 import { toast } from "sonner";
 import {
   Trash2, Plus, RotateCcw, Save, LogOut, Search, ImagePlus,
-  ArrowUp, ArrowDown, Eye, Star, Package,
+  ArrowUp, ArrowDown, Eye, Star, Package, LayoutDashboard, Type, ShieldAlert,
 } from "lucide-react";
 import { formatINR } from "@/lib/utils";
 import { XLogo } from "@/components/XmenIcons";
+import {
+  TEXT_ZONE_PAGES, readTextZone, writeTextZone, resetTextZone,
+} from "@/lib/xmen-text-zone";
 
 export const Route = createFileRoute("/x-admin")({
-  head: () => ({ meta: [{ title: "X-Admin — Product Manager" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "X-Admin — Control Room" }, { name: "robots", content: "noindex" }] }),
   component: XAdmin,
 });
 
