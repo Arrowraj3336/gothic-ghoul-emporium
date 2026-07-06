@@ -137,8 +137,8 @@ function Home() {
           <div className="relative grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
             <div>
               <CerebroIcon className="h-16 w-16 text-xmen-red" />
-              <div className="mt-4 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// why viral vault</div>
-              <h3 className="mt-2 font-xmen-display text-3xl sm:text-4xl tracking-tight">Built for the extraordinary.</h3>
+              <div className="mt-4 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">{t("manifestoEyebrow", "// why viral vault")}</div>
+              <h3 className="mt-2 font-xmen-display text-3xl sm:text-4xl tracking-tight">{t("manifestoTitle", "Built for the extraordinary.")}</h3>
             </div>
             <div className="grid gap-5 sm:grid-cols-3">
               {[
@@ -164,8 +164,8 @@ function Home() {
             <div className="inline-flex items-center gap-1.5 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">
               <Star className="h-3 w-3 fill-xmen-red" /> best sellers
             </div>
-            <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">Loved by the squad.</h2>
-            <p className="mt-2 max-w-lg text-sm text-xmen-ink-soft">Our top-rated gear this season — the pieces people keep coming back for.</p>
+            <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">{t("bestSellersTitle", "Loved by the squad.")}</h2>
+            <p className="mt-2 max-w-lg text-sm text-xmen-ink-soft">{t("bestSellersSubtitle", "")}</p>
           </div>
           <Link to="/shop" className="font-xmen-display text-[11px] uppercase tracking-[0.3em] text-xmen-ink-soft hover:text-xmen-red">
             Shop best sellers →
@@ -208,7 +208,7 @@ function Home() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// new arrivals</div>
-            <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">Fresh in the vault</h2>
+            <h2 className="mt-1 font-xmen-display text-3xl sm:text-5xl tracking-tight">{t("dropsTitle", "Fresh in the vault")}</h2>
           </div>
           <Link to="/shop" className="font-xmen-display text-[11px] uppercase tracking-[0.3em] text-xmen-ink-soft hover:text-xmen-red">
             View all →
