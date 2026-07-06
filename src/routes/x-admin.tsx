@@ -50,6 +50,7 @@ function XAdmin() {
   const [pass, setPass] = useState("");
   const [query, setQuery] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
+  const [tab, setTab] = useState<"products" | "textzone">("products");
   const products = useProducts();
 
   useEffect(() => {
