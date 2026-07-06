@@ -5,13 +5,16 @@ import { vaultProducts as defaults, type VaultProduct } from "@/lib/vault-produc
 import { toast } from "sonner";
 import {
   Trash2, Plus, RotateCcw, Save, LogOut, Search, ImagePlus,
-  ArrowUp, ArrowDown, Eye, Star, Package,
+  ArrowUp, ArrowDown, Eye, Star, Package, LayoutDashboard, Type, ShieldAlert,
 } from "lucide-react";
 import { formatINR } from "@/lib/utils";
 import { XLogo } from "@/components/XmenIcons";
+import {
+  TEXT_ZONE_PAGES, readTextZone, writeTextZone, resetTextZone,
+} from "@/lib/xmen-text-zone";
 
 export const Route = createFileRoute("/x-admin")({
-  head: () => ({ meta: [{ title: "X-Admin — Product Manager" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "X-Admin — Control Room" }, { name: "robots", content: "noindex" }] }),
   component: XAdmin,
 });
 
@@ -47,6 +50,7 @@ function XAdmin() {
   const [pass, setPass] = useState("");
   const [query, setQuery] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
+  const [tab, setTab] = useState<"products" | "textzone">("products");
   const products = useProducts();
 
   useEffect(() => {
@@ -102,19 +106,61 @@ function XAdmin() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       {/* HEADER STRIP */}
-      <div className="overflow-hidden rounded-3xl border border-xmen-line bg-gradient-to-br from-white via-white to-[#f7f3ff] p-6 sm:p-8">
+      <div className="overflow-hidden rounded-3xl border border-xmen-line bg-gradient-to-br from-white via-white to-[#f7f3ff] p-6 sm:p-8 shadow-[0_30px_60px_-40px_rgba(75,30,120,0.4)]">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">
-              <XLogo className="h-3.5 w-3.5" /> x-admin console
+              <XLogo className="h-3.5 w-3.5" /> control room
             </div>
-            <h1 className="mt-2 font-xmen-display text-4xl sm:text-5xl tracking-tight">Product Manager</h1>
+            <h1 className="mt-2 font-xmen-display text-4xl sm:text-5xl tracking-tight">X-Admin</h1>
             <p className="mt-2 max-w-xl text-sm text-xmen-ink-soft">
-              Add products, edit details, upload photos, and reorder gallery images.
-              Changes save to your browser and appear on the storefront instantly.
+              Manage products, replace copy across pages, and upload photos —
+              all saved to your browser and reflected on the store instantly.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => { sessionStorage.removeItem(AUTH_KEY); setAuthed(false); }}
+            className="inline-flex items-center gap-1.5 rounded-full border border-xmen-line px-4 py-2 font-xmen-mono text-[11px] uppercase tracking-widest hover:border-xmen-ink transition"
+          >
+            <LogOut className="h-3 w-3" /> Sign out
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Stat icon={<Package className="h-4 w-4" />} label="Products" value={products.length} />
+          <Stat icon={<Star className="h-4 w-4" />} label="Total stock" value={totalStock} />
+          <Stat icon={<ShieldAlert className="h-4 w-4" />} label="Low stock" value={lowStock} tone={lowStock > 0 ? "warn" : "ok"} />
+          <Stat icon={<ImagePlus className="h-4 w-4" />} label="Custom items" value={readStore().added.length} />
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-6 inline-flex rounded-full border border-xmen-line bg-white p-1">
+          <TabBtn active={tab === "products"} onClick={() => setTab("products")} icon={<LayoutDashboard className="h-3.5 w-3.5" />}>
+            Products
+          </TabBtn>
+          <TabBtn active={tab === "textzone"} onClick={() => setTab("textzone")} icon={<Type className="h-3.5 w-3.5" />}>
+            Text Zone
+          </TabBtn>
+        </div>
+      </div>
+
+      {tab === "products" && (
+        <>
+          {/* TOOLBAR */}
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            <div className="flex flex-1 min-w-[240px] items-center gap-2 rounded-full border border-xmen-line bg-white px-4 py-2">
+              <Search className="h-4 w-4 text-xmen-ink-soft" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search by name, slug, or category…"
+                className="w-full bg-transparent py-1 text-sm outline-none placeholder:text-xmen-ink-soft"
+              />
+              {query && (
+                <button onClick={() => setQuery("")} className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft hover:text-xmen-red">clear</button>
+              )}
+            </div>
             <button
               onClick={() => {
                 const s = readStore();
@@ -143,47 +189,21 @@ function XAdmin() {
             >
               <RotateCcw className="h-3 w-3" /> Reset
             </button>
-            <button
-              onClick={() => { sessionStorage.removeItem(AUTH_KEY); setAuthed(false); }}
-              className="inline-flex items-center gap-1.5 rounded-full border border-xmen-line px-4 py-2 font-xmen-mono text-[11px] uppercase tracking-widest hover:border-xmen-ink transition"
-            >
-              <LogOut className="h-3 w-3" /> Sign out
-            </button>
           </div>
-        </div>
 
-        {/* Stats */}
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat icon={<Package className="h-4 w-4" />} label="Products" value={products.length} />
-          <Stat icon={<Star className="h-4 w-4" />} label="Total stock" value={totalStock} />
-          <Stat icon={<Trash2 className="h-4 w-4" />} label="Low stock" value={lowStock} tone={lowStock > 0 ? "warn" : "ok"} />
-          <Stat icon={<ImagePlus className="h-4 w-4" />} label="Custom" value={readStore().added.length} />
-        </div>
-      </div>
-
-      {/* SEARCH */}
-      <div className="mt-6 flex items-center gap-2 rounded-full border border-xmen-line bg-white px-4 py-2">
-        <Search className="h-4 w-4 text-xmen-ink-soft" />
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search by name, slug, or category…"
-          className="w-full bg-transparent py-1 text-sm outline-none placeholder:text-xmen-ink-soft"
-        />
-        {query && (
-          <button onClick={() => setQuery("")} className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft hover:text-xmen-red">clear</button>
-        )}
-      </div>
-
-      {/* LIST */}
-      <div className="mt-6 grid gap-4">
-        {filtered.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-xmen-line bg-white p-10 text-center text-sm text-xmen-ink-soft">
-            No products match "{query}".
+          {/* LIST */}
+          <div className="mt-6 grid gap-4">
+            {filtered.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-xmen-line bg-white p-10 text-center text-sm text-xmen-ink-soft">
+                No products match "{query}".
+              </div>
+            )}
+            {filtered.map((p) => <Row key={p.slug} product={p} onPreview={setPreview} />)}
           </div>
-        )}
-        {filtered.map((p) => <Row key={p.slug} product={p} onPreview={setPreview} />)}
-      </div>
+        </>
+      )}
+
+      {tab === "textzone" && <TextZonePanel />}
 
       {/* PREVIEW LIGHTBOX */}
       {preview && (
@@ -201,6 +221,122 @@ function XAdmin() {
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+function TabBtn({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-xmen-mono text-[10px] uppercase tracking-widest transition ${
+        active ? "bg-xmen-ink text-white" : "text-xmen-ink-soft hover:text-xmen-ink"
+      }`}
+    >
+      {icon} {children}
+    </button>
+  );
+}
+
+function TextZonePanel() {
+  const [pageSlug, setPageSlug] = useState<string>(TEXT_ZONE_PAGES[0].slug);
+  const [zone, setZone] = useState(() => readTextZone());
+  const [dirty, setDirty] = useState(false);
+  const page = TEXT_ZONE_PAGES.find((p) => p.slug === pageSlug)!;
+  const values = zone[pageSlug] ?? {};
+
+  function patch(key: string, value: string) {
+    setZone((z) => ({ ...z, [pageSlug]: { ...(z[pageSlug] ?? {}), [key]: value } }));
+    setDirty(true);
+  }
+  function save() {
+    writeTextZone(zone);
+    setDirty(false);
+    toast.success(`${page.label} text saved`);
+  }
+  function resetAll() {
+    if (!confirm("Reset all page text back to defaults?")) return;
+    resetTextZone();
+    setZone(readTextZone());
+    setDirty(false);
+    toast.success("Text zone reset");
+  }
+
+  return (
+    <div className="mt-6 grid gap-6 lg:grid-cols-[240px_1fr]">
+      {/* Page selector */}
+      <aside className="rounded-3xl border border-xmen-line bg-white p-3 h-fit sticky top-4">
+        <div className="px-3 py-2 font-xmen-mono text-[9px] uppercase tracking-widest text-xmen-ink-soft">Pages</div>
+        <ul className="space-y-1">
+          {TEXT_ZONE_PAGES.map((p) => (
+            <li key={p.slug}>
+              <button
+                onClick={() => setPageSlug(p.slug)}
+                className={`w-full rounded-2xl px-3 py-2 text-left font-xmen-display text-sm transition ${
+                  pageSlug === p.slug
+                    ? "bg-xmen-red text-white"
+                    : "text-xmen-ink hover:bg-xmen-paper-soft"
+                }`}
+              >
+                {p.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-3 border-t border-xmen-line pt-3">
+          <button
+            onClick={resetAll}
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-xmen-line px-3 py-2 font-xmen-mono text-[10px] uppercase tracking-widest hover:border-xmen-red hover:text-xmen-red"
+          >
+            <RotateCcw className="h-3 w-3" /> Reset all
+          </button>
+        </div>
+      </aside>
+
+      {/* Editor */}
+      <section className="rounded-3xl border border-xmen-line bg-white p-6 sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div className="font-xmen-mono text-[10px] uppercase tracking-[0.3em] text-xmen-red">// editing</div>
+            <h2 className="mt-1 font-xmen-display text-3xl">{page.label}</h2>
+            <p className="mt-1 text-sm text-xmen-ink-soft">
+              Change any of the text below. Saved changes appear on the live page immediately.
+            </p>
+          </div>
+          <button
+            onClick={save}
+            disabled={!dirty}
+            className="inline-flex items-center gap-1.5 rounded-full bg-xmen-red px-5 py-2.5 font-xmen-mono text-[10px] uppercase tracking-widest text-white disabled:opacity-40"
+          >
+            <Save className="h-3 w-3" /> {dirty ? "Save changes" : "Saved"}
+          </button>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {page.fields.map((f) => (
+            <label key={f.key} className={`block ${f.multiline ? "md:col-span-2" : ""}`}>
+              <span className="font-xmen-mono text-[10px] uppercase tracking-widest text-xmen-ink-soft">{f.label}</span>
+              {f.multiline ? (
+                <textarea
+                  value={values[f.key] ?? ""}
+                  onChange={(e) => patch(f.key, e.target.value)}
+                  rows={3}
+                  className="mt-1 w-full rounded-xl border border-xmen-line bg-white px-3 py-2 text-sm focus:border-xmen-red focus:outline-none focus:ring-2 focus:ring-xmen-red/20"
+                />
+              ) : (
+                <input
+                  value={values[f.key] ?? ""}
+                  onChange={(e) => patch(f.key, e.target.value)}
+                  className="mt-1 w-full rounded-xl border border-xmen-line bg-white px-3 py-2 text-sm focus:border-xmen-red focus:outline-none focus:ring-2 focus:ring-xmen-red/20"
+                />
+              )}
+            </label>
+          ))}
+        </div>
+        <p className="mt-5 font-xmen-mono text-[10px] text-xmen-ink-soft">
+          Tip: for product photos, backgrounds and gallery images, use the Products tab.
+        </p>
+      </section>
     </div>
   );
 }

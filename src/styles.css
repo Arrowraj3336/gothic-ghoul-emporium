@@ -669,3 +669,159 @@
   .xm-squad-x { animation: none !important; }
   .xmen-scope * { scroll-behavior: auto !important; }
 }
+
+/* ============================================================
+   XmenCastBackdrop — real X-Men portraits, low-opacity ambient layer.
+   Fixed layer behind content; positions vary by viewport.
+   ============================================================ */
+.xm-cast-back {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.xm-cast-slot {
+  position: absolute;
+  height: auto;
+  opacity: 0.09;
+  filter: grayscale(15%) contrast(1.05);
+  mix-blend-mode: multiply;
+  transition: opacity .6s ease;
+  will-change: transform;
+  animation: xm-cast-float 22s ease-in-out infinite;
+}
+@keyframes xm-cast-float {
+  0%,100% { transform: translateY(0) }
+  50%     { transform: translateY(-12px) }
+}
+/* Desktop / tablet positions */
+.xm-cast-slot--1 { top:  8%; left: -3%;  width: 22vw; max-width: 320px; animation-delay: 0s; }
+.xm-cast-slot--2 { top: 12%; right: -2%; width: 20vw; max-width: 300px; animation-delay: -4s; }
+.xm-cast-slot--3 { top: 42%; left: -4%;  width: 24vw; max-width: 340px; animation-delay: -8s; }
+.xm-cast-slot--4 { top: 48%; right: -3%; width: 22vw; max-width: 320px; animation-delay: -12s; }
+.xm-cast-slot--5 { bottom: 6%; left: 4%; width: 20vw; max-width: 300px; animation-delay: -16s; }
+.xm-cast-slot--6 { bottom: 10%; right: 5%; width: 22vw; max-width: 320px; animation-delay: -20s; }
+
+/* Mobile: keep them visible but smaller, only 4 of them. */
+@media (max-width: 640px) {
+  .xm-cast-slot { opacity: 0.07; }
+  .xm-cast-slot--1 { top: 6%; left: -12%; width: 55vw; }
+  .xm-cast-slot--2 { top: 30%; right: -14%; width: 55vw; }
+  .xm-cast-slot--3 { display: none; }
+  .xm-cast-slot--4 { top: 58%; right: -12%; width: 55vw; }
+  .xm-cast-slot--5 { bottom: 4%; left: -12%; width: 55vw; }
+  .xm-cast-slot--6 { display: none; }
+}
+.xm-cast-back--success .xm-cast-slot { opacity: 0.12; }
+
+/* ============================================================
+   New Cerebro-style order-success animation
+   ============================================================ */
+.xm-cx-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,32,42,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,32,42,0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.xm-cx-grid.is-on { opacity: 1; }
+
+.xm-cx-sweep {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 140vmax; height: 140vmax;
+  transform: translate(-50%,-50%) rotate(0deg);
+  background: conic-gradient(from 0deg,
+    rgba(200,32,42,0.18) 0deg,
+    rgba(200,32,42,0.04) 40deg,
+    transparent 90deg,
+    transparent 360deg);
+  opacity: 0;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.xm-cx-sweep.is-on { opacity: 1; animation: xm-cx-sweep-spin 3s linear infinite; }
+@keyframes xm-cx-sweep-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+.xm-cx-cast {
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity .8s ease;
+}
+.xm-cx-cast.is-on { opacity: 1; }
+.xm-cx-cast-item {
+  position: absolute;
+  height: auto;
+  opacity: 0;
+  filter: contrast(1.05);
+  animation: xm-cx-cast-in .9s ease-out forwards;
+}
+.xm-cx-cast.is-on .xm-cx-cast-item { animation-play-state: running; }
+@keyframes xm-cx-cast-in {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to   { opacity: .9; transform: translateY(0) scale(1); }
+}
+.xm-cx-cast-item--1 { left: 4%;  bottom: 4%;  width: 22vw; max-width: 280px; animation-delay: .05s; }
+.xm-cx-cast-item--2 { right: 4%; bottom: 4%;  width: 22vw; max-width: 280px; animation-delay: .15s; }
+.xm-cx-cast-item--3 { left: 22%; bottom: 8%;  width: 18vw; max-width: 220px; opacity:.7; animation-delay: .25s; }
+.xm-cx-cast-item--4 { right: 22%; bottom: 8%; width: 18vw; max-width: 220px; opacity:.7; animation-delay: .35s; }
+.xm-cx-cast-item--5 { left: 40%; bottom: 12%; width: 14vw; max-width: 180px; opacity:.55; animation-delay: .45s; }
+.xm-cx-cast-item--6 { right: 40%; bottom: 12%; width: 14vw; max-width: 180px; opacity:.55; animation-delay: .55s; }
+@media (max-width: 640px) {
+  .xm-cx-cast-item--3, .xm-cx-cast-item--4, .xm-cx-cast-item--5, .xm-cx-cast-item--6 { display: none; }
+  .xm-cx-cast-item--1, .xm-cx-cast-item--2 { width: 42vw; bottom: 3%; }
+}
+
+.xm-cx-shield {
+  position: absolute; top: 50%; left: 50%;
+  width: min(46vmin, 380px); aspect-ratio: 1;
+  transform: translate(-50%,-50%) scale(.4) rotate(-8deg);
+  opacity: 0;
+  filter: drop-shadow(0 20px 40px rgba(200,32,42,0.35));
+}
+.xm-cx-shield svg { width: 100%; height: 100%; }
+.xm-cx-shield-fill { transform-origin: 100px 100px; transform: scale(0); transition: transform .6s cubic-bezier(.2,.9,.3,1.2); }
+.xm-cx-shield-x    { opacity: 0; transform-origin: 100px 100px; transform: scale(.3) rotate(-30deg); }
+.xm-cx-shield.is-locking {
+  opacity: 1;
+  animation: xm-cx-shield-in .7s cubic-bezier(.2,.9,.3,1.2) forwards;
+}
+.xm-cx-shield.is-locking .xm-cx-shield-fill { transform: scale(1); }
+.xm-cx-shield.is-locking .xm-cx-shield-x    { animation: xm-cx-x-in .5s .35s cubic-bezier(.2,.9,.3,1.4) forwards; }
+.xm-cx-shield.is-unlocked {
+  animation: xm-cx-shield-pulse 1s ease-out forwards;
+}
+@keyframes xm-cx-shield-in {
+  to { transform: translate(-50%,-50%) scale(1) rotate(0deg); }
+}
+@keyframes xm-cx-x-in { to { opacity: 1; transform: scale(1) rotate(0deg); } }
+@keyframes xm-cx-shield-pulse {
+  0%   { filter: drop-shadow(0 20px 40px rgba(200,32,42,0.35)); }
+  40%  { filter: drop-shadow(0 0 80px rgba(200,32,42,0.9)); transform: translate(-50%,-50%) scale(1.06); }
+  100% { filter: drop-shadow(0 20px 40px rgba(200,32,42,0.35)); transform: translate(-50%,-50%) scale(1); }
+}
+
+.xm-cx-holo {
+  position: absolute; left: 0; right: 0; top: 62%;
+  text-align: center; opacity: 0;
+  transition: opacity .4s ease;
+}
+.xm-cx-holo.is-on { opacity: 1; animation: xm-cx-holo-flicker 1.2s ease-out; }
+.xm-cx-holo-tag   { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .4em; color: #c8202a; }
+.xm-cx-holo-title { margin-top: 8px; font-family: var(--font-display); font-size: clamp(2rem, 6vw, 4.5rem); letter-spacing: .12em; color: #0b0d10; }
+.xm-cx-holo-sub   { margin-top: 4px; font-family: var(--font-mono); font-size: 11px; color: rgba(11,13,16,.6); }
+@keyframes xm-cx-holo-flicker {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  25% { opacity: .3; }
+  35% { opacity: 1; }
+  40% { opacity: .6; }
+  50%,100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xm-cast-slot { animation: none !important; }
+  .xm-cx-sweep, .xm-cx-shield, .xm-cx-holo, .xm-cx-cast-item { animation: none !important; }
+}
