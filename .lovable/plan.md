@@ -1,44 +1,24 @@
-## Viral Vault — Major Upgrade Plan
+# Viral Vault — Light Futuristic Forest Redesign
 
-Big request — breaking it into shippable chunks. Please confirm before I build.
+## Direction
+Rebuild the entire Viral Vault storefront as a premium “Moss Atelier”: warm-white architecture, deep forest green, sage, muted emerald, and restrained antique-gold details. Use Sora headings and Manrope body text in an asymmetric curated-gallery system. Remove the visible X-Men/comic language, character imagery, red/yellow accents, halftones, gaming terminology, and superhero animations from all customer-facing pages.
 
-### 1. Homepage + Product Page redesign (white / minimal / futuristic)
-- Rebuild `src/routes/index.tsx` with a cleaner hero: airy whitespace, thin hairline dividers, glass cards, soft `rounded-2xl` corners everywhere (no sharp corners).
-- Rebuild `src/routes/products.$slug.tsx` as a modern PDP: large transparent product hero on left, sticky character-tinted spec panel on right, rounded-2xl thumbnails.
-- Make all product images render on transparent background (CSS: remove image bg via `mix-blend-multiply` on white + soft drop-shadow, since source jpgs aren't PNG). Round all corners (`rounded-2xl` / `rounded-3xl`).
-- Update `XmenProductCard` corners + soft shadow.
+## Build
+- Create a new forest-tech visual system in the global styles: semantic palette, typography, glass surfaces, organic curves, botanical linework, subtle circuit-vein patterns, refined shadows, focus states, and reduced-motion behavior.
+- Replace the shared logo, header, navigation labels, footer, background, and page transition with a quiet botanical-future identity. The transition will use a fast leaf/aperture reveal built from transform and opacity only.
+- Redesign the homepage as an immersive asymmetric showroom with an editorial product-led opening, curated product collections, material/technology story, service promises, and calm newsletter area.
+- Redesign the shop with an elegant catalog introduction, compact filters and sorting, responsive gallery rhythm, and premium product cards that keep existing product photos unchanged and central.
+- Redesign each product page with a large soft-corner gallery, transparent-feeling image presentation, clear pricing/stock controls, product details, delivery information, and related products. Remove all per-character presentation.
+- Redesign cart and checkout as polished, spacious commerce flows with clear stock validation, order totals, secure form states, and plain customer-friendly language.
+- Restyle About, Contact, order confirmation, empty/error states, and the admin/test tools so the entire Viral Vault side shares one cohesive system. Existing product editing, image management, inventory, cart, checkout, SEO, and text-editing behavior will remain intact.
+- Update route metadata and structured copy to describe premium home and kitchen products rather than the retired comic theme.
 
-### 2. New site-wide animated background
-- New `<XmenBackground />` component mounted in `__root.tsx` (xmen scope only). Uses a fixed SVG layer with:
-  - Slow-drifting hex grid
-  - Parallax X-insignias that shift on scroll (via `scroll` event, throttled with rAF)
-  - Faint animated gradient orbs
-- Respects `prefers-reduced-motion`.
+## Motion and atmosphere
+- Use a lightweight fixed botanical/circuit backdrop with slow scroll depth and minimal ambient movement.
+- Add restrained grouped reveals and gentle product-image lift without constant visual noise.
+- Keep every effect responsive, GPU-friendly, non-interactive, and fully disabled or simplified for reduced motion.
 
-### 3. New loader animation
-- Replace `XmenTransition` with a faster (~900ms total), GPU-only version: single SVG X drawn with stroke-dashoffset + radial white flash. No layout thrash, transform/opacity only.
-
-### 4. INR currency
-- Add `formatINR()` in `src/lib/utils.ts`. Convert all `$${price}` sites (card, PDP, cart, checkout) to `₹` with `Intl.NumberFormat('en-IN')`. Prices in `vault-products.ts` stay numeric; multiply by 83 for display, or keep as-is and just switch symbol — I'll just switch symbol + Indian number formatting.
-
-### 5. Order-success X-Men animation
-- New `/order-success` route. On checkout submit, show fullscreen sequence: Blackbird jet SVG streaks across, X-insignia bursts, "Mission Complete" text. Then reveal order summary. ~2.5s.
-
-### 6. Hidden developer/test panel
-- New route `/x-lab` (unlinked). Lists every easter egg with a "Trigger" button, plays each character theme, previews the loader, and shows all product character themes in a grid.
-
-### 7. Admin panel for products
-- New route `/x-admin` (unlinked, localStorage-gated with a simple passcode `xavier`).
-- CRUD over products stored in `localStorage` (overrides `vault-products.ts` defaults at runtime via a `useProducts()` hook). Add/edit name, tagline, price, category, badge, image URL. Delete + reset-to-defaults buttons.
-- Note: this is client-side only (no backend). If you want real persistence across devices, we'd need to enable Lovable Cloud — say the word.
-
-### 8. Sound effects + haptics
-- New `src/lib/xmen-fx.ts` with tiny WebAudio-synthesized cues (no asset downloads): loader whoosh, Cerebro ping, per-egg tones (Wolverine snikt, Magneto hum, Storm crackle, Phoenix whoosh, etc.). Plus `navigator.vibrate()` where supported.
-- Global mute toggle in navbar (persisted).
-
-### Out of scope unless you confirm
-- Real backend / Lovable Cloud for admin persistence
-- Licensed Marvel audio samples (using synthesized tones instead)
-- Currency conversion rate handling (using symbol swap + Indian formatting; prices unchanged numerically)
-
-Reply **"go"** to build all of it, or tell me which sections to cut/prioritize.
+## Verification
+- Check the homepage, shop, one product, cart, checkout, order confirmation, About, Contact, and admin at desktop and mobile widths.
+- Confirm navigation, filtering, product selection, cart quantity and stock guards, checkout submission, image galleries, keyboard focus, metadata, and reduced-motion behavior.
+- Resolve all current preview and build errors before completion.
