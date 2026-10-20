@@ -825,3 +825,232 @@
   .xm-cast-slot { animation: none !important; }
   .xm-cx-sweep, .xm-cx-shield, .xm-cx-holo, .xm-cx-cast-item { animation: none !important; }
 }
+
+/* =====================================================================
+   VIRAL VAULT — Magpie Forest
+   A clean, luminous retail system with plum, olive, and botanical detail.
+   ===================================================================== */
+.xmen-scope {
+  --xm-paper: oklch(0.995 0.004 100);
+  --xm-paper-soft: oklch(0.975 0.012 105);
+  --xm-paper-warm: oklch(0.985 0.009 95);
+  --xm-ink: oklch(0.24 0.035 325);
+  --xm-ink-2: oklch(0.31 0.04 325);
+  --xm-ink-soft: oklch(0.52 0.025 320);
+  --xm-line: oklch(0.9 0.016 100);
+  --xm-line-strong: oklch(0.78 0.025 105);
+  --xm-red: oklch(0.35 0.075 325);
+  --xm-red-deep: oklch(0.25 0.065 325);
+  --xm-red-glow: oklch(0.55 0.08 325 / 0.16);
+  --xm-blue: oklch(0.46 0.055 165);
+  --xm-cyan: oklch(0.72 0.045 150);
+  --xm-amber: oklch(0.56 0.075 120);
+  --xm-violet: var(--xm-red);
+  --xm-phoenix: var(--xm-amber);
+  --xm-yellow: var(--xm-amber);
+  --xm-yellow-soft: oklch(0.94 0.04 115);
+  --xm-blue-deep: oklch(0.34 0.05 165);
+  --font-xmen-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-xmen-mono: "Manrope", system-ui, sans-serif;
+  --font-xmen-sans: "Manrope", system-ui, sans-serif;
+  --font-xmen-serif: "Cormorant Garamond", "Times New Roman", serif;
+  background: var(--xm-paper);
+  color: var(--xm-ink);
+  font-family: var(--font-xmen-sans);
+  color-scheme: light;
+}
+.xmen-scope h1,
+.xmen-scope h2,
+.xmen-scope h3,
+.xmen-scope h4 {
+  font-family: var(--font-xmen-display);
+  color: var(--xm-ink);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.06;
+}
+.xmen-scope h1 { font-size: clamp(2.6rem, 5.7vw, 5.4rem); }
+.xmen-scope h2 { font-size: clamp(2.1rem, 4vw, 3.8rem); }
+.xmen-scope ::selection { background: var(--xm-blue); color: white; }
+.xmen-scope ::-webkit-scrollbar-thumb { background: var(--xm-blue); }
+.xmen-scope :focus-visible {
+  outline: 2px solid var(--xm-blue);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+.xmen-scope .text-xmen-red,
+.xmen-scope .text-xmen-violet { color: var(--xm-red) !important; }
+.xmen-scope .text-xmen-yellow,
+.xmen-scope .text-xmen-amber { color: var(--xm-amber) !important; }
+.xmen-scope .text-xmen-blue,
+.xmen-scope .text-xmen-cyan { color: var(--xm-blue) !important; }
+.xmen-scope .text-xmen-ink { color: var(--xm-ink) !important; }
+.xmen-scope .text-xmen-ink-soft { color: var(--xm-ink-soft) !important; }
+.xmen-scope .bg-xmen-red { background-color: var(--xm-red) !important; }
+.xmen-scope .bg-xmen-yellow { background-color: var(--xm-yellow-soft) !important; }
+.xmen-scope .bg-xmen-blue { background-color: var(--xm-blue) !important; }
+.xmen-scope .bg-xmen-ink { background-color: var(--xm-ink) !important; }
+.xmen-scope .bg-xmen-paper-soft { background-color: var(--xm-paper-soft) !important; }
+.xmen-scope .border-xmen-red,
+.xmen-scope .border-xmen-yellow,
+.xmen-scope .border-xmen-blue,
+.xmen-scope .border-xmen-ink { border-color: var(--xm-line-strong) !important; }
+.xmen-scope .border-xmen-line { border-color: var(--xm-line) !important; }
+.xmen-scope .font-xmen-display { font-family: var(--font-xmen-display) !important; letter-spacing: 0 !important; }
+.xmen-scope .font-xmen-mono { font-family: var(--font-xmen-sans) !important; letter-spacing: 0.035em; }
+.xmen-scope .font-xmen-serif { font-family: var(--font-xmen-serif) !important; }
+.xmen-scope .bg-white { background-color: oklch(1 0 0) !important; }
+.xmen-scope .bg-xmen-yellow,
+.xmen-scope .bg-neutral-50,
+.xmen-scope .bg-neutral-100 { background-color: var(--xm-paper-soft) !important; }
+.xmen-scope .text-neutral-900 { color: var(--xm-ink) !important; }
+.xmen-scope .text-neutral-700,
+.xmen-scope .text-neutral-600 { color: var(--xm-ink-2) !important; }
+.xmen-scope .text-neutral-500 { color: var(--xm-ink-soft) !important; }
+.xmen-scope .border-neutral-200,
+.xmen-scope .border-neutral-300 { border-color: var(--xm-line) !important; }
+.xmen-scope input,
+.xmen-scope select,
+.xmen-scope textarea {
+  background-color: white !important;
+  color: var(--xm-ink) !important;
+  border: 1px solid var(--xm-line-strong) !important;
+  border-radius: 10px !important;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.xmen-scope input:focus,
+.xmen-scope select:focus,
+.xmen-scope textarea:focus {
+  border-color: var(--xm-blue) !important;
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--xm-blue) 14%, transparent) !important;
+  outline: none !important;
+}
+.xmen-scope .xm-glass {
+  background: color-mix(in oklab, white 90%, transparent);
+  border-color: var(--xm-line);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+.xmen-scope .xm-hex,
+.xmen-scope .xm-grid-fine,
+.xmen-scope .xm-halftone,
+.xmen-scope .xm-halftone-yellow { background-image: none; }
+.xmen-scope .xm-frame,
+.xmen-scope .xm-frame-red,
+.xmen-scope .xm-frame-yellow,
+.xmen-scope .xm-frame-blue {
+  border: 1px solid var(--xm-line);
+  border-radius: 12px;
+  box-shadow: 0 12px 34px -28px color-mix(in oklab, var(--xm-ink) 45%, transparent);
+}
+.xmen-scope .xm-chip,
+.xmen-scope .xm-chip-red {
+  border-color: color-mix(in oklab, var(--xm-blue) 25%, white);
+  background: color-mix(in oklab, var(--xm-blue) 8%, white);
+  color: var(--xm-blue);
+  font-family: var(--font-xmen-sans);
+  letter-spacing: .14em;
+}
+.xmen-scope .xm-btn,
+.xmen-scope .xm-btn-red {
+  border: 1px solid var(--xm-blue);
+  border-radius: 999px;
+  background: var(--xm-blue);
+  color: white;
+  font-family: var(--font-xmen-sans);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+.xmen-scope .rounded-3xl,
+.xmen-scope .rounded-2xl,
+.xmen-scope .rounded-\[2rem\],
+.xmen-scope .rounded-\[2\.5rem\] { border-radius: 12px !important; }
+.xmen-scope .xm-product-img {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 18px 20px color-mix(in oklab, var(--xm-ink) 12%, transparent));
+}
+.xmen-scope .xm-bg { overflow: hidden; }
+.xmen-scope .xm-bg-grid {
+  background-image: linear-gradient(color-mix(in oklab, var(--xm-blue) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--xm-blue) 5%, transparent) 1px, transparent 1px);
+  background-size: 76px 76px;
+}
+.xmen-scope .xm-bg-orb { display: none; }
+.xmen-scope .xm-bg-x { color: var(--xm-blue); opacity: .025; }
+.xmen-scope .xm-bg-x-a { color: var(--xm-red); }
+.xmen-scope .xm-squad-back,
+.xmen-scope .xm-cast-back { display: none !important; }
+.magpie-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 94% 14%, color-mix(in oklab, var(--xm-blue) 5%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--xm-paper), color-mix(in oklab, white 98%, var(--xm-amber)));
+}
+.magpie-ambient::before,
+.magpie-ambient::after {
+  content: "";
+  position: absolute;
+  border: 1px solid color-mix(in oklab, var(--xm-blue) 8%, transparent);
+  border-radius: 50%;
+  transform: translate3d(0, var(--forest-drift, 0), 0);
+}
+.magpie-ambient::before { width: 78vw; aspect-ratio: 1; right: -46vw; top: 7vh; }
+.magpie-ambient::after { width: 54vw; aspect-ratio: 1; left: -38vw; top: 55vh; }
+.magpie-ambient svg { position: absolute; width: min(48vw, 620px); height: auto; opacity: .055; }
+.magpie-ambient svg:first-child { top: 8%; right: -10%; }
+.magpie-ambient svg:last-child { bottom: 7%; left: -18%; transform: scaleX(-1); }
+.magpie-storefront > * { position: relative; z-index: 1; }
+.magpie-storefront > .magpie-ambient { position: fixed; z-index: 0; }
+.magpie-storefront header,
+.magpie-storefront main,
+.magpie-storefront footer { position: relative; z-index: 2; }
+.magpie-logo { color: var(--xm-ink); }
+.magpie-logo-mark { width: 42px; height: 42px; object-fit: contain; }
+.magpie-wordmark { font-family: var(--font-xmen-display); font-size: 1.45rem; line-height: 1; letter-spacing: .12em; }
+.magpie-hero { isolation: isolate; position: relative; overflow: hidden; min-height: 590px; }
+.magpie-hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
+.magpie-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, color-mix(in oklab, white 97%, transparent) 4%, color-mix(in oklab, white 91%, transparent) 43%, color-mix(in oklab, white 12%, transparent) 76%, transparent); }
+.magpie-kicker { display: inline-flex; align-items: center; gap: .55rem; color: var(--xm-blue); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.magpie-kicker::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+.magpie-display { font-family: var(--font-xmen-display); font-weight: 500; letter-spacing: 0; line-height: .98; }
+.magpie-primary { background: var(--xm-blue) !important; border-color: var(--xm-blue) !important; color: white !important; border-radius: 999px !important; text-transform: none !important; letter-spacing: .02em !important; font-family: var(--font-xmen-sans) !important; font-weight: 600 !important; }
+.magpie-primary:hover { background: var(--xm-blue-deep) !important; }
+.magpie-outline { border-color: var(--xm-line-strong) !important; color: var(--xm-ink) !important; border-radius: 999px !important; text-transform: none !important; letter-spacing: .02em !important; font-family: var(--font-xmen-sans) !important; }
+.magpie-panel { border: 1px solid var(--xm-line) !important; border-radius: 12px !important; background: color-mix(in oklab, white 96%, var(--xm-paper-soft)) !important; box-shadow: 0 16px 50px -42px color-mix(in oklab, var(--xm-ink) 55%, transparent); }
+.magpie-link { color: var(--xm-blue) !important; }
+.magpie-navlink { color: var(--xm-ink-2) !important; font-family: var(--font-xmen-sans) !important; font-size: .82rem !important; font-weight: 600 !important; letter-spacing: 0 !important; text-transform: none !important; }
+.magpie-navlink[aria-current="page"] { color: var(--xm-blue) !important; }
+.magpie-product-card { display: block; color: var(--xm-ink); }
+.magpie-product-card-media { position: relative; aspect-ratio: 4 / 4.5; overflow: hidden; border-radius: 10px; border: 1px solid var(--xm-line); background: var(--xm-paper-soft); }
+.magpie-product-card-media img { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.magpie-product-card:hover .magpie-product-card-media img { transform: scale(1.04); }
+.magpie-leaf-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--xm-line-strong), transparent); }
+.magpie-success { background: var(--xm-paper); }
+.magpie-step { background: var(--xm-paper-soft); border: 1px solid var(--xm-line); border-radius: 8px; }
+.magpie-auth-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr); min-height: 640px; align-items: center; gap: 3rem; }
+.magpie-auth-art { position: relative; min-height: 470px; overflow: hidden; border-radius: 12px; background: var(--xm-paper-soft); }
+.magpie-auth-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.magpie-auth-card { max-width: 510px; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); }
+.magpie-account-row { display: flex; align-items: center; gap: 1rem; padding: 1.15rem 0; border-bottom: 1px solid var(--xm-line); color: var(--xm-ink); }
+.magpie-account-row:last-child { border-bottom: 0; }
+.magpie-storefront footer { background: color-mix(in oklab, white 92%, var(--xm-paper-soft)); border-color: var(--xm-line) !important; }
+.magpie-storefront .text-white { color: white; }
+@keyframes magpie-reveal { from { opacity: 0; transform: translate3d(0, 8px, 0) scale(.985); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+.magpie-reveal { animation: magpie-reveal .35s ease-out both; }
+@media (max-width: 767px) {
+  .magpie-hero { min-height: 660px; }
+  .magpie-hero-image { object-position: 62% center; }
+  .magpie-hero::after { background: linear-gradient(180deg, color-mix(in oklab, white 96%, transparent) 0%, color-mix(in oklab, white 89%, transparent) 43%, color-mix(in oklab, white 28%, transparent) 100%); }
+  .magpie-auth-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+  .magpie-auth-art { min-height: 290px; max-height: 330px; }
+  .magpie-ambient svg { width: 72vw; opacity: .04; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .magpie-reveal,
+  .magpie-product-card-media img { animation: none !important; transition: none !important; }
+  .magpie-ambient::before,
+  .magpie-ambient::after { transform: none; }
+}
