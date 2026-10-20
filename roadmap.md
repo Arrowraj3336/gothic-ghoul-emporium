@@ -1,4 +1,4 @@
-- [ ] Replace Viral Vault shared shell, logo, navigation, background, and transition with the magpie forest identity.
+- [x] Replace Viral Vault shared shell, logo, navigation, background, and transition with the magpie forest identity.
 - [ ] Redesign home, shop, product, cart, checkout, order-success, about, contact, and admin/test page presentation while preserving existing commerce behavior.
 - [ ] Add presentation-only account and sign-in pages inspired by the supplied references.
 - [ ] Update route metadata, validate desktop/mobile visuals and build, and apply the required package security update.

@@ -1,16 +1,16 @@
-# Viral Vault — Light Futuristic Forest Redesign
+# Viral Vault — Magpie Forest Redesign
 
 ## Direction
-Rebuild the entire Viral Vault storefront as a premium “Moss Atelier”: warm-white architecture, deep forest green, sage, muted emerald, and restrained antique-gold details. Use Sora headings and Manrope body text in an asymmetric curated-gallery system. Remove the visible X-Men/comic language, character imagery, red/yellow accents, halftones, gaming terminology, and superhero animations from all customer-facing pages.
+Rebuild the Viral Vault storefront as a premium magpie-in-a-futuristic-forest identity. Keep the main surfaces white, with dark matte plum and olive green accents, architectural display typography, and a calm curated-gallery system. Remove the visible X-Men/comic language, character imagery, red/yellow accents, halftones, gaming terminology, and superhero animations from all customer-facing pages. Use the supplied Magpie product, cart, checkout, confirmation, profile, and sign-in screens as layout inspiration. Account and sign-in remain presentation-only.
 
 ## Build
-- Create a new forest-tech visual system in the global styles: semantic palette, typography, glass surfaces, organic curves, botanical linework, subtle circuit-vein patterns, refined shadows, focus states, and reduced-motion behavior.
-- Replace the shared logo, header, navigation labels, footer, background, and page transition with a quiet botanical-future identity. The transition will use a fast leaf/aperture reveal built from transform and opacity only.
+- Create a new forest-tech visual system in the global styles: semantic white/plum/olive palette, typography, translucent surfaces, botanical linework, subtle circuit-vein patterns, refined shadows, focus states, and reduced-motion behavior.
+- Replace the shared logo, header, navigation, footer, background, and page transition with a quiet magpie/botanical-future identity. The transition will use a fast leaf/aperture reveal built from transform and opacity only.
 - Redesign the homepage as an immersive asymmetric showroom with an editorial product-led opening, curated product collections, material/technology story, service promises, and calm newsletter area.
 - Redesign the shop with an elegant catalog introduction, compact filters and sorting, responsive gallery rhythm, and premium product cards that keep existing product photos unchanged and central.
 - Redesign each product page with a large soft-corner gallery, transparent-feeling image presentation, clear pricing/stock controls, product details, delivery information, and related products. Remove all per-character presentation.
 - Redesign cart and checkout as polished, spacious commerce flows with clear stock validation, order totals, secure form states, and plain customer-friendly language.
-- Restyle About, Contact, order confirmation, empty/error states, and the admin/test tools so the entire Viral Vault side shares one cohesive system. Existing product editing, image management, inventory, cart, checkout, SEO, and text-editing behavior will remain intact.
+- Restyle About, Contact, order confirmation, empty/error states, and the admin/test tools so the entire Viral Vault side shares one cohesive system. Add presentation-only account and sign-in screens. Existing product editing, image management, inventory, cart, checkout, SEO, and text-editing behavior will remain intact.
 - Update route metadata and structured copy to describe premium home and kitchen products rather than the retired comic theme.
 
 ## Motion and atmosphere
